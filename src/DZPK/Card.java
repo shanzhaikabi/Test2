@@ -19,6 +19,12 @@ public class Card {
         this.color = color;
     }
 
+    public Card(int num,int color){
+        this.num = num;
+        this.color = color;
+        this.id = (num - 1) + (color - 1) * 13;
+    }
+
     public int getId(){
         return this.id;
     }
@@ -29,7 +35,7 @@ public class Card {
         return this.color;
     }
 
-    public Card getCardFromId(){
-        return this;
+    static public Card getCardFromId(int id){
+        return new Card(id);
     }
 }
