@@ -6,6 +6,7 @@ package DZPK;
 public class Player {
     private Card[] hand = new Card[2];
     private int money;
+    private int status;//当前状态
 
     public Card[] getHand(){
         return  this.hand;
