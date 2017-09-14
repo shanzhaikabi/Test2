@@ -1,4 +1,5 @@
 package com.company;
+import DZPK.Calculate;
 import DZPK.frame.*;
 
 public class Main {
@@ -7,6 +8,9 @@ public class Main {
         System.out.println("Wow2");
         System.out.println("Woooooow2");
         System.out.println("1234");
-        ShowFrame.test();
+        //ShowFrame.test();
+        Calculate cal = new Calculate();
+        cal.setAns();
+        cal.test();
     }
 }
