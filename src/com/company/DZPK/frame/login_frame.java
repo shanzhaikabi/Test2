@@ -1,22 +1,14 @@
-package DZPK.frame;
+package com.company.DZPK.frame;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.JTree;
-import javax.swing.JEditorPane;
-import javax.swing.JFormattedTextField;
 
 public class login_frame {
 
