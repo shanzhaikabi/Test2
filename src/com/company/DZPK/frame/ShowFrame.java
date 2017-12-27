@@ -1,4 +1,4 @@
-package DZPK.frame;
+package com.company.DZPK.frame;
 
 import javax.swing.*;
 import java.awt.*;

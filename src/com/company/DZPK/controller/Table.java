@@ -1,4 +1,7 @@
-package DZPK;
+package com.company.DZPK.controller;
+
+import com.company.DZPK.controller.Card;
+import com.company.DZPK.controller.Player;
 
 /**
  * Created by Shanzhai on 2017/9/14.

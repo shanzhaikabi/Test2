@@ -1,19 +1,7 @@
 package DZPK.frame;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.SystemColor;
+import javax.swing.*;
+import java.awt.*;
 
 public class login_frame {
 
