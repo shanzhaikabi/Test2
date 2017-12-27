@@ -26,7 +26,6 @@ public class login_frame {
 	private JLabel currentplayer_label;
 	private JLabel currentgame_label;
 	private JPasswordField password_field;
-	private JTextPane game_textpane;
 	private JLabel gamename_label;
 
 	/**
@@ -96,14 +95,10 @@ public class login_frame {
 		warning_label.setBounds(537, 424, 403, 181);
 		login_frame.getContentPane().add(warning_label);
 		
-		game_textpane = new JTextPane();
-		game_textpane.setBounds(760, 158, 60, 60);
-		login_frame.getContentPane().add(game_textpane);
-		
 		gamename_label = new JLabel("\u65E0");
 		gamename_label.setFont(new Font("����", Font.PLAIN, 18));
 		gamename_label.setHorizontalAlignment(SwingConstants.CENTER);
-		gamename_label.setBounds(755, 231, 72, 18);
+		gamename_label.setBounds(759, 158, 72, 18);
 		login_frame.getContentPane().add(gamename_label);
 		
 		account_field = new JTextField();
