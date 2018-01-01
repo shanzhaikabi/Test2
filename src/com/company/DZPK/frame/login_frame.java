@@ -108,6 +108,7 @@ public class login_frame {
 		JButton login_button = new JButton("\u6CE8\u518C");
 		login_button.setFont(new Font("����", Font.PLAIN, 18));
 		login_button.setBounds(200, 323, 80, 32);
+
 		login_frame.getContentPane().add(login_button);
 		
 		JButton register_button = new JButton("\u767B\u5F55");

@@ -8,7 +8,6 @@ import java.util.Scanner;
  */
 public class Calculate{
     final String[] hs = {"","黑桃","红桃","草花","方片"};
-
     private Card[] ans= new Card[7];//底牌两张和场上五张牌
     public Card getcard(int x){return ans[x-1];}//返回第x张牌
     public void setAns(){
