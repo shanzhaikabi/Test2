@@ -1,4 +1,4 @@
-package com.company.DZPK.DAO;
+package com.company.DZPK.dao;
 
 import java.sql.*;
 

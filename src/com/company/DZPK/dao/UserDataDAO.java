@@ -14,5 +14,5 @@ public interface UserDataDAO {
 
     public void update(UserData userData);
 
-    public UserData get(String username);
+    public UserData get(int id);
 }
