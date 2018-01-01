@@ -13,7 +13,7 @@ public class UserDataDAOImpl implements UserDataDAO{
     Connection connection;
 
     @Override
-    public List<UserData> getAll() {
+    public List<UserData> GetAll() {
         try {
             List<UserData> list = new LinkedList<UserData>();
             connection = JdbcUtils.getConnection();
@@ -23,10 +23,11 @@ public class UserDataDAOImpl implements UserDataDAO{
             while(rs.next()){
                 int id = rs.getInt("id");
                 String username = rs.getString("username");
+                String password = rs.getString("password");
                 String nickname = rs.getString("nickname");
                 int point = rs.getInt("point");
                 int rank = rs.getInt("rank");
-                list.add(new UserData(id,username,nickname,point,rank));
+                list.add(new UserData(id,username,password,nickname,point,rank));
             }
             return list;
         } catch (SQLException e) {
@@ -36,17 +37,18 @@ public class UserDataDAOImpl implements UserDataDAO{
     }
 
     @Override
-    public void save(UserData userData) {
+    public void Save(UserData userData) {
         Connection connection = null;
         try{
             connection = JdbcUtils.getConnection();
-            String sql = "INSERT INTO userdata(username, password, id, balance ,error) VALUES(?,?,?,?,? )";
+            String sql = "INSERT INTO user(username, password, nickname, point, rank ,id) VALUES(?,?,?,?,? )";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1,userData.getUsername());
-            pst.setString(2,userData.getNickname());
-            pst.setInt(3,userData.getPoint());
-            pst.setInt(4,userData.getRank());
-            pst.setInt(5,userData.getId());
+            pst.setString(2,userData.getPassword());
+            pst.setString(3,userData.getNickname());
+            pst.setInt(4,userData.getPoint());
+            pst.setInt(5,userData.getRank());
+            pst.setInt(6,userData.getId());
             pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,17 +58,18 @@ public class UserDataDAOImpl implements UserDataDAO{
     }
 
     @Override
-    public void update(UserData userData) {
+    public void Update(UserData userData) {
         Connection connection = null;
         try{
             connection = JdbcUtils.getConnection();
-            String sql = "UPDATE UserData SET username=?, nickname=?, point=?, rank=? where id=?";
+            String sql = "UPDATE user SET username=?, password=?, nickname=?, point=?, rank=? where id=?";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1,userData.getUsername());
-            pst.setString(2,userData.getNickname());
-            pst.setInt(3,userData.getPoint());
-            pst.setInt(4,userData.getRank());
-            pst.setInt(5,userData.getId());
+            pst.setString(2,userData.getPassword());
+            pst.setString(3,userData.getNickname());
+            pst.setInt(4,userData.getPoint());
+            pst.setInt(5,userData.getRank());
+            pst.setInt(6,userData.getId());
             pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,21 +79,47 @@ public class UserDataDAOImpl implements UserDataDAO{
     }
 
     @Override
-    public UserData get(int id) {
+    public UserData GetById(int id) {
         Connection connection = null;
         try{
             connection = JdbcUtils.getConnection();
-            String sql = "select * from UserData where id=?";
+            String sql = "select * from user where id=?";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setInt(1,id);
             pst.executeUpdate();
             ResultSet rs = pst.executeQuery(sql);
             if (rs == null) return null;
             String username = rs.getString("username");
+            String password = rs.getString("password");
             String nickname = rs.getString("nickname");
             int point = rs.getInt("point");
             int rank = rs.getInt("rank");
-            return new UserData(id,username,nickname,point,rank);
+            return new UserData(id,username,password,nickname,point,rank);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally{
+            JdbcUtils.releaseConnection(connection);
+        }
+        return null;
+    }
+
+    @Override
+    public UserData GetByUsername(String username) {
+        Connection connection = null;
+        try{
+            connection = JdbcUtils.getConnection();
+            String sql = "select * from user where username=?";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setString(1,username);
+            pst.executeUpdate();
+            ResultSet rs = pst.executeQuery(sql);
+            if (rs == null) return null;
+            int id = rs.getInt("id");
+            String password = rs.getString("password");
+            String nickname = rs.getString("nickname");
+            int point = rs.getInt("point");
+            int rank = rs.getInt("rank");
+            return new UserData(id,username,password,nickname,point,rank);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally{
