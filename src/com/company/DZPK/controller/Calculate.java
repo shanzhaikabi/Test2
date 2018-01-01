@@ -101,7 +101,7 @@ public class Calculate{
     public int duizi()//当前葫芦1，三条2，两对3，一对4，五烂0
     {
         int[] n={0,0,0,0,0,0,0,0,0,0,0,0,0,0};//记录各点数牌数
-        for(int i=0;i<7;i++)
+        for(int i = 0;i < 7;i++)
             n[ans[i].getNum()]++;
         int two=0,three=0,four=0;//记录对子和三条个数
         for(int i=1;i<14;i++)
