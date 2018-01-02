@@ -21,7 +21,8 @@ public class login_frame {
 	private JLabel currentgame_label;
 	private JPasswordField password_field;
 	private JLabel gamename_label;
-	private JLabel error_label;
+	private static JLabel error_label;
+	public static final String login_error = "";
 
 	/**
 	 * Launch the application.
@@ -124,5 +125,9 @@ public class login_frame {
 		error_label.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
 		error_label.setBounds(200, 375, 242, 48);
 		login_frame.getContentPane().add(error_label);
+	}
+
+	public static void setError_label(String string){
+		error_label.setText(string);
 	}
 }
