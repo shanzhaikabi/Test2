@@ -7,10 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Client {
-    public static PrintWriter pw = null;
-    public void load(){
+    //static private Random r = new Random();
 
-    }
     public static void main(String[] args) {
         try {
             //1.创建客户端Socket，指定服务器地址和端口号
@@ -18,10 +16,15 @@ public class Client {
             //2.获取输出流，用来向服务器发送信息
             OutputStream os = socket.getOutputStream();//字节输出流
             //转换为打印流
-            pw = new PrintWriter(os);
+            PrintWriter pw = new PrintWriter(os);
+
+            //long name = Math.abs(r.nextLong());
+            //long pass = Math.abs(r.nextLong());
+
+            //pw.write("用户名：" + name + "；密码：" + pass);
             pw.flush();//刷新缓存，向服务器端输出信息
             //关闭输出流
-            //socket.shutdownOutput();
+            socket.shutdownOutput();
             //3.获取输入流，用来读取服务器端的响应信息
             InputStream is = socket.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
