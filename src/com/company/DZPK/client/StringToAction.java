@@ -11,19 +11,19 @@ public class StringToAction {
         String[] arr = string.split("\\s+");
         switch(arr[0]){
             case "returnCheckLogin" :
-                LoginClient.checkLoginFromServer(string);
+                LoginClient.CheckLoginFromServer(string);
                 break;
             case "returnUserData" : break;
         }
     }
 
-    public static UserData getUserDataByString(String string){
+    public static UserData GetUserDataByString(String string){
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("returnUserData")) return null;
         return new UserData(Integer.parseInt(arr[1]),arr[2],arr[3],arr[4],Integer.parseInt(arr[5]),Integer.parseInt(arr[6]));
     }
 
-    public static boolean getCheckLoginByString(String string){
+    public static boolean GetCheckLoginByString(String string){
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("returnCheckLogin")) return false;
         return Boolean.parseBoolean(arr[1]);

@@ -11,7 +11,7 @@ public class Server {
     private static List<ServerThread> threadList = new ArrayList<ServerThread>();
     public void openServer(){
         try {
-            ServerSocket serverSocket = new ServerSocket(8888);
+            ServerSocket serverSocket = new ServerSocket(18888);
             Socket socket = null;
             while (true){
                 socket = serverSocket.accept();
@@ -49,7 +49,7 @@ public class Server {
                 br = new BufferedReader(isr);
                 String info = null;
                 while ((info = br.readLine()) != null) {//循环读取客户端的信息
-                    System.out.println("我是服务器，客户端说：" + info);
+                    System.out.println("message from client:" + info);
                 }
                 socket.shutdownInput();//关闭输入流
                 //获取输出流，响应客户端的请求
