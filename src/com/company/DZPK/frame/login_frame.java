@@ -1,5 +1,8 @@
 package com.company.DZPK.frame;
 
+import com.company.DZPK.client.Client;
+import com.company.DZPK.controller.LoginClient;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,6 +14,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class login_frame {
 
@@ -33,6 +38,7 @@ public class login_frame {
 				try {
 					login_frame window = new login_frame();
 					window.login_frame.setVisible(true);
+                    //Client.main(args);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -109,16 +115,21 @@ public class login_frame {
 		password_field.setBounds(160, 260, 320, 32);
 		login_frame.getContentPane().add(password_field);
 		
-		JButton login_button = new JButton("\u6CE8\u518C");
-		login_button.setFont(new Font("����", Font.PLAIN, 18));
-		login_button.setBounds(200, 323, 80, 32);
+		JButton register_button = new JButton("\u6CE8\u518C");
+        register_button.setFont(new Font("����", Font.PLAIN, 18));
+        register_button.setBounds(200, 323, 80, 32);
 
-		login_frame.getContentPane().add(login_button);
-		
-		JButton register_button = new JButton("\u767B\u5F55");
-		register_button.setFont(new Font("����", Font.PLAIN, 18));
-		register_button.setBounds(360, 323, 80, 32);
 		login_frame.getContentPane().add(register_button);
+		
+		JButton login_button = new JButton("\u767B\u5F55");
+        login_button.setFont(new Font("����", Font.PLAIN, 18));
+        login_button.setBounds(360, 323, 80, 32);
+        login_button.addActionListener(e -> {
+            String username = account_field.getText();
+            String password = String.valueOf(password_field.getPassword());
+            LoginClient.checkLoginToServer(username,password);
+        });
+		login_frame.getContentPane().add(login_button);
 		
 		error_label = new JLabel("");
 		error_label.setForeground(Color.RED);
