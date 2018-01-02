@@ -1,4 +1,4 @@
-package com.company.DZPK.dao;
+package com.company.DZPK.DAO;
 
 import com.company.DZPK.model.UserData;
 import java.sql.*;

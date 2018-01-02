@@ -1,7 +1,7 @@
 package com.company.DZPK.controller;
 
-import com.company.DZPK.dao.DAOFactory;
-import com.company.DZPK.dao.UserDataDAOImpl;
+import com.company.DZPK.DAO.DAOFactory;
+import com.company.DZPK.DAO.UserDataDAOImpl;
 import com.company.DZPK.model.UserData;
 import com.company.DZPK.server.*;
 
@@ -21,7 +21,7 @@ public class LoginServer {
     public static void CheckLoginFromServer(String string){
         UserData usernameAndPassword = StringToAction.ActionCheckLoginByString(string);
         boolean checkLogin = CheckLogin(usernameAndPassword.getUsername(),usernameAndPassword.getPassword());
-        //传给客户端
+        //浼犵粰瀹㈡埛绔�
     }
 
     public static UserData GetUserDataByUsername(String username){

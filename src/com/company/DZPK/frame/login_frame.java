@@ -19,20 +19,20 @@ import java.awt.event.ActionListener;
 
 public class login_frame {
 
-	private JFrame login_frame;
-	private JTextField account_field;
-	private JLabel currentpeople_label;
-	private JLabel currentplayer_label;
-	private JLabel currentgame_label;
-	private JPasswordField password_field;
-	private JLabel gamename_label;
-	private static JLabel error_label;
+	public static JFrame login_frame;
+	public static JTextField account_field;
+	public static JLabel currentpeople_label;
+	public static JLabel currentplayer_label;
+	public static JLabel currentgame_label;
+	public static JPasswordField password_field;
+	public static JLabel gamename_label;
+	public static JLabel error_label;
 	public static final String login_error = "";
 
 	/**
 	 * Launch the application.
 	 */
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -44,15 +44,8 @@ public class login_frame {
 				}
 			}
 		});
-	}*/
-	public void show(){
-		try{
-			login_frame window = new login_frame();
-			window.login_frame.setVisible(true);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
 	}
+
 	/**
 	 * Create the application.
 	 */
@@ -134,7 +127,7 @@ public class login_frame {
         login_button.addActionListener(e -> {
             String username = account_field.getText();
             String password = String.valueOf(password_field.getPassword());
-            //LoginClient.checkLoginToServer(username,password);
+            LoginClient.CheckLoginToServer(username,password);
         });
 		login_frame.getContentPane().add(login_button);
 		
@@ -147,5 +140,17 @@ public class login_frame {
 
 	public static void setError_label(String string){
 		error_label.setText(string);
+	}
+	public static void set_currentgame_label(String s)
+	{
+		currentgame_label.setText(s);
+	}
+	public static void set_currentpeople_label(String s)
+	{
+		currentpeople_label.setText(s);
+	}
+	public static void set_currentplayer_label(String s)
+	{
+		currentplayer_label.setText(s);
 	}
 }

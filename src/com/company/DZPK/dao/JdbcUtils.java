@@ -1,4 +1,4 @@
-package com.company.DZPK.dao;
+package com.company.DZPK.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
