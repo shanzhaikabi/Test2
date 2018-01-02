@@ -9,6 +9,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.JPanel;
+import java.awt.Color;
 
 public class login_frame {
 
@@ -19,6 +21,7 @@ public class login_frame {
 	private JLabel currentgame_label;
 	private JPasswordField password_field;
 	private JLabel gamename_label;
+	private JLabel error_label;
 
 	/**
 	 * Launch the application.
@@ -115,5 +118,11 @@ public class login_frame {
 		register_button.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 18));
 		register_button.setBounds(360, 323, 80, 32);
 		login_frame.getContentPane().add(register_button);
+		
+		error_label = new JLabel("");
+		error_label.setForeground(Color.RED);
+		error_label.setFont(new Font("ËÎÌå", Font.PLAIN, 22));
+		error_label.setBounds(200, 375, 242, 48);
+		login_frame.getContentPane().add(error_label);
 	}
 }
