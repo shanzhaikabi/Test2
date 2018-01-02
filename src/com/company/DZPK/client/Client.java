@@ -16,19 +16,12 @@ public class Client {
         try {
             //1.创建客户端Socket，指定服务器地址和端口号
             socket = new Socket("127.0.0.1", 8888);
-            //2.获取输出流，用来向服务器发送信息
-            os = socket.getOutputStream();//字节输出流
-            //转换为打印流
-            pw = new PrintWriter(os);
-            pw.flush();//刷新缓存，向服务器端输出信息
-            //关闭输出流
-            //socket.shutdownOutput();
-            //3.获取输入流，用来读取服务器端的响应信息
-            //改为启动线程监听服务端消息
+            //启动线程监听服务端消息
             ClientThread clientThread = new ClientThread(socket);
             clientThread.start();
-            ListenFrame listenFrame = new ListenFrame(socket);
-            listenFrame.start();
+            SendThread sendThread = new SendThread(socket);
+            sendThread.start();
+            login_frame.show();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
@@ -75,27 +68,45 @@ public class Client {
             }
         }
     }
-    //监听窗口消息
-    class ListenFrame extends Thread{
-        private BufferedReader br = null;
+    //发送消息
+    class SendThread extends Thread{
         private Socket socket = null;
-        public ListenFrame(Socket x){socket = x;}
-        @Override
+        private OutputStream os = null;
+        private PrintWriter pw = null;
+        private InputStream is = null;
+        private InputStreamReader isr = null;
+        private BufferedReader br = null;
+        public SendThread(Socket x){socket = x;}
         public void run(){
             try {
-                br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-                login_frame loginFrame = new login_frame();
-                loginFrame.show();
-            } catch (Exception e) {
+                //字节输出流
+                os = socket.getOutputStream();
+                //转换为打印流
+                pw = new PrintWriter(os);
+                isr = new InputStreamReader(is,"UTF-8");
+                br = new BufferedReader(isr);
+                while(true){
+                    String msg = br.readLine();
+                    if(msg != null){
+                        pw.write(msg);
+                        pw.flush();
+                    }
+                    sleep(100);
+                }
+
+            }catch(Exception e){
                 e.printStackTrace();
-            } finally {
+            }finally{
                 try {
-                    // 关闭连接
-                    //pw.close();
-                } catch (Exception e) {
+                    //关闭输出流
+                    socket.shutdownOutput();
+                }catch(Exception e){
                     e.printStackTrace();
                 }
             }
+        }
+        public void setIs(String x){
+            is = new ByteArrayInputStream(x.getBytes());
         }
     }
     public static void main(String[] args) {

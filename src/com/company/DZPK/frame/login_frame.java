@@ -45,7 +45,14 @@ public class login_frame {
 			}
 		});
 	}
-
+	public static void show(){
+		try {
+			login_frame window = new login_frame();
+			window.login_frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * Create the application.
 	 */
