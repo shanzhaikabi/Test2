@@ -1,5 +1,8 @@
 package com.company.DZPK.controller;
 
+import com.company.DZPK.model.UserData;
+import com.company.DZPK.server.Server;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -15,7 +18,11 @@ public class Holdem {
     public OutputStream outputStream = null;
     public Holdem(Socket x){socket = x;}
     public void setPlayerList(){
-
+        UserData userData;
+        while((userData = Server.userDataQueue.poll()) != null) {
+            Player player = new Player(playerList.size() + 1, userData.getId(), userData.getNickname());
+            playerList.add(player);
+        }
     }
     public void play(){
 
@@ -26,6 +33,7 @@ public class Holdem {
             isr = new InputStreamReader(is,"utf-8");
             br = new BufferedReader(isr);
             setPlayerList();
+
             play();
         } catch (IOException e) {
             e.printStackTrace();

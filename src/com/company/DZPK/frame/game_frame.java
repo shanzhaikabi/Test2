@@ -8,9 +8,6 @@ import javax.swing.JPanel;
 
 import java.awt.Font;
 import javax.swing.JTextArea;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -72,6 +69,7 @@ public class game_frame {
 	public static JButton call_button;
 	public static JButton fold_button;
 	public static JButton all_in_button;
+	public static game_frame window;
 	
 	
 	/**
@@ -89,6 +87,19 @@ public class game_frame {
 			}
 		});
 	}
+
+    public static void show() {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    window = new game_frame();
+                    window.frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 	/**
 	 * Create the application.

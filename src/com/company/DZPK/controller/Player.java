@@ -7,12 +7,16 @@ import com.company.DZPK.controller.Card;
  */
 public class Player {
     private Card[] hand = new Card[2];
+    private String nickname;
     private int id;
+    private int playerId;
     private int money;
     private int status;//当前状态 0:未开始 1:弃牌 2:看牌或跟加注 3:Allin
 
-    public Player(int id){
+    public Player(int id,int playerId,String nickname){
+        this.nickname = nickname;
         this.id = id;
+        this.playerId = playerId;
         this.money = 0;
         this.status = 0;
     }

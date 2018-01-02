@@ -40,4 +40,10 @@ public class StringToAction {
         if (!arr[0].equals("returnRegister")) return false;
         return Boolean.parseBoolean(arr[1]);
     }
+
+    public static boolean GetYuyueResultByString(String string) {
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("returnYuyue")) return false;
+        return Boolean.parseBoolean(arr[1]);
+    }
 }

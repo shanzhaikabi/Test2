@@ -1,5 +1,8 @@
 package com.company.DZPK.client;
 
+import com.company.DZPK.model.UserData;
+import com.company.DZPK.tool.ToString;
+
 /**
  * Created by Shanzhai on 2018/1/2.
  */
@@ -16,7 +19,7 @@ public class ActionToString {
         return "actionGetUserData " + username;
     }
 
-    public static String SendYuyue(String username,int table){
-        return "sendYuyue " + username + " " + String.valueOf(table);
+    public static String SendYuyue(UserData userData,int table){
+        return "actionYuyue " + ToString.UserDataToString(userData) + " " + String.valueOf(table);
     }
 }

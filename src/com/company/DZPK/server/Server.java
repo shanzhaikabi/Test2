@@ -1,6 +1,7 @@
 package com.company.DZPK.server;
 
 import com.company.DZPK.controller.Holdem;
+import com.company.DZPK.model.UserData;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -8,12 +9,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class Server {
     private static List<ServerThread> threadList = new ArrayList<ServerThread>();
     private static List<GameThread> tableList = new ArrayList<GameThread>();
     private static int playerNumber = 0;
     private static int tableNumber = 0;
+    public static Queue<UserData> userDataQueue;
     public InetAddress address = null;
     public void openServer(){
         try {
@@ -29,7 +32,7 @@ public class Server {
                 address = socket.getInetAddress();
                 playerNumber++;
                 if(playerNumber % 6 == 0){
-                    Holdem holdem = new Holdem(new Socket("127.0.0.1",10000));//新建主机
+                    Holdem holdem = new Holdem(new Socket("127.0.0.1",10000 + tableNumber));//新建主机
                     GameThread gameThread = new GameThread(holdem);
                     tableList.add(gameThread);
                     tableNumber++;

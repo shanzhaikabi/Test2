@@ -18,4 +18,8 @@ public class ActionToString {
         return "returnUserData " + String.valueOf(userData.getId()) + " " + userData.getUsername() + " " + userData.getPassword() + " "
                 + userData.getNickname() + " " + String.valueOf(userData.getPoint()) + " " + String.valueOf(userData.getRank());
     }
+
+    public static String ReturnYuyue(boolean yuyue){
+        return "returnYuyue " + String.valueOf(yuyue);
+    }
 }
