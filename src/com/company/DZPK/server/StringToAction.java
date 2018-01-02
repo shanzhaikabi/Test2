@@ -9,11 +9,11 @@ import com.company.DZPK.model.UserData;
  * Created by Shanzhai on 2018/1/2.
  */
 public class StringToAction {
-    public static String StringToAction(String string){
+    public static String StringToAction(String string,Server.ServerThread thread){
         String[] arr = string.split("\\s+");
         switch(arr[0]){
             case "actionCheckLogin" :
-                return LoginServer.CheckLoginToClient(string);
+                return LoginServer.CheckLoginToClient(string,thread);
             case "actionGetUserData" :
                 return GetUserDataServer.GetUserDataToClient(string);
             case "actionRegister" :

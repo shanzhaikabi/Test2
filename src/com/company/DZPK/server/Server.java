@@ -7,16 +7,15 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Server {
     private static List<ServerThread> threadList = new ArrayList<ServerThread>();
+    public static Map<Integer,ServerThread> threadMap = new HashMap<Integer,ServerThread>();
     private static List<GameThread> tableList = new ArrayList<GameThread>();
     private static int playerNumber = 0;
     private static int tableNumber = 0;
-    public static Queue<UserData> userDataQueue;
+    public static Queue<UserData> userDataQueue = new ArrayDeque<UserData>();
     public InetAddress address = null;
     public void openServer(){
         try {
@@ -31,9 +30,11 @@ public class Server {
                 threadList.add(serverThread);
                 address = socket.getInetAddress();
                 playerNumber++;
-                if(playerNumber % 6 == 0){
-                    Holdem holdem = new Holdem(new Socket("127.0.0.1",10000 + tableNumber));//新建主机
+                if(userDataQueue.size() > 0 && userDataQueue.size() % 2 == 0){
+                    System.out.println("new holdem");
+                    Holdem holdem = new Holdem(new Socket("127.0.0.1",18888));//新建主机
                     GameThread gameThread = new GameThread(holdem);
+                    gameThread.start();
                     tableList.add(gameThread);
                     tableNumber++;
                 }
@@ -43,14 +44,36 @@ public class Server {
         }
     }
 
-    class ServerThread extends Thread {
+    public class ServerThread extends Thread {
         // 和本线程相关的Socket
         Socket socket = null;
 
         public ServerThread(Socket socket) {
             this.socket = socket;
         }
-
+        public void sendMessage(String string){
+            OutputStream os = null;
+            PrintWriter pw = null;
+            try {
+                //获取输入流，并读取客户端信息
+                os = socket.getOutputStream();
+                pw = new PrintWriter(os);
+                pw.println(string);
+                pw.flush();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                //关闭资源
+                try {
+                    pw.close();
+                    os.close();
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         //线程执行的操作，响应客户端的请求
         public void run() {
             InputStream is = null;
@@ -67,7 +90,7 @@ public class Server {
                 pw = new PrintWriter(os);
                 String info = "";
                 while ((info = br.readLine()) != null) {//循环读取客户端的信息
-                    String result = StringToAction.StringToAction(info);
+                    String result = StringToAction.StringToAction(info,this);
                     pw.println(result);
                     pw.flush();
                 }
@@ -115,6 +138,8 @@ public class Server {
                 br = new BufferedReader(isr);
                 os = socket.getOutputStream();
                 pw = new PrintWriter(os);
+                System.out.println("load");
+                table.load();
                 socket.shutdownInput();//关闭输入流
                 //获取输出流，响应客户端的请求
             } catch (IOException e) {

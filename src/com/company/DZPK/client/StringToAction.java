@@ -20,6 +20,9 @@ public class StringToAction {
             case "returnRegister":
                 LoginClient.CheckRegisterFromServer(string);
                 break;
+            case "start":
+                System.out.println("game start");
+                break;
         }
     }
 

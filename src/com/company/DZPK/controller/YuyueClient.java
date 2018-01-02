@@ -14,9 +14,9 @@ import javax.swing.*;
  */
 public class YuyueClient {
     public static void YuyueResultFromServer(String string){
-        boolean wow = StringToAction.GetYuyueResultByString(string);
-        main_frame.window.frame.setVisible(false);
-        game_frame.window.show();
+        boolean yuyue = StringToAction.GetYuyueResultByString(string);
+        //main_frame.window.frame.setVisible(false);
+        //game_frame.window.show();
     }
 
     public static void YuyueToServer(UserData userData,int table){

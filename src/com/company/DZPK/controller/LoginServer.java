@@ -10,11 +10,14 @@ import com.company.DZPK.server.*;
  */
 public class LoginServer {
 
-    public static boolean CheckLogin(String username,String password){
+    public static boolean CheckLogin(String username,String password,Server.ServerThread thread){
         UserDataDAOImpl userDataDAO = DAOFactory.getUserDataDAO();
         UserData userdata = userDataDAO.GetByUsername(username);
         if (userdata == null) return false;
-        if (userdata.getPassword().equals(password)) return true;
+        if (userdata.getPassword().equals(password)){
+            Server.threadMap.put(userdata.getId(),thread);
+            return true;
+        }
         return false;
     }
 
@@ -36,9 +39,9 @@ public class LoginServer {
         return returnString;
     }
 
-    public static String CheckLoginToClient(String string){
+    public static String CheckLoginToClient(String string, Server.ServerThread thread){
         UserData usernameAndPassword = StringToAction.ActionCheckLoginByString(string);
-        boolean checkLogin = CheckLogin(usernameAndPassword.getUsername(),usernameAndPassword.getPassword());
+        boolean checkLogin = CheckLogin(usernameAndPassword.getUsername(),usernameAndPassword.getPassword(),thread);
         String returnString = ActionToString.CheckLogin(checkLogin);
         return returnString;
     }

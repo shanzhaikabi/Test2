@@ -1,5 +1,6 @@
 package com.company.DZPK.frame;
 
+import com.company.DZPK.controller.YuyueClient;
 import com.company.DZPK.model.UserData;
 
 import java.awt.EventQueue;
@@ -122,6 +123,7 @@ public class main_frame {
 		yuyue_button_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+                YuyueClient.YuyueToServer(userData,0);
 			}
 		});
 		yuyue_button_1.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
