@@ -36,6 +36,13 @@ public class main_frame {
 	public static JLabel history_label_2;
 	public static JLabel history_label_3;
 	public static JLabel history_label;
+	public static JButton query_button;
+	public static JButton enter_button;
+	public static JButton exit_button;
+	public static JButton yuyue_button_1;
+	public static JButton yuyue_button_2;
+	public static JButton yuyue_button_3;
+	public static JButton replay_button;
 
 	/**
 	 * Launch the application.
@@ -95,7 +102,7 @@ public class main_frame {
 		game_combo_3.setBounds(60, 230, 240, 40);
 		frame.getContentPane().add(game_combo_3);
 		
-		JButton yuyue_button_1 = new JButton("\u9884\u7EA6");
+		yuyue_button_1 = new JButton("\u9884\u7EA6");
 		yuyue_button_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -105,7 +112,7 @@ public class main_frame {
 		yuyue_button_1.setBounds(360, 130, 80, 40);
 		frame.getContentPane().add(yuyue_button_1);
 		
-		JButton yuyue_button_2 = new JButton("\u9884\u7EA6");
+		yuyue_button_2 = new JButton("\u9884\u7EA6");
 		yuyue_button_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -115,7 +122,7 @@ public class main_frame {
 		yuyue_button_2.setBounds(360, 180, 80, 40);
 		frame.getContentPane().add(yuyue_button_2);
 		
-		JButton yuyue_button_3 = new JButton("\u9884\u7EA6");
+		yuyue_button_3 = new JButton("\u9884\u7EA6");
 		yuyue_button_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -132,7 +139,7 @@ public class main_frame {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JButton enter_button = new JButton("\u52A0\u5165\u623F\u95F4");
+		enter_button = new JButton("\u52A0\u5165\u623F\u95F4");
 		enter_button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -164,17 +171,17 @@ public class main_frame {
 		moneydata_label.setBounds(139, 531, 240, 40);
 		frame.getContentPane().add(moneydata_label);
 		
-		JButton qurey_button = new JButton("\u67E5\u8BE2\u8BE6\u7EC6\u6218\u7EE9");
-		qurey_button.addMouseListener(new MouseAdapter() {
+		query_button = new JButton("\u67E5\u8BE2\u8BE6\u7EC6\u6218\u7EE9");
+		query_button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
-		qurey_button.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
-		qurey_button.setBounds(169, 584, 180, 40);
-		frame.getContentPane().add(qurey_button);
+		query_button.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
+		query_button.setBounds(169, 584, 180, 40);
+		frame.getContentPane().add(query_button);
 		
-		JButton exit_button = new JButton("\u8F93\u5149\u4E86\u4E0D\u60F3\u73A9\u4E86");
+		exit_button = new JButton("\u8F93\u5149\u4E86\u4E0D\u60F3\u73A9\u4E86");
 		exit_button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -205,7 +212,7 @@ public class main_frame {
 		history_label_3.setBounds(602, 531, 240, 40);
 		frame.getContentPane().add(history_label_3);
 		
-		JButton replay_button = new JButton("\u5BF9\u5C40\u56DE\u653E");
+		replay_button = new JButton("\u5BF9\u5C40\u56DE\u653E");
 		replay_button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
