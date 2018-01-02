@@ -2,16 +2,12 @@ package com.company.DZPK.client;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Client {
     public static PrintWriter pw = null;
     public void load(){
-
-    }
-    public static void main(String[] args) {
         try {
             //1.创建客户端Socket，指定服务器地址和端口号
             Socket socket = new Socket("127.0.0.1", 8888);
@@ -37,6 +33,14 @@ public class Client {
             socket.close();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void main(String[] args) {
+        try {
+            Client client = new Client();
+            client.load();
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 }
