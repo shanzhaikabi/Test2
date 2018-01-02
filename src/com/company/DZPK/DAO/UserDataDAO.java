@@ -17,4 +17,6 @@ public interface UserDataDAO {
     public UserData GetById(int id);
 
     public UserData GetByUsername(String username);
+
+    public int getNum();
 }

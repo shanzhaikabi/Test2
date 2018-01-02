@@ -8,7 +8,15 @@ public class ActionToString {
         return "actionCheckLogin " + username + " " + password;
     }
 
+    public static String Register(String username,String password){
+        return "actionRegister " + username + " " + password;
+    }
+
     public static String GetUserData(String username){
         return "actionGetUserData " + username;
+    }
+
+    public static String SendYuyue(String username,int table){
+        return "sendYuyue " + username + " " + String.valueOf(table);
     }
 }

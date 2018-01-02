@@ -1,7 +1,6 @@
 package com.company.DZPK.server;
 
 import com.company.DZPK.controller.GetUserDataServer;
-import com.company.DZPK.controller.LoginClient;
 import com.company.DZPK.controller.LoginServer;
 import com.company.DZPK.model.UserData;
 
@@ -16,7 +15,8 @@ public class StringToAction {
                 return LoginServer.CheckLoginToClient(string);
             case "actionGetUserData" :
                 return GetUserDataServer.GetUserDataToClient(string);
-
+            case "actionRegister" :
+                return LoginServer.RegisterToClient(string);
         }
         return null;
     }
@@ -30,6 +30,15 @@ public class StringToAction {
     public static UserData ActionCheckLoginByString(String string){
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("actionCheckLogin")) return null;
+        UserData userData = new UserData();
+        userData.setUsername(arr[1]);
+        userData.setPassword(arr[2]);
+        return userData;
+    }
+
+    public static UserData ActionRegisterByString(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("actionRegister")) return null;
         UserData userData = new UserData();
         userData.setUsername(arr[1]);
         userData.setPassword(arr[2]);

@@ -17,6 +17,9 @@ public class StringToAction {
             case "returnUserData" :
                 GetUserDataClient.GetUserDataFromServer(string);
                 break;
+            case "returnRegister":
+                LoginClient.CheckRegisterFromServer(string);
+                break;
         }
     }
 
@@ -29,6 +32,12 @@ public class StringToAction {
     public static boolean GetCheckLoginByString(String string){
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("returnCheckLogin")) return false;
+        return Boolean.parseBoolean(arr[1]);
+    }
+
+    public static boolean GetRegisterByString(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("returnRegister")) return false;
         return Boolean.parseBoolean(arr[1]);
     }
 }
