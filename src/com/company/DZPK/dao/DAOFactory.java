@@ -1,4 +1,4 @@
-package com.company.DZPK.dao;
+package com.company.DZPK.DAO;
 
 /**
  * Created by Shanzhai on 2018/1/1.

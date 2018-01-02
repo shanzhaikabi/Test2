@@ -19,14 +19,14 @@ import java.awt.event.ActionListener;
 
 public class login_frame {
 
-	private static JFrame login_frame;
-	private static JTextField account_field;
-	private static JLabel currentpeople_label;
-	private static JLabel currentplayer_label;
-	private static JLabel currentgame_label;
-	private static JPasswordField password_field;
-	private static JLabel gamename_label;
-	private static JLabel error_label;
+	public static JFrame login_frame;
+	public static JTextField account_field;
+	public static JLabel currentpeople_label;
+	public static JLabel currentplayer_label;
+	public static JLabel currentgame_label;
+	public static JPasswordField password_field;
+	public static JLabel gamename_label;
+	public static JLabel error_label;
 	public static final String login_error = "";
 
 	/**
