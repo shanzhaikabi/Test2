@@ -1,5 +1,6 @@
 package com.company.DZPK.client;
 
+import com.company.DZPK.controller.GetUserDataClient;
 import com.company.DZPK.controller.LoginClient;
 import com.company.DZPK.model.UserData;
 
@@ -13,7 +14,9 @@ public class StringToAction {
             case "returnCheckLogin" :
                 LoginClient.CheckLoginFromServer(string);
                 break;
-            case "returnUserData" : break;
+            case "returnUserData" :
+                GetUserDataClient.GetUserDataFromServer(string);
+                break;
         }
     }
 

@@ -113,13 +113,14 @@ public class UserDataDAOImpl implements UserDataDAO{
             pst.setString(1,username);
             //pst.executeUpdate();
             ResultSet rs = pst.executeQuery();
-            if (rs == null) return null;
-            int id = rs.getInt("id");
-            String password = rs.getString("password");
-            String nickname = rs.getString("nickname");
-            int point = rs.getInt("point");
-            int rank = rs.getInt("rank");
-            return new UserData(id,username,password,nickname,point,rank);
+            while(rs.next()) {
+                int id = rs.getInt("id");
+                String password = rs.getString("password");
+                String nickname = rs.getString("nickname");
+                int point = rs.getInt("point");
+                int rank = rs.getInt("rank");
+                return new UserData(id, username, password, nickname, point, rank);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally{

@@ -9,17 +9,19 @@ import java.util.logging.Logger;
 
 
 public class Client {
-    public static PrintWriter pw = null;
+    public PrintWriter pw = null;
     private OutputStream os = null;
     private Socket socket = null;
+    public static SendThread sendThread;
+    //public Client client;
     public void load(){
         try {
             //1.创建客户端Socket，指定服务器地址和端口号
-            socket = new Socket("127.0.0.1", 8888);
+            socket = new Socket("127.0.0.1", 18888);
             //启动线程监听服务端消息
             ClientThread clientThread = new ClientThread(socket);
             clientThread.start();
-            SendThread sendThread = new SendThread(socket);
+            sendThread = new SendThread(socket);
             sendThread.start();
             login_frame.show();
         } catch (IOException ex) {
@@ -49,12 +51,13 @@ public class Client {
                 br = new BufferedReader(isr);
                 while (true) {
                     String result = br.readLine();
-                    if (result.equals("quit")) { // 遇到退出标识时表示服务端返回确认退出
-                        System.out.println("I'm client,and I'm out.");
-                        break;
-                    } else { // 输出服务端回复的消息
-                        System.out.println(result);
-                    }
+                    if (result != null)
+                        if (result.equals("quit")) { // 遇到退出标识时表示服务端返回确认退出
+                            System.out.println("I'm client,and I'm out.");
+                            break;
+                        } else { // 输出服务端回复的消息
+                            StringToAction.StringToAction(result);
+                        }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -69,7 +72,7 @@ public class Client {
         }
     }
     //发送消息
-    class SendThread extends Thread{
+    public class SendThread extends Thread{
         private Socket socket = null;
         private OutputStream os = null;
         private PrintWriter pw = null;
@@ -83,13 +86,17 @@ public class Client {
                 os = socket.getOutputStream();
                 //转换为打印流
                 pw = new PrintWriter(os);
-                isr = new InputStreamReader(is,"UTF-8");
-                br = new BufferedReader(isr);
                 while(true){
-                    String msg = br.readLine();
-                    if(msg != null){
-                        pw.write(msg);
-                        pw.flush();
+                    if (is != null) {
+                        isr = new InputStreamReader(is, "UTF-8");
+                        br = new BufferedReader(isr);
+                        String msg = br.readLine();
+                        if (msg != null) {
+                            System.out.println("message:" + msg);
+                            pw.println(msg);
+                            pw.flush();
+                        }
+                        is = null;
                     }
                     sleep(100);
                 }

@@ -1,5 +1,6 @@
 package com.company.DZPK.server;
 
+import com.company.DZPK.controller.GetUserDataServer;
 import com.company.DZPK.controller.LoginClient;
 import com.company.DZPK.controller.LoginServer;
 import com.company.DZPK.model.UserData;
@@ -8,15 +9,16 @@ import com.company.DZPK.model.UserData;
  * Created by Shanzhai on 2018/1/2.
  */
 public class StringToAction {
-    public static void StringToAction(String string){
+    public static String StringToAction(String string){
         String[] arr = string.split("\\s+");
         switch(arr[0]){
             case "actionCheckLogin" :
-                LoginServer.CheckLoginFromServer(string);
-                break;
+                return LoginServer.CheckLoginToClient(string);
             case "actionGetUserData" :
-                break;
+                return GetUserDataServer.GetUserDataToClient(string);
+
         }
+        return null;
     }
 
     public static String ActionGetUserDataByString(String string){

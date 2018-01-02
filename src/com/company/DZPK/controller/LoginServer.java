@@ -18,15 +18,11 @@ public class LoginServer {
         return false;
     }
 
-    public static void CheckLoginFromServer(String string){
+    public static String CheckLoginToClient(String string){
         UserData usernameAndPassword = StringToAction.ActionCheckLoginByString(string);
         boolean checkLogin = CheckLogin(usernameAndPassword.getUsername(),usernameAndPassword.getPassword());
-        //浼犵粰瀹㈡埛绔�
-    }
-
-    public static UserData GetUserDataByUsername(String username){
-        UserDataDAOImpl userDataDAO = DAOFactory.getUserDataDAO();
-        return userDataDAO.GetByUsername(username);
+        String returnString = ActionToString.checkLogin(checkLogin);
+        return returnString;
     }
 
 }

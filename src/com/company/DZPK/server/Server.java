@@ -12,7 +12,7 @@ public class Server {
     public InetAddress address = null;
     public void openServer(){
         try {
-            ServerSocket serverSocket = new ServerSocket(8888);
+            ServerSocket serverSocket = new ServerSocket(18888);
             Socket socket = null;
             while (true){
                 socket = serverSocket.accept();
@@ -48,16 +48,16 @@ public class Server {
                 is = socket.getInputStream();
                 isr = new InputStreamReader(is,"UTF-8");
                 br = new BufferedReader(isr);
+                os = socket.getOutputStream();
+                pw = new PrintWriter(os);
                 String info = "";
                 while ((info = br.readLine()) != null) {//循环读取客户端的信息
-                    System.out.println("我是服务器，" + info);
+                    String result = StringToAction.StringToAction(info);
+                    pw.println(result);
+                    pw.flush();
                 }
                 socket.shutdownInput();//关闭输入流
                 //获取输出流，响应客户端的请求
-                os = socket.getOutputStream();
-                pw = new PrintWriter(os);
-                pw.write("欢迎您！");
-                pw.flush();//调用flush()方法将缓冲输出
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

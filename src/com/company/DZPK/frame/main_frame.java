@@ -1,18 +1,13 @@
 package com.company.DZPK.frame;
 
+import com.company.DZPK.model.UserData;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JSpinner;
-import javax.swing.JList;
-import javax.swing.ListSelectionModel;
-import javax.swing.AbstractListModel;
-import javax.swing.JScrollBar;
-import javax.swing.JSeparator;
-import java.awt.Choice;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
@@ -22,6 +17,7 @@ import java.awt.event.MouseEvent;
 
 public class main_frame {
 
+    public static main_frame window;
 	public static JFrame frame;
 	public static JTextField textField;
 	public static JLabel username_label;
@@ -43,6 +39,11 @@ public class main_frame {
 	public static JButton yuyue_button_2;
 	public static JButton yuyue_button_3;
 	public static JButton replay_button;
+	public static UserData userData;
+
+	public static final String rank[] = {
+	        "\u65b0\u4eba","10\u7ea7","9\u7ea7","8\u7ea7","7\u7ea7","6\u7ea7","5\u7ea7","4\u7ea7","3\u7ea7","2\u7ea7","1\u7ea7"
+    };
 
 	/**
 	 * Launch the application.
@@ -59,6 +60,21 @@ public class main_frame {
 			}
 		});
 	}
+
+    public static void show(UserData _userData) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    userData = _userData;
+                    window = new main_frame();
+                    username_label.setText("\u6635\u79f0:" + userData.getNickname() + " \u79ef\u5206:" + userData.getPoint() + " \u6bb5\u4f4d:" + rank[userData.getRank()]);
+                    window.frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 	/**
 	 * Create the application.
@@ -78,8 +94,8 @@ public class main_frame {
 		frame.getContentPane().setLayout(null);
 		
 		username_label = new JLabel("\u73A9\u5BB6\u6635\u79F0\u6BB5\u4F4D");
-		username_label.setFont(new Font("宋体", Font.PLAIN, 24));
-		username_label.setBounds(640, 20, 320, 72);
+		username_label.setFont(new Font("宋体", Font.PLAIN, 22));
+		username_label.setBounds(560, 20, 640, 72);
 		frame.getContentPane().add(username_label);
 		
 		game_combo_1 = new JComboBox();

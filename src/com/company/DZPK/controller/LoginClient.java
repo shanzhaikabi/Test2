@@ -1,8 +1,11 @@
 package com.company.DZPK.controller;
 
 import com.company.DZPK.client.ActionToString;
+import com.company.DZPK.client.Client;
 import com.company.DZPK.client.StringToAction;
 import com.company.DZPK.frame.login_frame;
+
+import java.util.Optional;
 
 /**
  * Created by Shanzhai on 2018/1/2.
@@ -15,7 +18,7 @@ public class LoginClient {
             return;
         }
         else{
-
+            login_frame.GetUserData();
         }
     }
 
@@ -23,5 +26,6 @@ public class LoginClient {
         String string = ActionToString.CheckLogin(username,password);
         System.out.println(string);
         //上传给服务器
+        Client.sendThread.setIs(string);
     }
 }
