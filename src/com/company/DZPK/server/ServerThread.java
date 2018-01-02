@@ -2,22 +2,23 @@ package com.company.DZPK.server;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerThread extends Thread {
     // 和本线程相关的Socket
     Socket socket = null;
-
     public ServerThread(Socket socket) {
         this.socket = socket;
     }
 
     //线程执行的操作，响应客户端的请求
     public void run(){
-        InputStream is=null;
-        InputStreamReader isr=null;
-        BufferedReader br=null;
-        OutputStream os=null;
-        PrintWriter pw=null;
+        InputStream is = null;
+        InputStreamReader isr = null;
+        BufferedReader br = null;
+        OutputStream os = null;
+        PrintWriter pw = null;
         try {
             //获取输入流，并读取客户端信息
             is = socket.getInputStream();
@@ -25,7 +26,7 @@ public class ServerThread extends Thread {
             br = new BufferedReader(isr);
             String info=null;
             while((info=br.readLine())!=null){//循环读取客户端的信息
-                System.out.println("我是服务器，客户端说："+info);
+                System.out.println("我是服务器，客户端说：" + info);
             }
             socket.shutdownInput();//关闭输入流
             //获取输出流，响应客户端的请求
