@@ -34,6 +34,7 @@ public class Card {
     public int getColor(){
         return this.color;
     }
+    public void change(){if(this.num==1)this.num=14;}
 
     static public Card getCardFromId(int id){
         return new Card(id);
