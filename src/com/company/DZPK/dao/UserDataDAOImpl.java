@@ -111,8 +111,8 @@ public class UserDataDAOImpl implements UserDataDAO{
             String sql = "select * from user where username=?";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1,username);
-            pst.executeUpdate();
-            ResultSet rs = pst.executeQuery(sql);
+            //pst.executeUpdate();
+            ResultSet rs = pst.executeQuery();
             if (rs == null) return null;
             int id = rs.getInt("id");
             String password = rs.getString("password");

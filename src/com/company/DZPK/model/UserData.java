@@ -12,6 +12,8 @@ public class UserData {
     private int point;
     private int rank;
 
+    public UserData(){}
+
     public UserData(int id, String username, String password,String nickname, int point, int rank) {
         this.id = id;
         this.username = username;
