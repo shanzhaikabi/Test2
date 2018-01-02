@@ -19,7 +19,8 @@ public class Holdem {
     public Holdem(Socket x){socket = x;}
     public void setPlayerList(){
         UserData userData;
-        while((userData = Server.userDataQueue.poll()) != null) {
+        for(int i = 0;i < 2;i++){
+            userData = Server.userDataQueue.poll();
             Player player = new Player(playerList.size() + 1, userData.getId(), userData.getNickname());
             playerList.add(player);
         }

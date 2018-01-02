@@ -21,6 +21,8 @@ public class Server {
         try {
             ServerSocket serverSocket = new ServerSocket(18888);
             Socket socket = null;
+            ListenThread listenThread = new ListenThread();
+            listenThread.start();
             while (true){
                 socket = serverSocket.accept();
                 //创建线程
@@ -30,14 +32,6 @@ public class Server {
                 threadList.add(serverThread);
                 address = socket.getInetAddress();
                 playerNumber++;
-                if(userDataQueue.size() > 0 && userDataQueue.size() % 2 == 0){
-                    System.out.println("new holdem");
-                    Holdem holdem = new Holdem(new Socket("127.0.0.1",18888));//新建主机
-                    GameThread gameThread = new GameThread(holdem);
-                    gameThread.start();
-                    tableList.add(gameThread);
-                    tableNumber++;
-                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,7 +110,7 @@ public class Server {
             }
         }
     }
-    class GameThread extends Thread {
+    public class GameThread extends Thread {
         Holdem table = null;
         Socket socket = null;
         public GameThread(Holdem holdem) {
@@ -158,6 +152,26 @@ public class Server {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+    private class ListenThread extends Thread{
+        public void run(){
+            try {
+                while (true) {
+                    int cnt = userDataQueue.size();
+                    if (cnt > 1) {
+                        System.out.println("new holdem");
+                        Holdem holdem = new Holdem(new Socket("127.0.0.1", 18888));//新建主机
+                        GameThread gameThread = new GameThread(holdem);
+                        gameThread.start();
+                        tableList.add(gameThread);
+                        tableNumber++;
+                    }
+                    sleep(100);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
     }
