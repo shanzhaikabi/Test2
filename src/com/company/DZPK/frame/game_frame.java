@@ -111,6 +111,7 @@ public class game_frame {
 		ending_panel.setBounds(128, 80, 778, 560);
 		frame.getContentPane().add(ending_panel);
 		ending_panel.setLayout(null);
+		ending_panel.hide();
 		
 		ed_nuts_label = new JLabel("\u540C \u82B1 Dark \u987A");
 		ed_nuts_label.setHorizontalAlignment(SwingConstants.CENTER);

@@ -1,5 +1,7 @@
 package com.company.DZPK.server;
 
+import com.company.DZPK.controller.Holdem;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -9,6 +11,9 @@ import java.util.List;
 
 public class Server {
     private static List<ServerThread> threadList = new ArrayList<ServerThread>();
+    private static List<GameThread> tableList = new ArrayList<GameThread>();
+    private static int playerNumber = 0;
+    private static int tableNumber = 0;
     public InetAddress address = null;
     public void openServer(){
         try {
@@ -22,6 +27,13 @@ public class Server {
                 serverThread.start();
                 threadList.add(serverThread);
                 address = socket.getInetAddress();
+                playerNumber++;
+                if(playerNumber % 6 == 0){
+                    Holdem holdem = new Holdem(new Socket("127.0.0.1",10000));//新建主机
+                    GameThread gameThread = new GameThread(holdem);
+                    tableList.add(gameThread);
+                    tableNumber++;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,6 +83,50 @@ public class Server {
                     is.close();
                     socket.close();
                     threadList.remove(this);
+                    playerNumber--;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    class GameThread extends Thread {
+        Holdem table = null;
+        Socket socket = null;
+        public GameThread(Holdem holdem) {
+            table = holdem;
+            socket = table.getSocket();
+        }
+
+        //线程执行的操作，响应客户端的请求
+        public void run() {
+            InputStream is = null;
+            InputStreamReader isr = null;
+            BufferedReader br = null;
+            OutputStream os = null;
+            PrintWriter pw = null;
+            try {
+                //获取输入流，并读取客户端信息
+                is = socket.getInputStream();
+                isr = new InputStreamReader(is,"UTF-8");
+                br = new BufferedReader(isr);
+                os = socket.getOutputStream();
+                pw = new PrintWriter(os);
+                socket.shutdownInput();//关闭输入流
+                //获取输出流，响应客户端的请求
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                //关闭资源
+                try {
+                    pw.close();
+                    os.close();
+                    br.close();
+                    isr.close();
+                    is.close();
+                    tableList.remove(this);
+                    socket.close();
+                    tableNumber--;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
