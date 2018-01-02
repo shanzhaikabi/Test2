@@ -3,6 +3,7 @@ package com.company.DZPK.controller;
 import com.company.DZPK.client.ActionToString;
 import com.company.DZPK.client.Client;
 import com.company.DZPK.client.StringToAction;
+import com.company.DZPK.frame.login_frame;
 import com.company.DZPK.frame.main_frame;
 import com.company.DZPK.model.UserData;
 
@@ -12,6 +13,7 @@ import com.company.DZPK.model.UserData;
 public class GetUserDataClient {
     public static void GetUserDataFromServer(String string){
         UserData userData = StringToAction.GetUserDataByString(string);
+        login_frame.window.login_frame.setVisible(false);
         main_frame.show(userData);
     }
 

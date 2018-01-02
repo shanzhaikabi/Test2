@@ -7,17 +7,17 @@ import com.company.DZPK.controller.Card;
  */
 public class Player {
     private Card[] hand = new Card[2];
+    private String nickname;
     private int id;
+    private int playerId;
     private int money;
-    private int table;//面前的金额
-    private int total;//该局下注总金额
     private int status;//当前状态 0:未开始 1:弃牌 2:看牌或跟加注 3:Allin
 
-    public Player(int id){
+    public Player(int id,int playerId,String nickname){
+        this.nickname = nickname;
         this.id = id;
+        this.playerId = playerId;
         this.money = 0;
-        this.table = 0;
-        this.total = 0;
         this.status = 0;
     }
 
@@ -50,8 +50,6 @@ public class Player {
     public boolean changeMoney_jz(int cm){
         if (this.money - cm < 0) return false;
         this.money -= cm;
-        this.total += cm;
-        this.table += cm;
         return true;
     }//加注
     public boolean changeMoney_win(int cm){
@@ -85,8 +83,6 @@ public class Player {
     public void init(int money){
         this.hand = new Card[2];
         this.money = money;
-        this.table = 0;
-        this.total = 0;
         this.status = 0;
     }
 }

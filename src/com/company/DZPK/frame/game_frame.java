@@ -8,9 +8,6 @@ import javax.swing.JPanel;
 
 import java.awt.Font;
 import javax.swing.JTextArea;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -72,6 +69,7 @@ public class game_frame {
 	public static JButton call_button;
 	public static JButton fold_button;
 	public static JButton all_in_button;
+	public static game_frame window;
 	
 	
 	/**
@@ -89,6 +87,19 @@ public class game_frame {
 			}
 		});
 	}
+
+    public static void show() {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    window = new game_frame();
+                    window.frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 	/**
 	 * Create the application.
@@ -111,6 +122,7 @@ public class game_frame {
 		ending_panel.setBounds(128, 80, 778, 560);
 		frame.getContentPane().add(ending_panel);
 		ending_panel.setLayout(null);
+		ending_panel.hide();
 		
 		ed_nuts_label = new JLabel("\u540C \u82B1 Dark \u987A");
 		ed_nuts_label.setHorizontalAlignment(SwingConstants.CENTER);

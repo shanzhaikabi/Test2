@@ -1,5 +1,6 @@
 package com.company.DZPK.frame;
 
+import com.company.DZPK.controller.YuyueClient;
 import com.company.DZPK.model.UserData;
 
 import java.awt.EventQueue;
@@ -122,6 +123,7 @@ public class main_frame {
 		yuyue_button_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+                YuyueClient.YuyueToServer(userData,0);
 			}
 		});
 		yuyue_button_1.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
@@ -205,6 +207,10 @@ public class main_frame {
 		});
 		exit_button.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
 		exit_button.setBounds(820, 705, 200, 60);
+		exit_button.addActionListener(e -> {
+		    window.frame.setVisible(false);
+		    System.exit(0);
+        });
 		frame.getContentPane().add(exit_button);
 		
 		history_label = new JLabel("\u2014\u2014\u5386\u53F2\u5BF9\u5C40\u2014\u2014");

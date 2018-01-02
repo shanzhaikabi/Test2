@@ -17,7 +17,7 @@ public class UserDataDAOImpl implements UserDataDAO{
         try {
             List<UserData> list = new LinkedList<UserData>();
             connection = JdbcUtils.getConnection();
-            String sql = "select * from UserData";
+            String sql = "select * from user";
             Statement sta = connection.createStatement();
             ResultSet rs = sta.executeQuery(sql);
             while(rs.next()){
@@ -41,7 +41,7 @@ public class UserDataDAOImpl implements UserDataDAO{
         Connection connection = null;
         try{
             connection = JdbcUtils.getConnection();
-            String sql = "INSERT INTO user(username, password, nickname, point, rank ,id) VALUES(?,?,?,?,? )";
+            String sql = "INSERT INTO user(username, password, nickname, point, rank ,id) VALUES(?,?,?,?,?,? )";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1,userData.getUsername());
             pst.setString(2,userData.getPassword());
@@ -127,5 +127,19 @@ public class UserDataDAOImpl implements UserDataDAO{
             JdbcUtils.releaseConnection(connection);
         }
         return null;
+    }
+
+    @Override
+    public int getNum(){
+        try {
+            connection = JdbcUtils.getConnection();
+            String sql = "select * from user";
+            Statement sta = connection.createStatement();
+            ResultSet rs = sta.executeQuery(sql);
+            return rs.getRow();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

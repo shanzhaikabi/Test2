@@ -22,10 +22,26 @@ public class LoginClient {
         }
     }
 
+    public static void CheckRegisterFromServer(String string){
+        boolean register = StringToAction.GetRegisterByString(string);
+        if (register == false){
+            login_frame.setError_label(login_frame.register_error);
+            return;
+        }
+        else{
+            login_frame.setError_label(login_frame.register_success);
+            return;
+        }
+    }
+
     public static void CheckLoginToServer(String username,String password){
         String string = ActionToString.CheckLogin(username,password);
-        System.out.println(string);
-        //上传给服务器
         Client.sendThread.setIs(string);
     }
+
+    public static void CheckRegisterToServer(String username,String password){
+        String string = ActionToString.Register(username,password);
+        Client.sendThread.setIs(string);
+    }
+
 }

@@ -19,7 +19,7 @@ public class GetUserDataServer {
         UserData userData = GetUserDataByUsername(username);
         String returnString = null;
         if (userData != null){
-            returnString = ActionToString.getUserData(userData);
+            returnString = ActionToString.GetUserData(userData);
         }
         return returnString;
     }

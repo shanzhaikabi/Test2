@@ -25,6 +25,8 @@ public class login_frame {
 	public static JLabel gamename_label;
 	public static JLabel error_label;
 	public static final String login_error = "login_error!!!";
+    public static final String register_error = "register_error!!!";
+    public static final String register_success = "register_success!!!";
     public static login_frame window;
 
     /**
@@ -130,6 +132,11 @@ public class login_frame {
 		JButton register_button = new JButton("\u6CE8\u518C");
         register_button.setFont(new Font("����", Font.PLAIN, 18));
         register_button.setBounds(200, 323, 80, 32);
+        register_button.addActionListener(e -> {
+            String username = account_field.getText();
+            String password = String.valueOf(password_field.getPassword());
+            LoginClient.CheckRegisterToServer(username, password);
+        });
 
 		login_frame.getContentPane().add(register_button);
 		
@@ -167,7 +174,6 @@ public class login_frame {
 	}
 
 	public static void GetUserData(){
-	    window.login_frame.setVisible(false);
         GetUserDataClient.GetUserDataToServer(account_field.getText());
     }
 }
