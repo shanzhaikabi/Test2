@@ -25,15 +25,17 @@ public class Client {
             //socket.shutdownOutput();
             //3.获取输入流，用来读取服务器端的响应信息
             //改为启动线程监听服务端消息
-            ClientThread clientThread = new ClientThread();
+            ClientThread clientThread = new ClientThread(socket);
             clientThread.start();
+            ListenFrame listenFrame = new ListenFrame(socket);
+            listenFrame.start();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             try {
                 //4.关闭资源
-                os.close();
-                socket.close();
+                //os.close();
+                //socket.close();
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -41,9 +43,11 @@ public class Client {
     }
     //监听服务器消息
     class ClientThread extends Thread {
+        private Socket socket = null;
         private BufferedReader br = null;
         private InputStream is = null;
         private InputStreamReader isr = null;
+        public ClientThread(Socket x){socket = x;}
         @Override
         public void run() {
             try {
@@ -63,8 +67,6 @@ public class Client {
                 e.printStackTrace();
             } finally {
                 try {
-                    br.close();
-                    is.close();
                     isr.close();
                     // 关闭连接
                 } catch (Exception e) {
@@ -76,6 +78,8 @@ public class Client {
     //监听窗口消息
     class ListenFrame extends Thread{
         private BufferedReader br = null;
+        private Socket socket = null;
+        public ListenFrame(Socket x){socket = x;}
         @Override
         public void run(){
             try {
@@ -86,9 +90,8 @@ public class Client {
                 e.printStackTrace();
             } finally {
                 try {
-                    br.close();
                     // 关闭连接
-                    pw.close();
+                    //pw.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
