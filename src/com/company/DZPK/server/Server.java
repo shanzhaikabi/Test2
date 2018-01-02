@@ -9,9 +9,10 @@ import java.util.List;
 
 public class Server {
     private static List<ServerThread> threadList = new ArrayList<ServerThread>();
+    public InetAddress address = null;
     public void openServer(){
         try {
-            ServerSocket serverSocket = new ServerSocket(18888);
+            ServerSocket serverSocket = new ServerSocket(8888);
             Socket socket = null;
             while (true){
                 socket = serverSocket.accept();
@@ -20,7 +21,7 @@ public class Server {
                 //线程——启动
                 serverThread.start();
                 threadList.add(serverThread);
-                InetAddress address = socket.getInetAddress();
+                address = socket.getInetAddress();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,18 +46,18 @@ public class Server {
             try {
                 //获取输入流，并读取客户端信息
                 is = socket.getInputStream();
-                isr = new InputStreamReader(is);
+                isr = new InputStreamReader(is,"UTF-8");
                 br = new BufferedReader(isr);
-                String info = null;
+                String info = "";
                 while ((info = br.readLine()) != null) {//循环读取客户端的信息
-                    System.out.println("message from client:" + info);
+                    System.out.println("我是服务器，" + info);
                 }
                 socket.shutdownInput();//关闭输入流
                 //获取输出流，响应客户端的请求
                 os = socket.getOutputStream();
                 pw = new PrintWriter(os);
-                //pw.write("欢迎您！");
-                //pw.flush();//调用flush()方法将缓冲输出
+                pw.write("欢迎您！");
+                pw.flush();//调用flush()方法将缓冲输出
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

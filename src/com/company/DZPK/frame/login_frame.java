@@ -32,7 +32,7 @@ public class login_frame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -44,8 +44,15 @@ public class login_frame {
 				}
 			}
 		});
+	}*/
+	public void show(){
+		try{
+			login_frame window = new login_frame();
+			window.login_frame.setVisible(true);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
-
 	/**
 	 * Create the application.
 	 */
@@ -127,7 +134,7 @@ public class login_frame {
         login_button.addActionListener(e -> {
             String username = account_field.getText();
             String password = String.valueOf(password_field.getPassword());
-            LoginClient.checkLoginToServer(username,password);
+            //LoginClient.checkLoginToServer(username,password);
         });
 		login_frame.getContentPane().add(login_button);
 		
