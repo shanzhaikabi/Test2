@@ -230,6 +230,8 @@ public class Holdem {
             }
             //翻一张牌
             t = random.nextInt(cards.size());
+            cards.remove(t);
+            t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
             Card tempCard = cards.get(t);
             publicCards.add(tempCard);
@@ -244,6 +246,8 @@ public class Holdem {
                 continue;
             }
             //翻一张牌
+            t = random.nextInt(cards.size());
+            cards.remove(t);
             t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
             tempCard = cards.get(t);
