@@ -51,7 +51,7 @@ public class Server {
         public ServerThread(Socket socket) {
             this.socket = socket;
         }
-        public void sendMessage(String string){
+        public void SendMessage(String string){
             OutputStream os = null;
             PrintWriter pw = null;
             try {
@@ -114,7 +114,7 @@ public class Server {
             table = holdem;
             socket = table.getSocket();
         }
-        public void input(String string,int id){
+        /*public void input(String string,int id){
             OutputStream os = null;
             PrintWriter pw = null;
             try {
@@ -124,26 +124,30 @@ public class Server {
                 String str = "id " + String.valueOf(id) + " " + string;
                 pw.println(str);
                 pw.flush();
-                System.out.println(str);
+                System.out.println("input to holdem " + table.getTableId() + ":" + str);
             } catch (IOException e) {
                 // TODO Auto-generated catch  block
+                e.printStackTrace();
+            }
+        }*/
+        public void SendMessage(String string){
+            OutputStream os = null;
+            PrintWriter pw = null;
+            try {
+                //获取输入流，并读取客户端信息
+                os = socket.getOutputStream();
+                pw = new PrintWriter(os);
+                pw.write(string + "\n");
+                pw.flush();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
         //线程执行的操作，响应客户端的请求
         public void run() {
-            InputStream is = null;
-            InputStreamReader isr = null;
-            BufferedReader br = null;
-            OutputStream os = null;
-            PrintWriter pw = null;
             try {
                 //获取输入流，并读取客户端信息
-                is = socket.getInputStream();
-                isr = new InputStreamReader(is,"UTF-8");
-                br = new BufferedReader(isr);
-                os = socket.getOutputStream();
-                pw = new PrintWriter(os);
                 System.out.println("load");
                 table.load();
                 socket.shutdownInput();//关闭输入流
@@ -153,11 +157,6 @@ public class Server {
             } finally {
                 //关闭资源
                 try {
-                    pw.close();
-                    os.close();
-                    br.close();
-                    isr.close();
-                    is.close();
                     tableList.remove(this);
                     socket.close();
                     tableNumber--;
@@ -178,7 +177,7 @@ public class Server {
                         GameThread gameThread = new GameThread(holdem);
                         gameThread.start();
                         tableList.add(gameThread);
-                        gameThread.table.setTableId(tableCur);
+                        gameThread.table.SetTableId(tableCur);
                         tableNumber++;
                         tableCur++;
                     }
