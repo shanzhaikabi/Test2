@@ -11,7 +11,7 @@ public class Calculate{
     private Card[] ans= new Card[7];//底牌两张和场上五张牌
     public Card getcard(int x){return ans[x-1];}//返回第x张牌
     public Card[] nuts=new Card[7];
-    public int nuts_id=0;
+    public static int nuts_id=0;
 
     Calculate(){}
     Calculate(Card[] a){
@@ -226,12 +226,13 @@ public class Calculate{
             }
             for(int i=13;i>=1;i--)
             {
-                if(n[i]>=2&&n[i]!=san)
+                if(n[i]>=2&&i!=san)
                 {
                     er=i;
                     break;
                 }
             }
+            //System.out.println(san+" "+er);
             int cnt=0;
             for(int i=0;i<7;i++)
             {
@@ -388,6 +389,12 @@ public class Calculate{
         Calculate x=new Calculate();
         x.getans();
         x.test();
+        System.out.println(nuts_id);
+        for(int i=0;i<5;i++)
+        {
+            System.out.print(x.nuts[i].getNum());
+            System.out.println(x.nuts[i].getColor());
+        }
         return;
     }
 }
