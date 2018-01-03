@@ -23,6 +23,14 @@ public class Calculate_1{
         }
         return;
     }
+    Calculate_1(){}
+    Calculate_1(Card[] a){
+        for(int i=0;i<7;i++)
+        {
+            ans[i]=a[i];
+            ans[i].change();
+        }
+    }
     public Card search_num(int num)
     {
         for(int i=0;i<7;i++)
@@ -36,15 +44,24 @@ public class Calculate_1{
     }
     public void test(){
         int p = getPX();
-        if (p == 77){System.out.println("同花顺");nuts_id=8;}
-        if (p == 5) {System.out.println("四条");nuts_id=7;}
-        if (p == 66) {System.out.println("同花");nuts_id=6;}
-        if (p == 55){System.out.println("顺子");nuts_id=5;}
-        if (p == 1) {System.out.println("葫芦");nuts_id=4;}
-        if (p == 2) {System.out.println("三条");nuts_id=3;}
-        if (p == 3) {System.out.println("两对");nuts_id=2;}
-        if (p == 4) {System.out.println("一对");nuts_id=1;}
-        if (p == 0) {System.out.println("高牌");nuts_id=0;}
+        if (p == 77){System.out.println("tong_hua_shun");
+            nuts_id=8;}
+        if (p == 5) {System.out.println("sitiao");
+            nuts_id=7;}
+        if (p == 66) {System.out.println("tonghua");
+            nuts_id=5;}
+        if (p == 55){System.out.println("shunzi");
+            nuts_id=4;}
+        if (p == 1) {System.out.println("hulu");
+            nuts_id=6;}
+        if (p == 2) {System.out.println("santiao");
+            nuts_id=3;}
+        if (p == 3) {System.out.println("laingdui");
+            nuts_id=2;}
+        if (p == 4) {System.out.println("yidui");
+            nuts_id=1;}
+        if (p == 0) {System.out.println("laji");
+            nuts_id=0;}
        /* for(int i = 0;i < 7;++i){
             System.out.print(hs[ans[i].getColor()] + ans[i].getNum() + ' ');
         }
@@ -113,7 +130,7 @@ public class Calculate_1{
         {
             if(a[i]==a[i+1]-1&&a[i]==a[i+2]-2&&a[i]==a[i+3]-3&&a[i]==a[i+4]-4)
             {
-                for(int j=4;j>=0;j++)
+                for(int j=4;j>=0;j--)
                 {
                     nuts[j]=new Card(a[i+4-j],f);
                 }
@@ -149,7 +166,7 @@ public class Calculate_1{
     }
     public int duizi()//当前葫芦1，三条2，两对3，一对4，五烂0
     {
-        int[] n={0,0,0,0,0,0,0,0,0,0,0,0,0,0};//记录各点数牌数
+        int[] n={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};//记录各点数牌数
         for(int i = 0;i < 7;i++)
             n[ans[i].getNum()]++;
         int two=0,three=0,four=0;//记录对子和三条个数
@@ -210,14 +227,14 @@ public class Calculate_1{
                 }
             }
             int cnt=0;
-            for(int i=0;i<=7;i++)
+            for(int i=0;i<7;i++)
             {
                 if(ans[i].getNum()==san)
                 {
                     nuts[cnt++]=ans[i];
                 }
             }
-            for(int i=0;i<=7;i++)
+            for(int i=0;i<7;i++)
             {
                 if(ans[i].getNum()==er&&cnt<5)
                 {
@@ -253,23 +270,22 @@ public class Calculate_1{
                     break;
                 }
             }
-            int cnt=0;
-            for(int i=0;i<=7;i++)
+            for(int i=0;i<7;i++)
             {
                 if(ans[i].getNum()==san)
                 {
-                    nuts[cnt++]=ans[i];
+                    nuts[i]=ans[i];
                 }
             }
-            for(int i=0;i<=7;i++)
+            for(int i=0;i<7;i++)
             {
                 if(ans[i].getNum()==yi)
                 {
-                    nuts[cnt++]=ans[i];
+                    nuts[3]=ans[i];
                 }
                 if(ans[i].getNum()==er)
                 {
-                    nuts[cnt++]=ans[i];
+                    nuts[4]=ans[i];
                 }
             }
             return 2;
@@ -287,21 +303,21 @@ public class Calculate_1{
                     ccc=i;
             }
             int cnt=0;
-            for(int i=0;i<=7;i++)
+            for(int i=0;i<7;i++)
             {
                 if(ans[i].getNum()==aaa)
                 {
                     nuts[cnt++]=ans[i];
                 }
             }
-            for(int i=0;i<=7;i++)
+            for(int i=0;i<7;i++)
             {
                 if(ans[i].getNum()==bbb)
                 {
                     nuts[cnt++]=ans[i];
                 }
             }
-            for(int i=0;i<=7;i++)
+            for(int i=0;i<7;i++)
             {
                 if(ans[i].getNum()==ccc)
                 {
@@ -325,7 +341,7 @@ public class Calculate_1{
                     ddd=i;
             }
             int cnt=0;
-            for(int i=0;i<=7;i++)
+            for(int i=0;i<7;i++)
             {
                 if(ans[i].getNum()==aaa)
                 {
@@ -359,5 +375,12 @@ public class Calculate_1{
             return 4;
         }
         return 0;*/
+    }
+    public static void main(String args[])
+    {
+        Calculate_1 x=new Calculate_1();
+        x.getans();
+        x.test();
+        return;
     }
 }
