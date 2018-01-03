@@ -27,4 +27,5 @@ public class Localization {
     public static String pot_string="\u5E95\u6C60\uFF1A";
     public static String enable_string="\u4f60\u7684\u56de\u5408";
     public static String raise_to_string = "\u4f60\u7684\u56de\u5408";
+    public static String money_string = "\u8d44\u91d1";
 }

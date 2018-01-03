@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
+import static java.lang.Math.max;
 import static java.lang.Thread.sleep;
 
 public class Holdem {
@@ -51,6 +52,104 @@ public class Holdem {
             playerList.add(player);
         }
     }
+    public int bet(List<Player> playerList,int i,int mainpot,int beginPlayer){
+        int betPlayer = (i + beginPlayer) % MAXPLAYER, j = 1, moneyToCall = 1600;
+        String str = "";
+        while (j < MAXPLAYER) {
+            int cur = (betPlayer + j) % MAXPLAYER;
+            Player curPlayer = playerList.get(cur);
+            if (curPlayer.getStatus() == FOLDED) {
+                j++;
+                continue;
+            }
+            System.out.println("[Holdem]Wait for player " + playerList.get(cur).getPlayerId());
+            String act = read(cur);
+            int actionType = getActionType(act), tempMoney = 0;
+            switch (actionType) {
+                case 0:
+                    curPlayer.setStatus(FOLDED);
+                    str = curPlayer.getNickname() + " " + Localization.fold_string;
+                    updateGameFlow(str);
+                    updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(), Localization.fold_string);
+                    break;
+                case 1://跟注
+                    tempMoney = moneyToCall - curPlayer.getMoneyRaised();
+                    if(curPlayer.getMoney() < moneyToCall){
+                        sendErrorMessage(curPlayer.getId(),Localization.raise_high_string);
+                        continue;
+                    }
+                    curPlayer.setMoney(curPlayer.getMoney() - tempMoney);
+                    curPlayer.setMoneyRaised(moneyToCall);
+                    if (tempMoney > 0){//跟注操作，仅做注释，下同
+                        str = curPlayer.getNickname() + " " + Localization.call_string + " " + curPlayer.getMoneyRaised();
+                        updateGameFlow(str);
+                        updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(), Localization.call_string,curPlayer.getMoneyRaised());
+                    }
+                    else{//过牌操作
+                        str = curPlayer.getNickname() + " " + "check";
+                        updateGameFlow(str);
+                        updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(),"check");
+                    }
+                    mainpot += tempMoney;
+                    //如果raiseMoney为0则状态显示为check
+                    //否则显示为Call...元
+                    break;
+                case 2://加注
+                    tempMoney = getActionMoney(act);
+                    if(tempMoney - curPlayer.getMoneyRaised() > curPlayer.getMoney()){
+                        sendErrorMessage(curPlayer.getId(),Localization.raise_high_string);
+                        continue;
+                    }
+                    if(tempMoney < moneyToCall){
+                        sendErrorMessage(curPlayer.getId(),Localization.raise_low_string);
+                        continue;
+                    }
+                    mainpot += tempMoney - curPlayer.getMoneyRaised();
+                    moneyToCall = tempMoney;
+                    str = curPlayer.getNickname() + " " + Localization.raise_to_string + " " + moneyToCall;
+                    updateGameFlow(str);
+                    curPlayer.setMoney(curPlayer.getMoney() - moneyToCall + curPlayer.getMoneyRaised());
+                    updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(), Localization.raise_string, moneyToCall);
+                    j = 0;
+                    betPlayer = curPlayer.getId();
+                    curPlayer.setMoneyRaised(moneyToCall);
+                    break;
+                case 3://all in
+                    tempMoney = curPlayer.getMoney();
+                    mainpot += tempMoney - curPlayer.getMoneyRaised();
+                    curPlayer.setMoneyRaised(tempMoney);
+                    moneyToCall = max(moneyToCall,tempMoney);
+                    curPlayer.setMoney(0);
+                    j = 0;betPlayer = curPlayer.getId();
+                        /*else{
+                            //not finished
+                            sidepot.add(tempMoney);
+                        }*/
+                    break;
+            }
+            sendSuccessMessage(curPlayer.getId());
+            j++;
+        }
+        return mainpot;
+    }
+    public int gameOver(List<Player> playerList){
+        int cnt = 0,tmp = 0;
+        for(Player player : playerList){
+            if(player.getStatus() == FOLDED || player.getStatus() == ALLIN)cnt++;
+            else tmp = player.getId();
+        }
+        if(cnt == MAXPLAYER - 1)return tmp;
+        else return -1;
+    }
+    public void calcMoney(List<Player> playerlist,int mainpot,int result){
+        Player temp = playerList.get(result);
+        temp.setMoney(temp.getMoney() + mainpot);
+        //TODO:更新金钱
+        for(Player player : playerlist){
+            player.setMoneyRaised(0);
+            player.setStatus(PLAYING);
+        }
+    }
     public void play(){
         sendMessage("resetGameflow");
         for(int i = 0;i < MAXPLAYER;i++) {//第i个为庄家
@@ -58,7 +157,7 @@ public class Holdem {
             sendMessage("updateGameflow " + str);
             List<Card> cards = new ArrayList<Card>();
             List<Card> publicCards = new ArrayList<Card>();
-            Vector<Integer> sidepot = new Vector<Integer>();
+            //Vector<Integer> sidepot = new Vector<Integer>();
             int mainpot = 0;
             for (int j = 0; j < 52; j++)
                 cards.add(new Card(j));
@@ -79,101 +178,20 @@ public class Holdem {
             updateGameFlow(str);
             str = playerList.get(dmzp).getNickname() + " " + Localization.big_blind_string + " " + 1600;
             updateGameFlow(str);
-            updatePlayerLabel(xmzp, Localization.small_blind_string,800);
-            updatePlayerLabel(dmzp, Localization.big_blind_string,1600);
             Player temp = playerList.get((i + 1) % MAXPLAYER);
             temp.setMoney(temp.getMoney() - 800);temp.setMoneyRaised(800);
+            updatePlayerLabel(temp.getMoney(),xmzp, Localization.small_blind_string,800);
             temp = playerList.get((i + 2) % MAXPLAYER);
             temp.setMoney(temp.getMoney() - 1600);temp.setMoneyRaised(1600);
+            updatePlayerLabel(temp.getMoney(),dmzp, Localization.big_blind_string,1600);
             mainpot = 2400;
             updateMainPot(mainpot);
             //翻牌前
-            int betPlayer = (i + 2) % MAXPLAYER, j = 1, moneyToCall = 1600, sidepotID = -1;
-            while (j <= MAXPLAYER) {
-                int cur = (betPlayer + j) % MAXPLAYER;
-                Player curPlayer = playerList.get(cur);
-                if (curPlayer.getStatus() == FOLDED) {
-                    j++;
-                    continue;
-                }
-                System.out.println("[Holdem]Wait for player " + playerList.get(cur).getPlayerId());
-                String act = read(cur);
-                int actionType = getActionType(act), tempMoney = 0;
-                switch (actionType) {
-                    case 0:
-                        curPlayer.setStatus(FOLDED);
-                        str = curPlayer.getNickname() + " " + Localization.fold_string;
-                        updateGameFlow(str);
-                        updatePlayerLabel(curPlayer.getId(), Localization.fold_string);
-                        break;
-                    case 1://跟注
-                        tempMoney = moneyToCall - curPlayer.getMoneyRaised();
-                        if(tempMoney>0){
-                            sendErrorMessage(curPlayer.getId(),Localization.raise_high_string);
-                            continue;
-                        }
-                        curPlayer.setMoney(curPlayer.getMoney() - tempMoney);
-                        if (tempMoney > 0){//跟注操作，仅做注释，下同
-                            str = curPlayer.getNickname() + " " + Localization.call_string + " " + curPlayer.getMoneyRaised();
-                            updateGameFlow(str);
-                            updatePlayerLabel(curPlayer.getId(), Localization.call_string,curPlayer.getMoneyRaised());
-                        }
-                        else{//过牌操作
-                            str = curPlayer.getNickname() + " " + "check";
-                            updateGameFlow(str);
-                            updatePlayerLabel(curPlayer.getId(),"check");
-                        }
-                        temp.setMoneyRaised(tempMoney + curPlayer.getMoneyRaised());
-                        /*if(sidepotID == -1)*/
-                        mainpot += tempMoney;
-                        /*else {
-
-                        if(sidepotID == -1)mainpot += tempMoney;
-                        else {
-                            int moneyInSidepot = sidepot.get(sidepotID);
-                            sidepot.set(sidepotID,moneyInSidepot + tempMoney);
-                        }
-
-                        }*/
-                        //如果raiseMoney为0则状态显示为check
-                        //否则显示为Call...元
-                        break;
-                    case 2://加注
-                        tempMoney = getActionMoney(act);
-                        if(tempMoney-moneyToCall>curPlayer.getMoney()){
-                            sendErrorMessage(curPlayer.getId(),Localization.raise_high_string);
-                            continue;
-                        }
-                        if(tempMoney<moneyToCall){
-                            sendErrorMessage(curPlayer.getId(),Localization.raise_low_string);
-                            continue;
-                        }
-                        mainpot+=tempMoney-moneyToCall;
-                        moneyToCall = tempMoney;
-                        str = curPlayer.getNickname() + " " + Localization.raise_string + " " + moneyToCall;
-                        updateGameFlow(str);
-                        updatePlayerLabel(curPlayer.getId(), Localization.raise_string, moneyToCall);
-                        moneyToCall += tempMoney;
-                        curPlayer.setMoney(curPlayer.getMoney() - moneyToCall);
-                        j = 0;
-                        betPlayer = curPlayer.getId();
-                        curPlayer.setMoneyRaised(moneyToCall);
-                        break;
-                    case 3://all in
-                        tempMoney = curPlayer.getMoney();
-                        mainpot+=tempMoney-moneyToCall;
-                        curPlayer.setMoneyRaised(tempMoney-moneyToCall);
-                        moneyToCall = tempMoney;
-                        curPlayer.setMoney(0);
-                        j = 1;betPlayer = curPlayer.getId();
-                        /*else{
-                            //not finished
-                            sidepot.add(tempMoney);
-                        }*/
-                        break;
-                }
-                sendSuccessMessage(curPlayer.getId());
-                j++;
+            mainpot = bet(playerList,i,mainpot,2);
+            int result = 0;
+            if((result = gameOver(playerList)) != -1){
+                calcMoney(playerList,mainpot,result);
+                mainpot = 0;
             }
             //翻三张牌
             int t = random.nextInt(cards.size());
@@ -188,6 +206,7 @@ public class Holdem {
                 cards.remove(t);
             }
             updateGameFlow(cardString);
+            mainpot = bet(playerList,i,mainpot,1);
             //翻一张牌
             t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
@@ -197,6 +216,7 @@ public class Holdem {
             cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
             cards.remove(t);
             updateGameFlow(cardString);
+            mainpot = bet(playerList,i,mainpot,1);
             //翻一张牌
             t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
@@ -206,6 +226,7 @@ public class Holdem {
             cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
             cards.remove(t);
             updateGameFlow(cardString);
+            mainpot = bet(playerList,i,mainpot,1);
         }
     }
     //给桌上的每个玩家发送消息
@@ -324,12 +345,12 @@ public class Holdem {
         sendMessage("updateMainPot " + String.valueOf(mainPot));
     }
 
-    public void updatePlayerLabel(int id,String str){
-        sendMessage("updatePlayerLabel " + id + " " + str);
+    public void updatePlayerLabel(int money,int playerId,String str){
+        sendMessage("updatePlayerLabel " + playerId + " " + Localization.money_string + " " + money + " " + str);
     }
 
-    public void updatePlayerLabel(int id,String str,int money){
-        sendMessage("updatePlayerLabel " + id + " " + str + " " + money);
+    public void updatePlayerLabel(int money1,int playerId,String str,int money){
+        sendMessage("updatePlayerLabel " + playerId + " " + Localization.money_string + " " + money1 + " " + str + " " + money);
     }
 
     public void sendErrorMessage(int id,String string){
