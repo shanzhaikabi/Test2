@@ -76,4 +76,9 @@ public class PlayGameClient {
         game_frame.fold_button.setEnabled(false);
         game_frame.error_label.setText("");
     }
+
+    public static void raise(int money,int id){
+        String string = ActionToString.sendMessageToServer("raise",money,id);
+        Client.sendThread.setIs(string);
+    }
 }
