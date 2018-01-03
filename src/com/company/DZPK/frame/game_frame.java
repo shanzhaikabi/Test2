@@ -1,6 +1,8 @@
 package com.company.DZPK.frame;
 
+import com.company.DZPK.client.ActionToString;
 import com.company.DZPK.controller.Card;
+import com.company.DZPK.controller.PlayGameClient;
 import com.company.DZPK.model.UserData;
 
 import java.awt.EventQueue;
@@ -15,6 +17,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class game_frame {
 
@@ -305,6 +309,11 @@ public class game_frame {
 		ending_panel.add(ed_player6_hole_hand);
 		
 		continue_button = new JButton("Continue");
+		continue_button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		continue_button.setFont(new Font("宋体", Font.PLAIN, 22));
 		continue_button.setBounds(309, 510, 160, 40);
 		ending_panel.add(continue_button);
@@ -399,21 +408,34 @@ public class game_frame {
 		gameflow_textarea.setBounds(257, 32, 698, 498);
 		
 		raise_button = new JButton("\u52A0\u6CE8");
+		raise_button.addActionListener(e -> {
+			int money=Integer.parseInt(raise_field.getText());
+			PlayGameClient.raise(money,userData.getId(),tableId);
+		});
 		raise_button.setFont(new Font("宋体", Font.PLAIN, 22));
 		raise_button.setBounds(460, 708, 120, 40);
 		frame.getContentPane().add(raise_button);
-		
+
 		call_button = new JButton("\u8DDF\u6CE8");
+		call_button.addActionListener(e -> {
+			PlayGameClient.call(0,userData.getId(),tableId);
+		});
 		call_button.setFont(new Font("宋体", Font.PLAIN, 22));
 		call_button.setBounds(640, 708, 120, 40);
 		frame.getContentPane().add(call_button);
 		
 		fold_button = new JButton("\u5F03\u724C");
+		fold_button.addActionListener(e -> {
+			PlayGameClient.fold(0,userData.getId(),tableId);
+		});
 		fold_button.setFont(new Font("宋体", Font.PLAIN, 22));
 		fold_button.setBounds(820, 708, 120, 40);
 		frame.getContentPane().add(fold_button);
 		
 		all_in_button = new JButton("ALL-IN");
+		all_in_button.addActionListener(e -> {
+			PlayGameClient.all_in(0,userData.getId(),tableId);
+		});
 		all_in_button.setFont(new Font("宋体", Font.PLAIN, 22));
 		all_in_button.setBounds(257, 649, 683, 40);
 		frame.getContentPane().add(all_in_button);

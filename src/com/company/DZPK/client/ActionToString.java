@@ -27,8 +27,8 @@ public class ActionToString {
         return "playerReady " + String.valueOf(userData.getId()) + " " + String.valueOf(tableId);
     }
 
-    public static String sendMessageToServer(String type,int id,int money){
-        return type + " " + String.valueOf(money) + " " + String.valueOf(id);
+    public static String sendMessageToServer(String type,int id,int money,int table_id){
+        return type + " " + String.valueOf(money) + " " + String.valueOf(id)+" "+table_id;
     }
 
 }

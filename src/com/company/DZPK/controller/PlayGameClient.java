@@ -77,8 +77,23 @@ public class PlayGameClient {
         game_frame.error_label.setText("");
     }
 
-    public static void raise(int money,int id){
-        String string = ActionToString.sendMessageToServer("raise",money,id);
+    public static void raise(int money,int id,int table_id){
+        String string = ActionToString.sendMessageToServer("raise",id,money,table_id);
+        Client.sendThread.setIs(string);
+    }
+
+    public static void call(int money,int id,int table_id){
+        String string = ActionToString.sendMessageToServer("call",id,0,table_id);
+        Client.sendThread.setIs(string);
+    }
+
+    public static void fold(int money,int id,int table_id){
+        String string = ActionToString.sendMessageToServer("fold",id,0,table_id);
+        Client.sendThread.setIs(string);
+    }
+
+    public static void all_in(int money,int id,int table_id){
+        String string = ActionToString.sendMessageToServer("all_in",id,0,table_id);
         Client.sendThread.setIs(string);
     }
 }
