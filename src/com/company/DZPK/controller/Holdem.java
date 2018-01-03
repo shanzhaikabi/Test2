@@ -91,6 +91,7 @@ public class Holdem {
                         updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(),"check");
                     }
                     mainpot += tempMoney;
+                    updateMainPot(mainpot);
                     //如果raiseMoney为0则状态显示为check
                     //否则显示为Call...元
                     break;
@@ -105,6 +106,7 @@ public class Holdem {
                         continue;
                     }
                     mainpot += tempMoney - curPlayer.getMoneyRaised();
+                    updateMainPot(mainpot);
                     moneyToCall = tempMoney;
                     str = curPlayer.getNickname() + " " + Localization.raise_to_string + " " + moneyToCall;
                     updateGameFlow(str);
@@ -117,6 +119,7 @@ public class Holdem {
                 case 3://all in
                     tempMoney = curPlayer.getMoney();
                     mainpot += tempMoney - curPlayer.getMoneyRaised();
+                    updateMainPot(mainpot);
                     curPlayer.setMoneyRaised(tempMoney);
                     moneyToCall = max(moneyToCall,tempMoney);
                     curPlayer.setMoney(0);
@@ -141,10 +144,10 @@ public class Holdem {
         if(cnt == MAXPLAYER - 1)return tmp;
         else return -1;
     }
-    public void calcMoney(List<Player> playerlist,int mainpot,int result){
+    public void calcMoney(List<Player> playerlist,int mainpot,int result){//弃牌胜利
         Player temp = playerList.get(result);
         temp.setMoney(temp.getMoney() + mainpot);
-        //TODO:更新金钱
+
         for(Player player : playerlist){
             player.setMoneyRaised(0);
             player.setStatus(PLAYING);
@@ -159,6 +162,7 @@ public class Holdem {
             List<Card> publicCards = new ArrayList<Card>();
             //Vector<Integer> sidepot = new Vector<Integer>();
             int mainpot = 0;
+            updateMainPot(mainpot);
             for (int j = 0; j < 52; j++)
                 cards.add(new Card(j));
             for (int j = 0; j < MAXPLAYER; j++) {
@@ -185,7 +189,6 @@ public class Holdem {
             temp.setMoney(temp.getMoney() - 1600);temp.setMoneyRaised(1600);
             updatePlayerLabel(temp.getMoney(),dmzp, Localization.big_blind_string,1600);
             mainpot = 2400;
-            updateMainPot(mainpot);
             //翻牌前
             mainpot = bet(playerList,i,mainpot,2);
             int result = 0;

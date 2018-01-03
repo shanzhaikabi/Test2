@@ -70,6 +70,7 @@ public class PlayGameClient {
         game_frame.call_button.setEnabled(true);
         game_frame.all_in_button.setEnabled(true);
         game_frame.fold_button.setEnabled(true);
+        if (game_frame.error_label.getText() == null || game_frame.error_label.getText().length() == 0)
         game_frame.error_label.setText(Localization.enable_string);
     }
 
@@ -103,6 +104,6 @@ public class PlayGameClient {
 
     public static void setError(String string){
         String str = StringToAction.getError(string);
-        game_frame.error_label.setText(string);
+        game_frame.error_label.setText(str);
     }
 }
