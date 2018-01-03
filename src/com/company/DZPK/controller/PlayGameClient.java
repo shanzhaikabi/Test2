@@ -42,6 +42,7 @@ public class PlayGameClient {
         String str = StringToAction.resetGameflow(string);
         if (str == null) str = "";
         game_frame.resetGameflow(str);
+        disableButton();
     }
 
     public static void updatePlayerLabel(String string){

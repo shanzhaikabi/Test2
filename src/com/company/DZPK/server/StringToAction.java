@@ -23,6 +23,11 @@ public class StringToAction {
                 return YuyueServer.YuyueToClient(string);
             case "playerReady" :
                 return PlayGameServer.PlayerReady(string);
+            case "raise" :
+            case "fold" :
+            case "all_in" :
+            case "call" :
+                return PlayGameServer.action(string);
         }
         return null;
     }
@@ -69,10 +74,33 @@ public class StringToAction {
         return Integer.parseInt(arr[1]);
     }
 
-
     public static int PlayerReadyTable(String string){
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("playerReady")) return -1;
         return Integer.parseInt(arr[2]);
+    }
+
+    public static int getActionId(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("raise") && !arr[0].equals("fold") && !arr[0].equals("call") && !arr[0].equals("all_in")) return -1;
+        return Integer.parseInt(arr[1]);
+    }
+
+    public static int getActionMoney(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("raise") && !arr[0].equals("fold") && !arr[0].equals("call") && !arr[0].equals("all_in")) return -1;
+        return Integer.parseInt(arr[2]);
+    }
+
+    public static int getActionTable(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("raise") && !arr[0].equals("fold") && !arr[0].equals("call") && !arr[0].equals("all_in")) return -1;
+        return Integer.parseInt(arr[3]);
+    }
+
+    public static String getAction(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("raise") && !arr[0].equals("fold") && !arr[0].equals("call") && !arr[0].equals("all_in")) return null;
+        return string;
     }
 }

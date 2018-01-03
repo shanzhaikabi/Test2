@@ -114,6 +114,9 @@ public class Server {
             table = holdem;
             socket = table.getSocket();
         }
+        public void input(String string){
+            table.input(string);
+        }
         public void input(String string,int id){
             String str = "id " + String.valueOf(id) + " " + string;
             table.input(str);

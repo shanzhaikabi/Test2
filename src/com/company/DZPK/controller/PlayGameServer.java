@@ -17,4 +17,16 @@ public class PlayGameServer {
         }
         return "failed";
     }
+
+    public static String action(String string){
+        String str = StringToAction.getAction(string);
+        int tableId = StringToAction.getActionTable(string);
+        for(Server.GameThread gameThread : Server.tableList){
+            if (gameThread.table.getTableId() == tableId){
+                gameThread.input(str);
+                return "success";
+            }
+        }
+        return "failed";
+    }
 }

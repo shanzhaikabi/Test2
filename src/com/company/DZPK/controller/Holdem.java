@@ -78,18 +78,17 @@ public class Holdem {
             int xmzp = (i + 1) % MAXPLAYER;
             int dmzp = (i + 2) % MAXPLAYER;
             str = playerList.get(xmzp).getNickname() + " " + game_frame.small_blind_string + " " + 800;
-            sendMessage("updateGameflow " + str);
+            updateGameFlow(str);
             str = playerList.get(dmzp).getNickname() + " " + game_frame.big_blind_string + " " + 1600;
-            sendMessage("updateGameflow " + str);
-            sendMessage("updatePlayerLabel " + playerList.get(xmzp).getId() + " " + game_frame.small_blind_string + " " + 800);
-            sendMessage("updatePlayerLabel " + playerList.get(dmzp).getId() + " " + game_frame.big_blind_string + " " + 1600);
-            //TODO:告知小盲大盲,PlayerID为(i + 1) % MAXPLAYER和(i + 2) % MAXPLAYER
+            updateGameFlow(str);
+            updatePlayerLabel(xmzp,game_frame.small_blind_string,800);
+            updatePlayerLabel(dmzp,game_frame.big_blind_string,1600);
             Player temp = playerList.get((i + 1) % MAXPLAYER);
-            temp.setMoney(temp.getMoney() - 800);
+            temp.setMoney(temp.getMoney() - 800);temp.setMoneyRaised(800);
             temp = playerList.get((i + 2) % MAXPLAYER);
-            temp.setMoney(temp.getMoney() - 1600);
+            temp.setMoney(temp.getMoney() - 1600);temp.setMoneyRaised(1600);
             mainpot = 2400;
-            sendMessage("updateMainPot " + String.valueOf(mainpot));
+            updateMainPot(mainpot);
             //翻牌前
             int betPlayer = (i + 3) % MAXPLAYER,j = 0,moneyToCall = 1600,sidepotID = -1;
             //TODO:向玩家发送信息
@@ -99,26 +98,43 @@ public class Holdem {
                 if(curPlayer.getStatus() == FOLDED){
                     j++;continue;
                 }
-                sendMessageToPlayer("yourTurn",curPlayer.getPlayerId());
+                System.out.println("[Holdem]Wait for player " + playerList.get(cur).getPlayerId());
                 String act = read(cur);
                 int actionType = getActionType(act),tempMoney = 0;
                 switch(actionType){
                     case 0:
                         curPlayer.setStatus(FOLDED);
+                        str = curPlayer.getNickname() + " " + game_frame.fold_string;
+                        updateGameFlow(str);
+                        updatePlayerLabel(curPlayer.getId(),game_frame.fold_string);
                         break;
                     case 1:
                         tempMoney = moneyToCall - curPlayer.getMoneyRaised();
                         curPlayer.setMoney(curPlayer.getMoney() - tempMoney);
+                        if (tempMoney > 0){
+                            str = curPlayer.getNickname() + " " + game_frame.call_string + " " + curPlayer.getMoneyRaised();
+                            updateGameFlow(str);
+                            updatePlayerLabel(curPlayer.getId(),game_frame.call_string + " " + curPlayer.getMoneyRaised());
+                        }
+                        else{
+                            str = curPlayer.getNickname() + " " + "check";
+                            updateGameFlow(str);
+                            updatePlayerLabel(curPlayer.getId(),"check");
+                        }
                         if(sidepotID == -1)mainpot += tempMoney;
                         else {
                             int moneyInSidepot = sidepot.get(sidepotID);
                             sidepot.set(sidepotID,moneyInSidepot + tempMoney);
                         }
+                        temp.setMoneyRaised(tempMoney + curPlayer.getMoneyRaised());
                         //如果raiseMoney为0则状态显示为check
                         //否则显示为Call...元
                         break;
                     case 2:
                         tempMoney = getActionMoney(act);
+                        str = curPlayer.getNickname() + " " + game_frame.raise_string + " " + curPlayer.getMoneyRaised();
+                        updateGameFlow(str);
+                        updatePlayerLabel(curPlayer.getId(),game_frame.raise_string);
                         moneyToCall += tempMoney;
                         curPlayer.setMoney(curPlayer.getMoney() - moneyToCall);
                         j = 1;betPlayer = curPlayer.getId() - 1;
@@ -161,16 +177,24 @@ public class Holdem {
         }
     }
 
-    public String read(int player) throws InterruptedException {
+    public String read(int player){
         sendMessageToPlayer("waitForRequire",playerList.get(player).getPlayerId());
-        sleep(100);
+        try {
+            sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String string = stringQueue.poll();
-        int trytime = 0;
+        int tryTime = 0;
         while(string == null || string.length() == 0){
             string = stringQueue.poll();
-            sleep(100);
-            trytime++;
-            if (trytime > 100) return "id " + playerList.get(player).getPlayerId() + " fold ";
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            tryTime++;
+            //if (tryTime > 100) return "fold " + playerList.get(player).getPlayerId() + " 0";
         }
         return string;
     }
@@ -224,11 +248,35 @@ public class Holdem {
     }
 
     public int getActionType(String string){
-        return 0;
+        String[] arr = string.split("\\s+");
+        switch (arr[0]){
+            case "fold":return 0;
+            case "call":return 1;
+            case "raise":return 2;
+            case "all_in":return 3;
+        }
+        return -1;
     }
 
     public int getActionMoney(String string){
-        return 0;
+        String[] arr = string.split("\\s+");
+        return Integer.parseInt(arr[1]);
+    }
+
+    public void updateGameFlow(String string){
+        sendMessage("updateGameflow " + string);
+    }
+
+    public void updateMainPot(int mainPot){
+        sendMessage("updateMainPot " + String.valueOf(mainPot));
+    }
+
+    public void updatePlayerLabel(int id,String str){
+        sendMessage("updatePlayerLabel " + id + " " + str);
+    }
+
+    public void updatePlayerLabel(int id,String str,int money){
+        sendMessage("updatePlayerLabel " + id + " " + str + " " + money);
     }
 
     public Socket getSocket(){return socket;}
