@@ -97,17 +97,24 @@ public class StringToAction {
         return Integer.parseInt(arr[1]);
     }
 
-    public static int GetPlayerIdWhenStart(String string){
+    public static int GetIdWhenStart(String string){
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("playerStart")) return -1;
         return Integer.parseInt(arr[1]);
+    }
+
+    public static int GetPlayerIdWhenStart(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("playerStart")) return -1;
+        if (arr.length < 3) return -1;
+        return Integer.parseInt(arr[2]);
     }
 
     public static String GetPlayerNicknameWhenStart(String string){
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("playerStart")) return null;
         if (arr.length < 3) return null;
-        return arr[2];
+        return arr[3];
     }
 
     public static int GetCardSingleId(String string){
@@ -152,6 +159,12 @@ public class StringToAction {
         return Integer.parseInt(arr[1]);
     }
 
+    public static int updatePlayerNicknamePlayerId(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("updatePlayerNickname")) return -1;
+        return Integer.parseInt(arr[2]);
+    }
+
     public static String updatePlayerNickname(String string){
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("updatePlayerNickname")) return null;
@@ -167,6 +180,6 @@ public class StringToAction {
     public static String getError(String string){
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("actionFailed")) return null;
-        return arr[2];
+        return arr[1];
     }
 }

@@ -21,10 +21,11 @@ public class PlayGameClient {
     }
 
     public static void addPlayer(String string){
+        int id = StringToAction.GetIdWhenStart(string);
         int playerId = StringToAction.GetPlayerIdWhenStart(string);
         String nickName = StringToAction.GetPlayerNicknameWhenStart(string);
         if (nickName == null) nickName = "";
-        game_frame.setPlayerNameLabel(nickName, playerId);
+        game_frame.setPlayerNameLabel(nickName, playerId, id);
     }
 
     public static void getCardSingle(String string){
@@ -53,8 +54,9 @@ public class PlayGameClient {
 
     public static void updatePlayerNickname(String string){
         int id = StringToAction.updatePlayerNicknameId(string);
+        int playerId = StringToAction.updatePlayerNicknamePlayerId(string);
         String str = StringToAction.updatePlayerNickname(string);
-        game_frame.setPlayerNameLabel(str,id);
+        game_frame.setPlayerNameLabel(str,playerId,id);
     }
 
     public static void updateMainPot(String string){

@@ -428,9 +428,11 @@ public class game_frame {
 	}
 
 
-    public static void setPlayerNameLabel(String string,int playerId){
-	    if (string.equals(userData.getUsername())) string = "Player: " + string;
-	    switch (playerId){
+    public static void setPlayerNameLabel(String string,int playerId,int id){
+	    if (playerId == userData.getId()) string = "[Player] " + string;
+	    else string = "[" + playerId + "] " + string;
+	    if (playerId == -1) string = "";
+	    switch (id){
         case 0:
             player1_name_label.setText(string);
             if(string.length() > 0)

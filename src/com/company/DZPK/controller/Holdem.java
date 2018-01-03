@@ -88,9 +88,9 @@ public class Holdem {
             mainpot = 2400;
             updateMainPot(mainpot);
             //翻牌前
-            int betPlayer = (i + 3) % MAXPLAYER, j = 0, moneyToCall = 1600, sidepotID = -1;
-            while (j < MAXPLAYER) {
-                int cur = (betPlayer + j + 2) % MAXPLAYER;
+            int betPlayer = (i + 2) % MAXPLAYER, j = 1, moneyToCall = 1600, sidepotID = -1;
+            while (j <= MAXPLAYER) {
+                int cur = (betPlayer + j) % MAXPLAYER;
                 Player curPlayer = playerList.get(cur);
                 if (curPlayer.getStatus() == FOLDED) {
                     j++;
@@ -108,14 +108,17 @@ public class Holdem {
                         break;
                     case 1://跟注
                         tempMoney = moneyToCall - curPlayer.getMoneyRaised();
-                        if(tempMoney>0);//todo:同筹码不足以加注对应raise_more_string,后面统统不执行
+                        if(tempMoney>0){
+                            sendErrorMessage(curPlayer.getId(),Localization.raise_high_string);
+                            continue;
+                        }
                         curPlayer.setMoney(curPlayer.getMoney() - tempMoney);
-                        if (tempMoney > 0){//todo:跟注操作，仅做注释，下同
+                        if (tempMoney > 0){//跟注操作，仅做注释，下同
                             str = curPlayer.getNickname() + " " + Localization.call_string + " " + curPlayer.getMoneyRaised();
                             updateGameFlow(str);
                             updatePlayerLabel(curPlayer.getId(), Localization.call_string,curPlayer.getMoneyRaised());
                         }
-                        else{//todo:过牌操作
+                        else{//过牌操作
                             str = curPlayer.getNickname() + " " + "check";
                             updateGameFlow(str);
                             updatePlayerLabel(curPlayer.getId(),"check");
@@ -132,20 +135,28 @@ public class Holdem {
                         }
 
                         }*/
+                        //如果raiseMoney为0则状态显示为check
+                        //否则显示为Call...元
                         break;
                     case 2://加注
                         tempMoney = getActionMoney(act);
-                        if(tempMoney-moneyToCall>curPlayer.getMoney());//todo:筹码不足以加注aise_more_string，后面统统不执行
-                        if(tempMoney<moneyToCall);//todo:没到达跟注线（没加够）,对应less，后面不执行
+                        if(tempMoney-moneyToCall>curPlayer.getMoney()){
+                            sendErrorMessage(curPlayer.getId(),Localization.raise_high_string);
+                            continue;
+                        }
+                        if(tempMoney<moneyToCall){
+                            sendErrorMessage(curPlayer.getId(),Localization.raise_low_string);
+                            continue;
+                        }
                         mainpot+=tempMoney-moneyToCall;
                         moneyToCall = tempMoney;
-                        str = curPlayer.getNickname() + " " + Localization.raise_string + " " + curPlayer.getMoneyRaised();
+                        str = curPlayer.getNickname() + " " + Localization.raise_string + " " + moneyToCall;
                         updateGameFlow(str);
-                        updatePlayerLabel(curPlayer.getId(), Localization.raise_string);
+                        updatePlayerLabel(curPlayer.getId(), Localization.raise_string, moneyToCall);
                         moneyToCall += tempMoney;
                         curPlayer.setMoney(curPlayer.getMoney() - moneyToCall);
-                        j = 1;
-                        betPlayer = curPlayer.getId() - 1;
+                        j = 0;
+                        betPlayer = curPlayer.getId();
                         curPlayer.setMoneyRaised(moneyToCall);
                         break;
                     case 3://all in
@@ -154,13 +165,14 @@ public class Holdem {
                         curPlayer.setMoneyRaised(tempMoney-moneyToCall);
                         moneyToCall = tempMoney;
                         curPlayer.setMoney(0);
-                        j = 1;betPlayer = curPlayer.getId() - 1;
+                        j = 1;betPlayer = curPlayer.getId();
                         /*else{
                             //not finished
                             sidepot.add(tempMoney);
                         }*/
                         break;
                 }
+                sendSuccessMessage(curPlayer.getId());
                 j++;
             }
             //翻三张牌
@@ -176,7 +188,6 @@ public class Holdem {
                 cards.remove(t);
             }
             updateGameFlow(cardString);
-            //TODO:下注流程
             //翻一张牌
             t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
@@ -186,7 +197,6 @@ public class Holdem {
             cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
             cards.remove(t);
             updateGameFlow(cardString);
-            //TODO:下注流程
             //翻一张牌
             t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
@@ -200,7 +210,7 @@ public class Holdem {
     }
     //给桌上的每个玩家发送消息
     public void sendMessage(String message){
-        System.out.println("message send");
+        System.out.println("[Broadcast]" + message);
         for(Player player : playerList){
             Server.threadMap.get(player.getPlayerId()).sendMessage(message);
         }
@@ -208,11 +218,12 @@ public class Holdem {
 
     public void sendMessageToPlayer(String message,int playerId){
         Server.threadMap.get(playerId).sendMessage(message);
+        System.out.println("[" + playerId + "]" + message);
     }
 
     public void sendPlayerMessageToPlayer(int playerId){
         for(int i = 0;i < playerList.size();i++){
-            sendMessageToPlayer("playerStart " + String.valueOf(i) + " " + playerList.get(i).getNickname(),playerId);
+            sendMessageToPlayer("playerStart " + String.valueOf(i) + " " + playerList.get(i).getPlayerId() + " " + playerList.get(i).getNickname(),playerId);
         }
         for(int i = playerList.size();i < 6;i++){
             sendMessageToPlayer("playerStart " + String.valueOf(i) + " " + " ",playerId);
@@ -319,6 +330,14 @@ public class Holdem {
 
     public void updatePlayerLabel(int id,String str,int money){
         sendMessage("updatePlayerLabel " + id + " " + str + " " + money);
+    }
+
+    public void sendErrorMessage(int id,String string){
+        sendMessageToPlayer("actionFailed " + string,playerList.get(id).getPlayerId());
+    }
+
+    public void sendSuccessMessage(int id){
+        sendMessageToPlayer("actionSuccess 0",playerList.get(id).getPlayerId());
     }
 
     public Socket getSocket(){return socket;}
