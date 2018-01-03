@@ -60,4 +60,40 @@ public class PlayGameClient {
         int mainPot = StringToAction.updateMainPot(string);
         game_frame.updateMainPot(mainPot);
     }
+
+    public static void enableButton(){
+        game_frame.raise_button.setEnabled(true);
+        game_frame.call_button.setEnabled(true);
+        game_frame.all_in_button.setEnabled(true);
+        game_frame.fold_button.setEnabled(true);
+        game_frame.error_label.setText(game_frame.enable_string);
+    }
+
+    public static void disableButton(){
+        game_frame.raise_button.setEnabled(false);
+        game_frame.call_button.setEnabled(false);
+        game_frame.all_in_button.setEnabled(false);
+        game_frame.fold_button.setEnabled(false);
+        game_frame.error_label.setText("");
+    }
+
+    public static void raise(int money,int id,int table_id){
+        String string = ActionToString.sendMessageToServer("raise",id,money,table_id);
+        Client.sendThread.setIs(string);
+    }
+
+    public static void call(int money,int id,int table_id){
+        String string = ActionToString.sendMessageToServer("call",id,0,table_id);
+        Client.sendThread.setIs(string);
+    }
+
+    public static void fold(int money,int id,int table_id){
+        String string = ActionToString.sendMessageToServer("fold",id,0,table_id);
+        Client.sendThread.setIs(string);
+    }
+
+    public static void all_in(int money,int id,int table_id){
+        String string = ActionToString.sendMessageToServer("all_in",id,0,table_id);
+        Client.sendThread.setIs(string);
+    }
 }
