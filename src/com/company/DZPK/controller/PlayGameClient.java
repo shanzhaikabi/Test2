@@ -60,4 +60,20 @@ public class PlayGameClient {
         int mainPot = StringToAction.updateMainPot(string);
         game_frame.updateMainPot(mainPot);
     }
+
+    public static void enableButton(){
+        game_frame.raise_button.setEnabled(true);
+        game_frame.call_button.setEnabled(true);
+        game_frame.all_in_button.setEnabled(true);
+        game_frame.fold_button.setEnabled(true);
+        game_frame.error_label.setText(game_frame.enable_string);
+    }
+
+    public static void disableButton(){
+        game_frame.raise_button.setEnabled(false);
+        game_frame.call_button.setEnabled(false);
+        game_frame.all_in_button.setEnabled(false);
+        game_frame.fold_button.setEnabled(false);
+        game_frame.error_label.setText("");
+    }
 }

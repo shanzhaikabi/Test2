@@ -72,9 +72,9 @@ public class Holdem {
             }
             int xmzp = (i + 1) % MAXPLAYER;
             int dmzp = (i + 2) % MAXPLAYER;
-            str = playerList.get(xmzp).getNickname() + " " + game_frame.small_blind_string + " " + 800 + "\r\n";
+            str = playerList.get(xmzp).getNickname() + " " + game_frame.small_blind_string + " " + 800;
             sendMessage("updateGameflow " + str);
-            str = playerList.get(dmzp).getNickname() + " " + game_frame.big_blind_string + " " + 1600 + "\r\n";
+            str = playerList.get(dmzp).getNickname() + " " + game_frame.big_blind_string + " " + 1600;
             sendMessage("updateGameflow " + str);
             sendMessage("updatePlayerLabel " + playerList.get(xmzp).getId() + " " + game_frame.small_blind_string + " " + 800);
             sendMessage("updatePlayerLabel " + playerList.get(dmzp).getId() + " " + game_frame.big_blind_string + " " + 1600);
@@ -116,15 +116,16 @@ public class Holdem {
         }
     }
 
-    public String read(int player){
+    public String read(int player) throws InterruptedException {
+        sendMessageToPlayer("waitForRequire",playerList.get(player).getPlayerId());
+        sleep(100);
         String string = stringQueue.poll();
+        int trytime = 0;
         while(string == null || string.length() == 0){
             string = stringQueue.poll();
-            try {
-                sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            sleep(100);
+            trytime++;
+            if (trytime > 100) return "id " + playerList.get(player).getPlayerId() + " fold ";
         }
         return string;
     }
@@ -168,6 +169,21 @@ public class Holdem {
             e.printStackTrace();
         }
 
+    }
+
+    public int getIdByPlayerId(int playerId){
+        for(int i = 0;i < playerList.size();i++){
+            if (playerList.get(i).getPlayerId() == playerId) return i;
+        }
+        return -1;
+    }
+
+    public int getActionType(String string){
+        return 0;
+    }
+
+    public int getActionMoney(String string){
+        return 0;
     }
 
     public Socket getSocket(){return socket;}

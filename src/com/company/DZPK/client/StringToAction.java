@@ -49,6 +49,9 @@ public class StringToAction {
             case "updateMainPot":
                 PlayGameClient.updateMainPot(string);
                 break;
+            case "waitForRequire":
+                PlayGameClient.enableButton();
+                break;
         }
     }
 
