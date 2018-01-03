@@ -23,7 +23,8 @@ import java.awt.event.MouseEvent;
 public class game_frame {
 
 	public static JFrame frame;
-	public static JTextField raise_field;
+	public static JPanel ending_panel;
+    public static JTextField raise_field;
 	public static JLabel[] ed_player_name=new JLabel[6];
 	public static JLabel[] ed_player_money=new JLabel[6];
 	public static JLabel[] ed_player_delta=new JLabel[6];
@@ -111,11 +112,12 @@ public class game_frame {
 		frame.getContentPane().setLayout(null);
 
 
-		JPanel ending_panel = new JPanel();
+		ending_panel = new JPanel();
 		ending_panel.setBounds(128, 80, 778, 560);
 		frame.getContentPane().add(ending_panel);
 		ending_panel.setLayout(null);
-		ending_panel.show();
+		ending_panel.setVisible(false);
+		//ending_panel.show();
 		
 		ed_nuts_label = new JLabel("\u540C \u82B1 Dark \u987A");
 		ed_nuts_label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -266,11 +268,7 @@ public class game_frame {
 		ending_panel.add(ed_player_detail[5]);
 		
 		continue_button = new JButton("Continue");
-		continue_button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
+		continue_button.addActionListener(e -> ending_panel.setVisible(false));
 		continue_button.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
 		continue_button.setBounds(309, 510, 160, 40);
 		ending_panel.add(continue_button);
@@ -523,5 +521,19 @@ public class game_frame {
     public static void updateMainPot(int mainPot){
         String string = Localization.pot_string + " " + String.valueOf(mainPot);
         pot_label.setText(string);
+    }
+
+    public static void resetEd(){
+        for(int i = 0;i < 6;i++){
+            ed_player_detail[i].setText("");
+            ed_player_name[i].setText("");
+            ed_player_delta[i].setText("");
+            ed_player_money[i].setText("");
+        }
+        ed_nuts_detail_label.setText("");
+        ed_board_detail_label.setText("");
+        ed_board_label.setText("");
+        ed_nuts_label.setText("");
+        pot_label.setText(Localization.pot_string);
     }
 }

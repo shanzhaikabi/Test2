@@ -194,6 +194,7 @@ public class StringToAction {
         if (!arr[0].equals("edPlayerMessage")) return null;
         Player player = new Player(Integer.parseInt(arr[1]),Integer.parseInt(arr[2]),arr[3]);
         player.setMoney(Integer.parseInt(arr[4]));
+        if (arr.length <= 5) return player;
         if (Integer.parseInt(arr[5]) > 0){
             player.setHand(0,new Card(Integer.parseInt(arr[5])));
             player.setHand(1,new Card(Integer.parseInt(arr[6])));
@@ -210,13 +211,13 @@ public class StringToAction {
 
     public static String getWinner(String string){
         String[] arr = string.split("\\s+");
-        if (!arr[0].equals("getWinner")) return null;
+        if (!arr[0].equals("winner")) return null;
         return arr[1];
     }
 
     public static String getWinnerDetail(String string){
         String[] arr = string.split("\\s+");
-        if (!arr[0].equals("getWinner")) return null;
+        if (!arr[0].equals("winner")) return null;
         if (arr.length <= 2) return null;
         if (arr[2].equals("fold")) return "fold";
         String cardString = "";

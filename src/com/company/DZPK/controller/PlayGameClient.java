@@ -111,19 +111,36 @@ public class PlayGameClient {
         Player player = StringToAction.getEdPlayerId(string);
         game_frame.ed_player_name[player.getId()].setText(player.getNickname());
         game_frame.ed_player_money[player.getId()].setText(String.valueOf(player.getMoney()));
+        game_frame.setPlayerLabel(Localization.money_string + " " + String.valueOf(player.getMoney()),player.getId());
         if (player.getHand() != null && player.getHand()[0] != null){
             String str = player.getHand()[0].toString() + " " + player.getHand()[1].toString();
-            game_frame.ed_board_detail_label.setText(str);
+            game_frame.ed_player_detail[player.getId()].setText(str);
+        }
+        else {
+            game_frame.ed_player_detail[player.getId()].setText(Localization.fold_string);
         }
         if (player.getMoneyRaised() > 0) {
             game_frame.ed_player_delta[player.getId()].setText("+" + String.valueOf(player.getMoneyRaised()));
         }
+        else{
+            game_frame.ed_player_delta[player.getId()].setText("");
+        }
     }
 
     public static void setWinnerType(String string){
+        game_frame.resetEd();
         int type = StringToAction.getWinnerType(string);
         switch (type){
-            case 0:game_frame.ed_nuts_label.setText(Localization.fold_winner_string);break;
+            case -1:game_frame.ed_nuts_label.setText(Localization.fold_winner_string);break;
+            case 0:game_frame.ed_nuts_label.setText(Localization.high_card_string);break;
+            case 1:game_frame.ed_nuts_label.setText(Localization.one_pair_string);break;
+            case 2:game_frame.ed_nuts_label.setText(Localization.two_pair_string);break;
+            case 3:game_frame.ed_nuts_label.setText(Localization.three_of_a_kind_string);break;
+            case 4:game_frame.ed_nuts_label.setText(Localization.straight_string);break;
+            case 5:game_frame.ed_nuts_label.setText(Localization.flush_string);break;
+            case 6:game_frame.ed_nuts_label.setText(Localization.full_house_string);break;
+            case 7:game_frame.ed_nuts_label.setText(Localization.four_of_a_kind_string);break;
+            case 8:game_frame.ed_nuts_label.setText(Localization.straight_flush_string);break;
         }
     }
 
@@ -134,5 +151,6 @@ public class PlayGameClient {
         if (detail == null) game_frame.ed_nuts_detail_label.setText("");
         else if (detail.equals("fold")) game_frame.ed_nuts_detail_label.setText("");
         else game_frame.ed_nuts_detail_label.setText(detail);
+        game_frame.ending_panel.setVisible(true);
     }
 }
