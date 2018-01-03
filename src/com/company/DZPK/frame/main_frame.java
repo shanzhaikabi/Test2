@@ -120,32 +120,25 @@ public class main_frame {
 		frame.getContentPane().add(game_combo_3);
 		
 		yuyue_button_1 = new JButton("\u9884\u7EA6");
-		yuyue_button_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-                YuyueClient.YuyueToServer(userData,0);
-			}
-		});
+		yuyue_button_1.addActionListener(e -> {
+            YuyueClient.YuyueToServer(userData,1);
+        });
 		yuyue_button_1.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
 		yuyue_button_1.setBounds(360, 130, 80, 40);
 		frame.getContentPane().add(yuyue_button_1);
 		
 		yuyue_button_2 = new JButton("\u9884\u7EA6");
-		yuyue_button_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
+		yuyue_button_2.addActionListener(e -> {
+            YuyueClient.YuyueToServer(userData,2);
+        });
 		yuyue_button_2.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
 		yuyue_button_2.setBounds(360, 180, 80, 40);
 		frame.getContentPane().add(yuyue_button_2);
 		
 		yuyue_button_3 = new JButton("\u9884\u7EA6");
-		yuyue_button_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
+		yuyue_button_3.addActionListener(e -> {
+            YuyueClient.YuyueToServer(userData,3);
+        });
 		yuyue_button_3.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
 		yuyue_button_3.setBounds(360, 230, 80, 40);
 		frame.getContentPane().add(yuyue_button_3);

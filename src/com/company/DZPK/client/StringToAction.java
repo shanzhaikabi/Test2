@@ -2,6 +2,7 @@ package com.company.DZPK.client;
 
 import com.company.DZPK.controller.GetUserDataClient;
 import com.company.DZPK.controller.LoginClient;
+import com.company.DZPK.controller.YuyueClient;
 import com.company.DZPK.model.UserData;
 
 /**
@@ -19,6 +20,9 @@ public class StringToAction {
                 break;
             case "returnRegister":
                 LoginClient.CheckRegisterFromServer(string);
+                break;
+            case "returnYuyue":
+                YuyueClient.YuyueResultFromServer(string);
                 break;
             case "start":
                 System.out.println("game start");
@@ -48,5 +52,11 @@ public class StringToAction {
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("returnYuyue")) return false;
         return Boolean.parseBoolean(arr[1]);
+    }
+
+    public static int GetYuyueResultSlotByString(String string) {
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("returnYuyue")) return -1;
+        return Integer.parseInt(arr[2]);
     }
 }

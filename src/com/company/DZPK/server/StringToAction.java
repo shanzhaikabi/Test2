@@ -53,4 +53,10 @@ public class StringToAction {
         if (!arr[0].equals("actionYuyue")) return null;
         return new UserData(Integer.parseInt(arr[1]),arr[2],arr[3],arr[4],Integer.parseInt(arr[5]),Integer.parseInt(arr[6]));
     }
+
+    public static int ActionYuyueSlot(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("actionYuyue")) return -1;
+        return Integer.parseInt(arr[7]);
+    }
 }

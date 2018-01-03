@@ -7,15 +7,19 @@ import com.company.DZPK.server.*;
  * Created by Shanzhai on 2018/1/2.
  */
 public class YuyueServer {
-    public static void Yuyue(UserData userData){
+    public static boolean Yuyue(UserData userData){
+        for(UserData userData1:Server.userDataQueue){
+            if (userData.getId() == userData.getId()) return false;
+        }
         Server.userDataQueue.add(userData);
-        System.out.println("yuyue success " + userData.getId() + "size:" + Server.userDataQueue.size());
+        return true;
     }
 
     public static String YuyueToClient(String string){
         UserData userData = StringToAction.ActionYuyue(string);
-        Yuyue(userData);
-        String returnString = ActionToString.ReturnYuyue(false);
+        int slot = StringToAction.ActionYuyueSlot(string);
+        boolean yuyue = Yuyue(userData);
+        String returnString = ActionToString.ReturnYuyue(yuyue,slot);
         return returnString;
     }
 }

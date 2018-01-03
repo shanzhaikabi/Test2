@@ -19,7 +19,7 @@ public class ActionToString {
                 + userData.getNickname() + " " + String.valueOf(userData.getPoint()) + " " + String.valueOf(userData.getRank());
     }
 
-    public static String ReturnYuyue(boolean yuyue){
-        return "returnYuyue " + String.valueOf(yuyue);
+    public static String ReturnYuyue(boolean yuyue,int slot){
+        return "returnYuyue " + String.valueOf(yuyue) + " " + String.valueOf(slot);
     }
 }
