@@ -26,6 +26,6 @@ public class Localization {
     public static String raise_low_string="\u8DDF\u6CE8\u91D1\u989D\u4E0D\u8DB3\uFF01";
     public static String pot_string="\u5E95\u6C60\uFF1A";
     public static String enable_string="\u4f60\u7684\u56de\u5408";
-    public static String raise_to_string = "\u4f60\u7684\u56de\u5408";
+    public static String raise_to_string = "\u52a0\u6ce8\u81f3";
     public static String money_string = "\u8d44\u91d1";
 }

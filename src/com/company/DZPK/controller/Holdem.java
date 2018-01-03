@@ -325,11 +325,11 @@ public class Holdem {
     }
 
     public void updatePlayerLabel(int money,int playerId,String str){
-        sendMessage("updatePlayerLabel " + Localization.money_string + " " + money + " " + playerId + " " + str);
+        sendMessage("updatePlayerLabel " + playerId + " " + Localization.money_string + " " + money + " " + str);
     }
 
     public void updatePlayerLabel(int money1,int playerId,String str,int money){
-        sendMessage("updatePlayerLabel "+ Localization.money_string + " " + money1 + " " + playerId + " " + str + " " + money);
+        sendMessage("updatePlayerLabel " + playerId + " " + Localization.money_string + " " + money1 + " " + str + " " + money);
     }
 
     public void sendErrorMessage(int id,String string){
