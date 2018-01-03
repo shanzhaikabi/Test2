@@ -10,8 +10,8 @@ public class PlayGameServer {
         int playerId = StringToAction.PlayerReady(string);
         int tableId = StringToAction.PlayerReadyTable(string);
         for(Server.GameThread gameThread : Server.tableList){
-            if (gameThread.table.GetTableId() == tableId){
-                Server.tableList.get(tableId).table.input("id " + String.valueOf(playerId) + " ready");
+            if (gameThread.table.getTableId() == tableId){
+                Server.tableList.get(tableId).input("ready",playerId);
                 return "success";
             }
         }
