@@ -45,6 +45,8 @@ public class PlayGameClient {
         String str = StringToAction.resetGameflow(string);
         if (str == null) str = "";
         game_frame.resetGameflow(str);
+        game_frame.board = new Card[5];
+        game_frame.board_label.setText(Localization.board_string);
         disableButton();
     }
 

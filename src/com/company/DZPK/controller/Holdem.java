@@ -56,7 +56,8 @@ public class Holdem {
         }
     }
     public int bet(List<Player> playerList,int i,int mainpot,int beginPlayer){
-        int betPlayer = (i + beginPlayer) % MAXPLAYER, j = 1, moneyToCall = 1600;
+        int betPlayer = (i + beginPlayer) % MAXPLAYER, j = 1, moneyToCall = 0;
+        if(beginPlayer == 2)moneyToCall = 1600;
         String str = "";
         boolean raise = false;
         while (j <= MAXPLAYER) {
@@ -141,6 +142,9 @@ public class Holdem {
             sendSuccessMessage(curPlayer.getId());
             j++;
         }
+        for(Player player : playerList){
+            player.setMoneyRaised(0);
+        }
         return mainpot;
     }
     public int gameOver(List<Player> playerList){
@@ -167,8 +171,9 @@ public class Holdem {
         sendMessage("winner " + temp.getNickname() + " fold");
     }
     public void play(){
-        sendMessage("resetGameflow");
+        //sendMessage("resetGameflow");
         for(int i = 0;i < MAXPLAYER;i++) {//第i个为庄家
+            sendMessage("resetGameflow");
             String str = "============== Round " + String.valueOf(i + 1) + " ==============";
             sendMessage("updateGameflow " + str);
             List<Card> cards = new ArrayList<Card>();
@@ -269,10 +274,11 @@ public class Holdem {
                     else sendPlayerMessageWhenGameOver(player,-1);
                 }
                 Compare compare = new Compare(players.size(),players,publicCards);
+                compare.get_winner(players.size());
                 sendMessage("winnerType " + String.valueOf(compare.nuts_num));
                 int winnerNumber = compare.winner_num;
+                System.out.println(winnerNumber + " " + compare.winner_id.size());
                 int prize = mainpot / winnerNumber;
-                compare.get_winner(players.size());
                 for(int Id : compare.winner_id){
                     Player player = playerList.get(Id);
                     player.setMoney(player.getMoney() + prize);
@@ -296,6 +302,7 @@ public class Holdem {
                 }
             }
         }
+        send_player_message_when_match_over();
     }
     //给桌上的每个玩家发送消息
     public void sendMessage(String message){
@@ -455,7 +462,9 @@ public class Holdem {
         });
         for(int i = 0;i < playerList.size();i++){
             Player player = playerList.get(i);
-            string += player.getNickname() + " " + player.getMoney() + " " + DAOFactory.getUserDataDAO().GetById(player.getId()).getPoint() + " ";
+            string += player.getNickname() + " " +
+                    player.getMoney() + " " +
+                    DAOFactory.getUserDataDAO().GetById(player.getPlayerId()).getPoint() + " ";
             string += String.valueOf((player.getMoney() - 200000) / 10000) + " ";
         }
         sendMessage(string);
