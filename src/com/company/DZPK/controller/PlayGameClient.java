@@ -1,8 +1,11 @@
 package com.company.DZPK.controller;
 
 import com.company.DZPK.client.*;
+import com.company.DZPK.client.ActionToString;
+import com.company.DZPK.client.StringToAction;
 import com.company.DZPK.frame.game_frame;
 import com.company.DZPK.frame.main_frame;
+import com.company.DZPK.server.*;
 
 /**
  * Created by Shanzhai on 2018/1/3.
@@ -28,5 +31,33 @@ public class PlayGameClient {
         int id = StringToAction.GetCardSingleId(string);
         int place = StringToAction.GetCardSinglePlace(string);
         game_frame.addCard(id,place);
+    }
+
+    public static void updateGameflow(String string){
+        String str = StringToAction.updateGameflow(string);
+        game_frame.updateGameflow(str);
+    }
+
+    public static void resetGameflow(String string){
+        String str = StringToAction.resetGameflow(string);
+        if (str == null) str = "";
+        game_frame.resetGameflow(str);
+    }
+
+    public static void updatePlayerLabel(String string){
+        int id = StringToAction.updatePlayerLabelId(string);
+        String str = StringToAction.updatePlayerLabel(string);
+        game_frame.setPlayerLabel(str,id);
+    }
+
+    public static void updatePlayerNickname(String string){
+        int id = StringToAction.updatePlayerNicknameId(string);
+        String str = StringToAction.updatePlayerNickname(string);
+        game_frame.setPlayerNameLabel(str,id);
+    }
+
+    public static void updateMainPot(String string){
+        int mainPot = StringToAction.updateMainPot(string);
+        game_frame.updateMainPot(mainPot);
     }
 }

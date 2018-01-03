@@ -523,4 +523,20 @@ public class game_frame {
 	        updateBoard();
         }
     }
+
+    public static void updateGameflow(String string){
+        String text = gameflow_textarea.getText();
+        text += string + "\r\n";
+        gameflow_textarea.setText(text);
+    }
+
+    public static void resetGameflow(String string){
+        String text = string;
+        gameflow_textarea.setText(text);
+    }
+
+    public static void updateMainPot(int mainPot){
+        String string = pot_string + " " + String.valueOf(mainPot);
+        pot_label.setText(string);
+    }
 }

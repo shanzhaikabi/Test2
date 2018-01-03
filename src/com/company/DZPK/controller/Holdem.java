@@ -1,15 +1,13 @@
 package com.company.DZPK.controller;
 
+import com.company.DZPK.frame.game_frame;
 import com.company.DZPK.model.UserData;
 import com.company.DZPK.server.*;
 
 import java.io.*;
 import java.net.Socket;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Vector;
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 
@@ -24,7 +22,15 @@ public class Holdem {
     private List<Player> playerList = new ArrayList<Player>();
     public OutputStream outputStream = null;
     private PrintWriter pw = null;
-    public Holdem(Socket x){socket = x;}
+    private Queue<String> stringQueue = new ArrayDeque<String>();
+    public Holdem(Socket x)
+    {
+        socket = x;
+    }
+
+    public void input(String string){
+        stringQueue.add(string);
+    }
 
     public int getTableId() {
         return tableId;
@@ -43,7 +49,10 @@ public class Holdem {
         }
     }
     public void play(){
+        sendMessage("resetGameflow");
         for(int i = 0;i < MAXPLAYER;i++) {//第i个为庄家
+            String str = "============== Round " + String.valueOf(i + 1) + " ==============";
+            sendMessage("updateGameflow " + str);
             List<Card> cards = new ArrayList<Card>();
             Vector<Integer> sidepot = new Vector<Integer>();
             int mainpot = 0;
@@ -61,17 +70,27 @@ public class Holdem {
                     tmp++;
                 }
             }
+            int xmzp = (i + 1) % MAXPLAYER;
+            int dmzp = (i + 2) % MAXPLAYER;
+            str = playerList.get(xmzp).getNickname() + " " + game_frame.small_blind_string + " " + 800 + "\r\n";
+            sendMessage("updateGameflow " + str);
+            str = playerList.get(dmzp).getNickname() + " " + game_frame.big_blind_string + " " + 1600 + "\r\n";
+            sendMessage("updateGameflow " + str);
+            sendMessage("updatePlayerLabel " + playerList.get(xmzp).getId() + " " + game_frame.small_blind_string + " " + 800);
+            sendMessage("updatePlayerLabel " + playerList.get(dmzp).getId() + " " + game_frame.big_blind_string + " " + 1600);
             //TODO:告知小盲大盲,PlayerID为(i + 1) % MAXPLAYER和(i + 2) % MAXPLAYER
             Player temp = playerList.get((i + 1) % MAXPLAYER);
             temp.setMoney(temp.getMoney() - 800);
             temp = playerList.get((i + 2) % MAXPLAYER);
             temp.setMoney(temp.getMoney() - 1600);
             mainpot = 2400;
+            sendMessage("updateMainPot " + String.valueOf(mainpot));
             //翻牌前
             int j = 0;
             while(j < MAXPLAYER){
                 //TODO:获取操作类型
                 int cur = (i + j + 2) % MAXPLAYER;
+                sendMessageToPlayer("yourTurn",playerList.get(cur).getPlayerId());
 
             }
         }
@@ -97,31 +116,51 @@ public class Holdem {
         }
     }
 
+    public String read(int player){
+        String string = stringQueue.poll();
+        while(string == null || string.length() == 0){
+            string = stringQueue.poll();
+            try {
+                sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return string;
+    }
+
     public void load(){
+        InputStream is = null;
+        InputStreamReader isr = null;
+        BufferedReader br = null;
+        OutputStream os = null;
+        PrintWriter pw = null;
         try {
             is = socket.getInputStream();
-            isr = new InputStreamReader(is,"utf-8");
+            isr = new InputStreamReader(is,"UTF-8");
             br = new BufferedReader(isr);
-            outputStream = socket.getOutputStream();
-            pw = new PrintWriter(outputStream);
-            //System.out.println("set player list");
+            os = socket.getOutputStream();
+            pw = new PrintWriter(os);
+            System.out.println("[Holdem]Set Player List Start");
             setPlayerList();
+            System.out.println("[Holdem]Set Player List Complete");
             sendMessage("start " + tableId);
             sleep(100);
+            System.out.println("[Holdem]Waiting for players");
             for(int i = 0;i < playerList.size();i++){
-                String string = br.readLine();
+                String string = stringQueue.poll();
                 while(string == null || string.length() == 0){
-                    string = br.readLine();
+                    string = stringQueue.poll();
                     sleep(50);
                 }
                 String arr[] = string.split("\\s+");
-                System.out.println("server:" + string + string.length());
-                if (arr[0] == "id"){
+                System.out.println("[Holdem]player" + String.valueOf(i + 1) + "'s message: " + string);
+                if (arr[0].equals("id")){
                     int playerId = Integer.valueOf(arr[1]);
                     sendPlayerMessageToPlayer(playerId);
                 }
             }
-            System.out.println("Play!!!");
+            System.out.println("[Holdem]Play");
             play();
         } catch (IOException e) {
             e.printStackTrace();
@@ -130,5 +169,6 @@ public class Holdem {
         }
 
     }
+
     public Socket getSocket(){return socket;}
 }

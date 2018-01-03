@@ -34,6 +34,21 @@ public class StringToAction {
             case "getCardSingle":
                 PlayGameClient.getCardSingle(string);
                 break;
+            case "updateGameflow":
+                PlayGameClient.updateGameflow(string);
+                break;
+            case "resetGameflow":
+                PlayGameClient.resetGameflow(string);
+                break;
+            case "updatePlayerLabel":
+                PlayGameClient.updatePlayerLabel(string);
+                break;
+            case "updatePlayerNickname":
+                PlayGameClient.updatePlayerNickname(string);
+                break;
+            case "updateMainPot":
+                PlayGameClient.updateMainPot(string);
+                break;
         }
     }
 
@@ -96,5 +111,47 @@ public class StringToAction {
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("getCardSingle")) return -1;
         return Integer.parseInt(arr[2]);
+    }
+
+    public static String updateGameflow(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("updateGameflow")) return null;
+        return string.substring(arr[0].length());
+    }
+
+    public static String resetGameflow(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("resetGameflow")) return null;
+        return string.substring(arr[0].length());
+    }
+
+    public static int updatePlayerLabelId(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("updatePlayerLabel")) return -1;
+        return Integer.parseInt(arr[1]);
+    }
+
+    public static String updatePlayerLabel(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("updatePlayerLabel")) return null;
+        return string.substring(arr[0].length() + arr[1].length() + 1);
+    }
+
+    public static int updatePlayerNicknameId(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("updatePlayerNickname")) return -1;
+        return Integer.parseInt(arr[1]);
+    }
+
+    public static String updatePlayerNickname(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("updatePlayerNickname")) return null;
+        return string.substring(arr[0].length() + arr[1].length() + 1);
+    }
+
+    public static int updateMainPot(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("updateMainPot")) return -1;
+        return Integer.parseInt(arr[1]);
     }
 }
