@@ -13,6 +13,10 @@ import static java.lang.Thread.sleep;
 
 public class Holdem {
     private final int MAXPLAYER = 2;
+    private final int WAIT = 0;
+    private final int FOLDED = 1;
+    private final int PLAYING = 2;
+    private final int ALLIN = 3;
     private int tableId;
     private Random random = new Random(System.currentTimeMillis());
     private Socket socket = null;
@@ -60,9 +64,10 @@ public class Holdem {
                 cards.add(new Card(j));
             int tmp = 0;
             for (int j = 0; j < MAXPLAYER; j++) {
+                int curPlayer = (i + j) % MAXPLAYER;
+                playerList.get(curPlayer).setStatus(PLAYING);
                 for (int k = 0; k < 2; k++) {
                     int t = random.nextInt(52 - tmp);
-                    int curPlayer = (i + j) % MAXPLAYER;
                     Card card = cards.get(t);
                     playerList.get(curPlayer).setHand(k, card);
                     cards.remove(t);
@@ -86,12 +91,52 @@ public class Holdem {
             mainpot = 2400;
             sendMessage("updateMainPot " + String.valueOf(mainpot));
             //翻牌前
-            int j = 0;
+            int betPlayer = (i + 3) % MAXPLAYER,j = 0,moneyToCall = 1600,sidepotID = -1;
+            //TODO:向玩家发送信息
             while(j < MAXPLAYER){
-                //TODO:获取操作类型
-                int cur = (i + j + 2) % MAXPLAYER;
-                sendMessageToPlayer("yourTurn",playerList.get(cur).getPlayerId());
-
+                int cur = (betPlayer + j + 2) % MAXPLAYER;
+                Player curPlayer = playerList.get(cur);
+                if(curPlayer.getStatus() == FOLDED){
+                    j++;continue;
+                }
+                sendMessageToPlayer("yourTurn",curPlayer.getPlayerId());
+                String act = read(cur);
+                int actionType = getActionType(act),tempMoney = 0;
+                switch(actionType){
+                    case 0:
+                        curPlayer.setStatus(FOLDED);
+                        break;
+                    case 1:
+                        tempMoney = moneyToCall - curPlayer.getMoneyRaised();
+                        curPlayer.setMoney(curPlayer.getMoney() - tempMoney);
+                        if(sidepotID == -1)mainpot += tempMoney;
+                        else {
+                            int moneyInSidepot = sidepot.get(sidepotID);
+                            sidepot.set(sidepotID,moneyInSidepot + tempMoney);
+                        }
+                        //如果raiseMoney为0则状态显示为check
+                        //否则显示为Call...元
+                        break;
+                    case 2:
+                        tempMoney = getActionMoney(act);
+                        moneyToCall += tempMoney;
+                        curPlayer.setMoney(curPlayer.getMoney() - moneyToCall);
+                        j = 1;betPlayer = curPlayer.getId() - 1;
+                        break;
+                    case 3:
+                        tempMoney = curPlayer.getMoney();
+                        if(moneyToCall < tempMoney){
+                            moneyToCall = curPlayer.getMoney();
+                            curPlayer.setMoney(0);
+                            j = 1;betPlayer = curPlayer.getId() - 1;
+                        }
+                        else{
+                            //not finished
+                            sidepot.add(tempMoney);
+                        }
+                        break;
+                }
+                j++;
             }
         }
     }
@@ -116,7 +161,7 @@ public class Holdem {
         }
     }
 
-    public String read(int player){
+    public String read(int id){
         String string = stringQueue.poll();
         while(string == null || string.length() == 0){
             string = stringQueue.poll();

@@ -11,6 +11,7 @@ public class Player {
     private int id;
     private int playerId;
     private int money;
+    private int moneyRaised;
     private int status;//当前状态 0:未开始 1:弃牌 2:看牌或跟加注 3:Allin
 
     public Player(int id,int playerId,String nickname){
@@ -103,5 +104,13 @@ public class Player {
         this.hand = new Card[2];
         this.money = money;
         this.status = 0;
+    }
+
+    public int getMoneyRaised() {
+        return moneyRaised;
+    }
+
+    public void setMoneyRaised(int moneyRaised) {
+        this.moneyRaised = moneyRaised;
     }
 }
