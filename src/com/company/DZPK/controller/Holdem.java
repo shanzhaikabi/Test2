@@ -6,7 +6,10 @@ import com.company.DZPK.server.*;
 import java.io.*;
 import java.net.Socket;
 import java.sql.Time;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
 import static java.lang.Thread.sleep;
 
@@ -21,11 +24,7 @@ public class Holdem {
     private List<Player> playerList = new ArrayList<Player>();
     public OutputStream outputStream = null;
     private PrintWriter pw = null;
-    private Queue<String> stringQueue = new ArrayDeque<String>();
-    public Holdem(Socket x)
-    {
-        socket = x;
-    }
+    public Holdem(Socket x){socket = x;}
 
     public int getTableId() {
         return tableId;
@@ -33,10 +32,6 @@ public class Holdem {
 
     public void setTableId(int tableId) {
         this.tableId = tableId;
-    }
-
-    public void input(String string){
-        stringQueue.add(string);
     }
 
     public void setPlayerList(){
@@ -50,6 +45,8 @@ public class Holdem {
     public void play(){
         for(int i = 0;i < MAXPLAYER;i++) {//第i个为庄家
             List<Card> cards = new ArrayList<Card>();
+            Vector<Integer> sidepot = new Vector<Integer>();
+            int mainpot = 0;
             for (int j = 0; j < 52; j++)
                 cards.add(new Card(j));
             int tmp = 0;
@@ -65,9 +62,17 @@ public class Holdem {
                 }
             }
             //TODO:告知小盲大盲,PlayerID为(i + 1) % MAXPLAYER和(i + 2) % MAXPLAYER
+            Player temp = playerList.get((i + 1) % MAXPLAYER);
+            temp.setMoney(temp.getMoney() - 800);
+            temp = playerList.get((i + 2) % MAXPLAYER);
+            temp.setMoney(temp.getMoney() - 1600);
+            mainpot = 2400;
             //翻牌前
-            for (int j = 0; j < MAXPLAYER; j++) {
+            int j = 0;
+            while(j < MAXPLAYER){
                 //TODO:获取操作类型
+                int cur = (i + j + 2) % MAXPLAYER;
+
             }
         }
     }
@@ -93,37 +98,30 @@ public class Holdem {
     }
 
     public void load(){
-        InputStream is = null;
-        InputStreamReader isr = null;
-        BufferedReader br = null;
-        OutputStream os = null;
-        PrintWriter pw = null;
         try {
             is = socket.getInputStream();
-            isr = new InputStreamReader(is,"UTF-8");
+            isr = new InputStreamReader(is,"utf-8");
             br = new BufferedReader(isr);
-            os = socket.getOutputStream();
-            pw = new PrintWriter(os);
-            System.out.println("[Holdem]Set Player List Start");
+            outputStream = socket.getOutputStream();
+            pw = new PrintWriter(outputStream);
+            //System.out.println("set player list");
             setPlayerList();
-            System.out.println("[Holdem]Set Player List Complete");
             sendMessage("start " + tableId);
             sleep(100);
-            System.out.println("[Holdem]Waiting for players");
             for(int i = 0;i < playerList.size();i++){
-                String string = stringQueue.poll();
+                String string = br.readLine();
                 while(string == null || string.length() == 0){
-                    string = stringQueue.poll();
+                    string = br.readLine();
                     sleep(50);
                 }
                 String arr[] = string.split("\\s+");
-                System.out.println("[Holdem]player" + String.valueOf(i + 1) + "'s message: " + string);
-                if (arr[0].equals("id")){
+                System.out.println("server:" + string + string.length());
+                if (arr[0] == "id"){
                     int playerId = Integer.valueOf(arr[1]);
                     sendPlayerMessageToPlayer(playerId);
                 }
             }
-            System.out.println("[Holdem]Play");
+            System.out.println("Play!!!");
             play();
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,8 +130,5 @@ public class Holdem {
         }
 
     }
-
-    public Socket getSocket(){
-        return socket;
-    }
+    public Socket getSocket(){return socket;}
 }
