@@ -230,6 +230,17 @@ public class Holdem {
             cards.remove(t);
             updateGameFlow(cardString);
             mainpot = bet(playerList,i,mainpot,1);
+            if((result = gameOver(playerList)) != -1){//弃牌胜利
+
+            }else{
+                List<Player> players = new ArrayList<Player>();
+                for(Player player : playerList){
+                    if(player.getStatus() == PLAYING || player.getStatus() == ALLIN)players.add(player);
+                }
+                Compare compare = new Compare(players.size(),players,publicCards);
+                compare.get_winner(players.size());
+                //TODO:显示赢家
+            }
         }
     }
     //给桌上的每个玩家发送消息
