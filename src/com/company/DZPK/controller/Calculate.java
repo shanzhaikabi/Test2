@@ -20,7 +20,7 @@ public class Calculate{
             ans[i]=a[i];
         }
     }
-    public void getans(){
+    public void getans(){/*控制台测试程序读入七张牌的点数和花色*/
         System.out.println("INPUT");
         Scanner sc = new Scanner(System.in);
         for(int i = 0;i < 7;++i) {
@@ -32,7 +32,7 @@ public class Calculate{
             ans[i]=new Card(i+2,1);*/
         return;
     }
-    public Card search_num(int num)
+    public Card search_num(int num)/*返回7张牌中指定点数的一张牌，仅做单张搜索*/
     {
         for(int i=0;i<7;i++)
         {
@@ -43,7 +43,7 @@ public class Calculate{
         }
         return new Card(1,1);
     }
-    public void test(){
+    public void test(){/*控制台测试程序输出*/
         int p = getPX();
         if (p == 77){System.out.println("tong_hua_shun");
             nuts_id=8;}
@@ -68,7 +68,7 @@ public class Calculate{
         }
         System.out.println();*/
     }
-    public int getPX(){
+    public int getPX(){/*依次判定各花色*/
         if (tonghuashun()) return 77;
         int p = duizi();
         if (p == 1) return 1;
@@ -190,7 +190,7 @@ public class Calculate{
                 {
                     for(int j=0;i<4;j++)
                     {
-                        nuts[j]=new Card(i,j+1);
+                        nuts[j]=new Card(i,j+1);/*前四张放四条*/
                     }
                     break;
                 }
@@ -203,7 +203,7 @@ public class Calculate{
                     {
                         if(ans[j].getNum()==i)
                         {
-                          nuts[4]=ans[j];
+                          nuts[4]=ans[j];/*最后放张最大的*/
                           break;
                         }
                     }
