@@ -280,9 +280,9 @@ public class Holdem {
                 }
                 if (winnerNumber == 1){
                     Player player = playerList.get(compare.winner_id.get(0));
-                    String string = "winner " + player.getNickname();
+                    String string = "winner " + player.getNickname() + " ";
                     for(int j = 0;j < 5;j++){
-                        string += compare.playernuts[player.getId()][j].toString() + " ";
+                        string += compare.playernuts[player.getId()][j] + " ";
                     }
                     sendMessage(string);
                 }
