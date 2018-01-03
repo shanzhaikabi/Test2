@@ -126,7 +126,7 @@ public class Server {
                 pw.flush();
                 System.out.println(str);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
+                // TODO Auto-generated catch  block
                 e.printStackTrace();
             }
         }
