@@ -28,4 +28,6 @@ public class Localization {
     public static String enable_string="\u4f60\u7684\u56de\u5408";
     public static String raise_to_string = "\u52a0\u6ce8\u81f3";
     public static String money_string = "\u8d44\u91d1";
+    public static String fold_winner_string = "\u5f03\u724c\u80dc\u5229";
+    public static String multiWinner = "\u591a\u4eba\u80dc\u5229";
 }

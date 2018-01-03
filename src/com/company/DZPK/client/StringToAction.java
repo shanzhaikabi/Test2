@@ -1,9 +1,6 @@
 package com.company.DZPK.client;
 
-import com.company.DZPK.controller.GetUserDataClient;
-import com.company.DZPK.controller.LoginClient;
-import com.company.DZPK.controller.PlayGameClient;
-import com.company.DZPK.controller.YuyueClient;
+import com.company.DZPK.controller.*;
 import com.company.DZPK.model.UserData;
 
 /**
@@ -57,6 +54,15 @@ public class StringToAction {
                 break;
             case "actionFailed":
                 PlayGameClient.setError(string);
+                break;
+            case "edPlayerMessage":
+                PlayGameClient.setEdPlayer(string);
+                break;
+            case "winnerType":
+                PlayGameClient.setWinnerType(string);
+                break;
+            case "winner":
+                PlayGameClient.setWinner(string);
                 break;
         }
     }
@@ -181,5 +187,42 @@ public class StringToAction {
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("actionFailed")) return null;
         return arr[1];
+    }
+
+    public static Player getEdPlayerId(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("edPlayerMessage")) return null;
+        Player player = new Player(Integer.parseInt(arr[1]),Integer.parseInt(arr[2]),arr[3]);
+        player.setMoney(Integer.parseInt(arr[4]));
+        if (Integer.parseInt(arr[5]) > 0){
+            player.setHand(0,new Card(Integer.parseInt(arr[5])));
+            player.setHand(1,new Card(Integer.parseInt(arr[6])));
+        }
+        if (Integer.parseInt(arr[7]) > 0) player.setMoneyRaised(Integer.parseInt(arr[7]));
+        return player;
+    }
+
+    public static int getWinnerType(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("winnerType")) return -1;
+        return Integer.parseInt(arr[1]);
+    }
+
+    public static String getWinner(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("getWinner")) return null;
+        return arr[1];
+    }
+
+    public static String getWinnerDetail(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("getWinner")) return null;
+        if (arr.length <= 2) return null;
+        if (arr[2].equals("fold")) return "fold";
+        String cardString = "";
+        for(int i = 2;i < 7;i++){
+            cardString += new Card(Integer.parseInt(arr[i])).toString() + " ";
+        }
+        return cardString;
     }
 }

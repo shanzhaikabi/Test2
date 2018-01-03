@@ -1,5 +1,7 @@
 package com.company.DZPK.controller;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2018/1/2.
  */
@@ -18,36 +20,36 @@ public class Compare {
 
         return;
     }
-    public void init(int n,Player[] players,Card[] board)/*目前是假设传入n个player,还有桌面上的5张牌*/
+    public Compare(int n, List<Player> players, List<Card> board)/*目前是假设传入n个player,还有桌面上的5张牌*/
     {
         for (int i = 0; i < n; i++)/*初始化了所有玩家的七张牌*/
         {
-            Card[] hand = players[i].getHand();
+            Card[] hand = players.get(i).getHand();
             for (int j = 0; j < 2; j++)
             {
                 playercard[i][j] = hand[j];
             }
             for (int j = 2; j < 7; j++)
             {
-                playercard[i][j] = board[j - 2];
+                playercard[i][j] = board.get(j - 2);
             }
         }
-        for(int i=0;i<n;i++)/*1和14两种情况取最佳放入nuts*/
+        for(int i = 0;i < n;i++)/*1和14两种情况取最佳放入nuts*/
         {
             nuts_1[i] = new Calculate(playercard[i]);
             //nuts_2[i] = new Calculate_1(playercard[i]);
             if(cmp(nuts_1[i].nuts,nuts_2[i].nuts,nuts_1[i].nuts_id,nuts_2[i].nuts_id)>0)
             {
                 player_nuts_id[i]=nuts_1[i].nuts_id;
-                for(int j=0;j<5;j++)
+                for(int j = 0;j < 5;j++)
                 {
-                    playernuts[i][j]=nuts_1[i].nuts[j];
+                    playernuts[i][j] = nuts_1[i].nuts[j];
                 }
             }
             else
             {
-                player_nuts_id[i]=nuts_2[i].nuts_id;
-                for(int j=0;j<5;j++)
+                player_nuts_id[i] = nuts_2[i].nuts_id;
+                for(int j = 0;j < 5;j++)
                 {
                     playernuts[i][j]=nuts_2[i].nuts[j];
                 }
@@ -74,18 +76,18 @@ public class Compare {
     public void get_winner(int n)
     {
         int winner_tmp=0;
-        for(int i=1;i<n;i++)
+        for(int i = 1;i < n;i++)
         {
-            int ttt=cmp(playernuts[winner_tmp],playernuts[i],player_nuts_id[winner_tmp],player_nuts_id[i]);
-            if(ttt==0)
+            int ttt = cmp(playernuts[winner_tmp],playernuts[i],player_nuts_id[winner_tmp],player_nuts_id[i]);
+            if(ttt == 0)
             {
-                if(winner_num>1)winner_num=1;
-                winner_tmp=i;
-                winner_id[winner_num-1]=i;
+                if(winner_num > 1)winner_num = 1;
+                winner_tmp = i;
+                winner_id[winner_num - 1] = i;
             }
-            else if(ttt==2)
+            else if(ttt == 2)
             {
-                winner_id[(++winner_num)-1]=i;
+                winner_id[(++winner_num) - 1] = i;
             }
         }
     }

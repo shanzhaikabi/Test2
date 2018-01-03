@@ -106,4 +106,33 @@ public class PlayGameClient {
         String str = StringToAction.getError(string);
         game_frame.error_label.setText(str);
     }
+
+    public static void setEdPlayer(String string){
+        Player player = StringToAction.getEdPlayerId(string);
+        game_frame.ed_player_name[player.getId()].setText(player.getNickname());
+        game_frame.ed_player_money[player.getId()].setText(String.valueOf(player.getMoney()));
+        if (player.getHand() != null && player.getHand()[0] != null){
+            String str = player.getHand()[0].toString() + " " + player.getHand()[1].toString();
+            game_frame.ed_board_detail_label.setText(str);
+        }
+        if (player.getMoneyRaised() > 0) {
+            game_frame.ed_player_delta[player.getId()].setText("+" + String.valueOf(player.getMoneyRaised()));
+        }
+    }
+
+    public static void setWinnerType(String string){
+        int type = StringToAction.getWinnerType(string);
+        switch (type){
+            case 0:game_frame.ed_nuts_label.setText(Localization.fold_winner_string);break;
+        }
+    }
+
+    public static void setWinner(String string){
+        String winner = StringToAction.getWinner(string);
+        game_frame.ed_winner_label.setText(winner);
+        String detail = StringToAction.getWinnerDetail(string);
+        if (detail == null) game_frame.ed_nuts_detail_label.setText("");
+        else if (detail.equals("fold")) game_frame.ed_nuts_detail_label.setText("");
+        else game_frame.ed_nuts_detail_label.setText(detail);
+    }
 }

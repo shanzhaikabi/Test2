@@ -147,11 +147,16 @@ public class Holdem {
     public void calcMoney(List<Player> playerlist,int mainpot,int result){//弃牌胜利
         Player temp = playerList.get(result);
         temp.setMoney(temp.getMoney() + mainpot);
-
         for(Player player : playerlist){
+            if (player.equals(temp)){
+                sendPlayerMessageWhenGameOver(player,mainpot);
+            }
+            else sendPlayerMessageWhenGameOver(player,-1);
             player.setMoneyRaised(0);
             player.setStatus(PLAYING);
         }
+        sendMessage("winnerType 0");
+        sendMessage("winner " + temp.getNickname() + " fold");
     }
     public void play(){
         sendMessage("resetGameflow");
@@ -230,6 +235,16 @@ public class Holdem {
             cards.remove(t);
             updateGameFlow(cardString);
             mainpot = bet(playerList,i,mainpot,1);
+            if((result = gameOver(playerList)) != -1){//弃牌胜利
+                calcMoney(playerList,mainpot,result);
+            }else{
+                List<Player> players = new ArrayList<Player>();
+                for(Player player : playerList){
+                    if(player.getStatus() == PLAYING || player.getStatus() == ALLIN)players.add(player);
+                }
+                Compare compare = new Compare(players.size(),players,publicCards);
+                compare.get_winner(players.size());
+            }
         }
     }
     //给桌上的每个玩家发送消息
@@ -362,6 +377,13 @@ public class Holdem {
 
     public void sendSuccessMessage(int id){
         sendMessageToPlayer("actionSuccess 0",playerList.get(id).getPlayerId());
+    }
+
+    public void sendPlayerMessageWhenGameOver(Player player,int delta){
+        String string = "edPlayerMessage " + String.valueOf(player.getId()) + " " + String.valueOf(player.getPlayerId()) + " " + player.getNickname() + " ";
+        string += player.getMoney() + " " + player.getHand()[0].toString() + " " + player.getHand()[1].toString() + " ";
+        string += String.valueOf(delta);
+        sendMessage(string);
     }
 
     public Socket getSocket(){return socket;}
