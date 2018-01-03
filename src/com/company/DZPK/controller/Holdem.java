@@ -54,7 +54,7 @@ public class Holdem {
                     Card card = cards.get(t);
                     playerList.get(curPlayer).setHand(k, card);
                     cards.remove(t);
-                    sendMessageToPlayer(ActionToString.ShowCardToPlayerSingle(card,0),playerList.get(curPlayer).getPlayerId());
+                    sendMessageToPlayer(ActionToString.ShowCardToPlayerSingle(card,k),playerList.get(curPlayer).getPlayerId());
                     tmp++;
                 }
             }

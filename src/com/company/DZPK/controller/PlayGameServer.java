@@ -11,7 +11,7 @@ public class PlayGameServer {
         int tableId = StringToAction.PlayerReadyTable(string);
         for(Server.GameThread gameThread : Server.tableList){
             if (gameThread.table.getTableId() == tableId){
-                Server.tableList.get(tableId).input("ready",playerId);
+                gameThread.input("ready",playerId);
                 return "success";
             }
         }
