@@ -108,13 +108,14 @@ public class Holdem {
                         break;
                     case 1://跟注
                         tempMoney = moneyToCall - curPlayer.getMoneyRaised();
+                        if(tempMoney>0);//todo:同筹码不足以加注对应raise_more_string,后面统统不执行
                         curPlayer.setMoney(curPlayer.getMoney() - tempMoney);
-                        if (tempMoney > 0){
+                        if (tempMoney > 0){//todo:跟注操作，仅做注释，下同
                             str = curPlayer.getNickname() + " " + Localization.call_string + " " + curPlayer.getMoneyRaised();
                             updateGameFlow(str);
                             updatePlayerLabel(curPlayer.getId(), Localization.call_string,curPlayer.getMoneyRaised());
                         }
-                        else{
+                        else{//todo:过牌操作
                             str = curPlayer.getNickname() + " " + "check";
                             updateGameFlow(str);
                             updatePlayerLabel(curPlayer.getId(),"check");
@@ -131,11 +132,12 @@ public class Holdem {
                         }
 
                         }*/
-                        //如果raiseMoney为0则状态显示为check
-                        //否则显示为Call...元
                         break;
                     case 2://加注
                         tempMoney = getActionMoney(act);
+                        if(tempMoney-moneyToCall>curPlayer.getMoney());//todo:筹码不足以加注aise_more_string，后面统统不执行
+                        if(tempMoney<moneyToCall);//todo:没到达跟注线（没加够）,对应less，后面不执行
+                        mainpot+=tempMoney-moneyToCall;
                         moneyToCall = tempMoney;
                         str = curPlayer.getNickname() + " " + Localization.raise_string + " " + curPlayer.getMoneyRaised();
                         updateGameFlow(str);
@@ -144,19 +146,19 @@ public class Holdem {
                         curPlayer.setMoney(curPlayer.getMoney() - moneyToCall);
                         j = 1;
                         betPlayer = curPlayer.getId() - 1;
-                        //底池和sidepot如何变化
+                        curPlayer.setMoneyRaised(moneyToCall);
                         break;
-                    case 3:
+                    case 3://all in
                         tempMoney = curPlayer.getMoney();
-                        if(moneyToCall < tempMoney){
-                            moneyToCall = curPlayer.getMoney();
-                            curPlayer.setMoney(0);
-                            j = 1;betPlayer = curPlayer.getId() - 1;
-                        }
-                        else{
+                        mainpot+=tempMoney-moneyToCall;
+                        curPlayer.setMoneyRaised(tempMoney-moneyToCall);
+                        moneyToCall = tempMoney;
+                        curPlayer.setMoney(0);
+                        j = 1;betPlayer = curPlayer.getId() - 1;
+                        /*else{
                             //not finished
                             sidepot.add(tempMoney);
-                        }
+                        }*/
                         break;
                 }
                 j++;
