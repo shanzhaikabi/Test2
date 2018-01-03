@@ -60,9 +60,10 @@ public class Holdem {
         while (j <= MAXPLAYER) {
             int cur = (betPlayer + j) % MAXPLAYER;
             Player curPlayer = playerList.get(cur);
-            if(j == MAXPLAYER){
-                if(curPlayer.getMoneyRaised() == moneyToCall)break;
-            }
+            /*if(j == MAXPLAYER){
+                if(beginPlayer != 2)
+                    if(curPlayer.getMoneyRaised() == moneyToCall)break;
+            }*/
             if (curPlayer.getStatus() == FOLDED) {
                 j++;
                 continue;
@@ -150,6 +151,7 @@ public class Holdem {
         else return -1;
     }
     public void calcMoney(List<Player> playerlist,int mainpot,int result){//弃牌胜利
+        sendMessage("winnerType -1");
         Player temp = playerList.get(result);
         temp.setMoney(temp.getMoney() + mainpot);
         for(Player player : playerlist){
@@ -160,7 +162,6 @@ public class Holdem {
             player.setMoneyRaised(0);
             player.setStatus(PLAYING);
         }
-        sendMessage("winnerType 0");
         sendMessage("winner " + temp.getNickname() + " fold");
     }
     public void play(){
@@ -205,6 +206,7 @@ public class Holdem {
             if((result = gameOver(playerList)) != -1){
                 calcMoney(playerList,mainpot,result);
                 mainpot = 0;
+                continue;
             }
             //翻三张牌
             int t = random.nextInt(cards.size());
@@ -219,7 +221,12 @@ public class Holdem {
                 cards.remove(t);
             }
             updateGameFlow(cardString);
-            mainpot = bet(playerList,i,mainpot,1);
+            mainpot = bet(playerList,i,mainpot,0);
+            if((result = gameOver(playerList)) != -1){
+                calcMoney(playerList,mainpot,result);
+                mainpot = 0;
+                continue;
+            }
             //翻一张牌
             t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
@@ -229,7 +236,12 @@ public class Holdem {
             cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
             cards.remove(t);
             updateGameFlow(cardString);
-            mainpot = bet(playerList,i,mainpot,1);
+            mainpot = bet(playerList,i,mainpot,0);
+            if((result = gameOver(playerList)) != -1){
+                calcMoney(playerList,mainpot,result);
+                mainpot = 0;
+                continue;
+            }
             //翻一张牌
             t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
@@ -239,22 +251,42 @@ public class Holdem {
             cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
             cards.remove(t);
             updateGameFlow(cardString);
-            mainpot = bet(playerList,i,mainpot,1);
+            mainpot = bet(playerList,i,mainpot,0);
             if((result = gameOver(playerList)) != -1){//弃牌胜利
                 calcMoney(playerList,mainpot,result);
             }else{
                 List<Player> players = new ArrayList<Player>();
                 for(Player player : playerList){
-                    if(player.getStatus() == PLAYING || player.getStatus() == ALLIN)players.add(player);
+                    if(player.getStatus() == PLAYING || player.getStatus() == ALLIN){
+                        players.add(player);
+                    }
+                    else sendPlayerMessageWhenGameOver(player,-1);
                 }
                 Compare compare = new Compare(players.size(),players,publicCards);
-                compare.get_winner(players.size());
+                sendMessage("winnerType " + String.valueOf(compare.nuts_num));
                 int winnerNumber = compare.winner_num;
                 int prize = mainpot / winnerNumber;
+                compare.get_winner(players.size());
                 for(int Id : compare.winner_id){
                     Player player = playerList.get(Id);
                     player.setMoney(player.getMoney() + prize);
+                    sendPlayerMessageWhenGameOver(player,prize);
+                    players.remove(player);
                     //TODO:你懂的
+                }
+                for (Player player:players){
+                    sendPlayerMessageWhenGameOver(player,-1);
+                }
+                if (winnerNumber == 1){
+                    Player player = playerList.get(compare.winner_id.get(0));
+                    String string = "winner " + player.getNickname();
+                    for(int j = 0;j < 5;j++){
+                        string += compare.playernuts[player.getId()][j].toString() + " ";
+                    }
+                    sendMessage(string);
+                }
+                else{
+                    sendMessage("winner " + Localization.multiWinner);
                 }
             }
         }
@@ -334,6 +366,7 @@ public class Holdem {
                     sendPlayerMessageToPlayer(playerId);
                 }
             }
+            sleep(100);
             System.out.println("[Holdem]Play");
             play();
         } catch (IOException e) {
@@ -393,7 +426,12 @@ public class Holdem {
 
     public void sendPlayerMessageWhenGameOver(Player player,int delta){
         String string = "edPlayerMessage " + String.valueOf(player.getId()) + " " + String.valueOf(player.getPlayerId()) + " " + player.getNickname() + " ";
-        string += player.getMoney() + " " + player.getHand()[0].toString() + " " + player.getHand()[1].toString() + " ";
+        string += player.getMoney() + " ";
+        if (player.getStatus() == FOLDED){
+            sendMessage(string);
+            return;
+        }
+        string += player.getHand()[0].getId() + " " + player.getHand()[1].getId() + " ";
         string += String.valueOf(delta);
         sendMessage(string);
     }
