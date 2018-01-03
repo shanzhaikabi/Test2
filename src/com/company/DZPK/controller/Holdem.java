@@ -57,13 +57,13 @@ public class Holdem {
     public int bet(List<Player> playerList,int i,int mainpot,int beginPlayer){
         int betPlayer = (i + beginPlayer) % MAXPLAYER, j = 1, moneyToCall = 1600;
         String str = "";
+        boolean raise = false;
         while (j <= MAXPLAYER) {
             int cur = (betPlayer + j) % MAXPLAYER;
             Player curPlayer = playerList.get(cur);
-            /*if(j == MAXPLAYER){
-                if(beginPlayer != 2)
+            if(raise && j == MAXPLAYER){
                     if(curPlayer.getMoneyRaised() == moneyToCall)break;
-            }*/
+            }
             if (curPlayer.getStatus() == FOLDED) {
                 j++;
                 continue;
@@ -119,6 +119,7 @@ public class Holdem {
                     curPlayer.setMoney(curPlayer.getMoney() - moneyToCall + curPlayer.getMoneyRaised());
                     updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(), Localization.raise_string, moneyToCall);
                     j = 0;
+                    raise = true;
                     betPlayer = curPlayer.getId();
                     curPlayer.setMoneyRaised(moneyToCall);
                     break;
