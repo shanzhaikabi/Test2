@@ -220,7 +220,7 @@ public class Calculate_1{
             }
             for(int i=14;i>=2;i--)
             {
-                if(n[i]>=2&&n[i]!=san)
+                if(n[i]>=2&&i!=san)
                 {
                     er=i;
                     break;
@@ -264,7 +264,7 @@ public class Calculate_1{
             }
             for(int i=14;i>=2;i--)
             {
-                if(n[i]>0&&n[i]!=san&&n[i]!=yi)
+                if(n[i]>0&&i!=san&&i!=yi)
                 {
                     er=i;
                     break;

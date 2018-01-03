@@ -264,7 +264,7 @@ public class Calculate{
             }
             for(int i=13;i>=1;i--)
             {
-                if(n[i]>0&&n[i]!=san)
+                if(n[i]>0&&i!=san)
                 {
                     yi=i;
                     break;
@@ -272,7 +272,7 @@ public class Calculate{
             }
             for(int i=13;i>=1;i--)
             {
-                if(n[i]>0&&n[i]!=san&&n[i]!=yi)
+                if(n[i]>0&&i!=san&&i!=yi)
                 {
                     er=i;
                     break;
