@@ -99,6 +99,7 @@ public class game_frame {
 	public static String small_blind_string="\u5C0F\u76F2\u6CE8";
 	public static String raise_high_string="\u7B79\u7801\u4E0D\u8DB3\uFF01";
 	public static String raise_low_string="\u8DDF\u6CE8\u91D1\u989D\u4E0D\u8DB3\uFF01";
+	public static String pot_string="\u5E95\u6C60\uFF1A";
 
 	/**
 	 * Launch the application.
@@ -376,7 +377,7 @@ public class game_frame {
 		hole_label.setBounds(257, 596, 334, 40);
 		frame.getContentPane().add(hole_label);
 		
-		pot_label = new JLabel("\u5E95\u6C60\uFF1A  23333");
+		pot_label = new JLabel("");
 		pot_label.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
 		pot_label.setBounds(27, 679, 203, 40);
 		frame.getContentPane().add(pot_label);
