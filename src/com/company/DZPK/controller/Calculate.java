@@ -19,6 +19,7 @@ public class Calculate{
         {
             ans[i]=a[i];
         }
+        test();
     }
     public void getans(){/*控制台测试程序读入七张牌的点数和花色*/
         System.out.println("INPUT");
@@ -45,23 +46,23 @@ public class Calculate{
     }
     public void test(){/*控制台测试程序输出*/
         int p = getPX();
-        if (p == 77){System.out.println("tong_hua_shun");
+        if (p == 77){//System.out.println("tong_hua_shun");
             nuts_id=8;}
-        if (p == 5) {System.out.println("sitiao");
+        if (p == 5) {//System.out.println("sitiao");
             nuts_id=7;}
-        if (p == 66) {System.out.println("tonghua");
+        if (p == 66) {//System.out.println("tonghua");
             nuts_id=5;}
-        if (p == 55){System.out.println("shunzi");
+        if (p == 55){//System.out.println("shunzi");
             nuts_id=4;}
-        if (p == 1) {System.out.println("hulu");
+        if (p == 1) {//System.out.println("hulu");
             nuts_id=6;}
-        if (p == 2) {System.out.println("santiao");
+        if (p == 2) {//System.out.println("santiao");
             nuts_id=3;}
-        if (p == 3) {System.out.println("laingdui");
+        if (p == 3) {//System.out.println("laingdui");
             nuts_id=2;}
-        if (p == 4) {System.out.println("yidui");
+        if (p == 4) {//System.out.println("yidui");
             nuts_id=1;}
-        if (p == 0) {System.out.println("laji");
+        if (p == 0) {//System.out.println("laji");
             nuts_id=0;}
         /*for(int i = 0;i < 7;++i){
             System.out.print(hs[ans[i].getColor()] + ans[i].getNum() + ' ');

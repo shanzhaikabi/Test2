@@ -398,5 +398,11 @@ public class Holdem {
         sendMessage(string);
     }
 
+    public void send_player_message_when_match_over()
+    {
+        String string ="match_over ";
+        sendMessage(string);
+    }
+
     public Socket getSocket(){return socket;}
 }

@@ -38,7 +38,7 @@ public class Compare {
         for(int i = 0;i < n;i++)/*1和14两种情况取最佳放入nuts*/
         {
             nuts_1[i] = new Calculate(playercard[i]);
-            //nuts_2[i] = new Calculate_1(playercard[i]);
+            nuts_2[i] = new Calculate_1(playercard[i]);
             if(cmp(nuts_1[i].nuts,nuts_2[i].nuts,nuts_1[i].nuts_id,nuts_2[i].nuts_id)>0)
             {
                 player_nuts_id[i]=nuts_1[i].nuts_id;
