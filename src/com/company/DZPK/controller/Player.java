@@ -17,7 +17,7 @@ public class Player {
         this.nickname = nickname;
         this.id = id;
         this.playerId = playerId;
-        this.money = 0;
+        this.money = 200000;
         this.status = 0;
     }
 
