@@ -30,14 +30,6 @@ public class Calculate_1{
         return;
     }
     Calculate_1(){}
-    Calculate_1(Card[] a){
-        for(int i=0;i<7;i++)
-        {
-            ans[i]=a[i];
-
-            ans[i].change();
-        }
-    }
     public Card search_num(int num)
     {
         for(int i=0;i<7;i++)
