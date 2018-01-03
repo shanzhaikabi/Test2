@@ -60,9 +60,10 @@ public class Holdem {
         while (j <= MAXPLAYER) {
             int cur = (betPlayer + j) % MAXPLAYER;
             Player curPlayer = playerList.get(cur);
-            if(j == MAXPLAYER){
-                if(curPlayer.getMoneyRaised() == moneyToCall)break;
-            }
+            /*if(j == MAXPLAYER){
+                if(beginPlayer != 2)
+                    if(curPlayer.getMoneyRaised() == moneyToCall)break;
+            }*/
             if (curPlayer.getStatus() == FOLDED) {
                 j++;
                 continue;
@@ -220,7 +221,7 @@ public class Holdem {
                 cards.remove(t);
             }
             updateGameFlow(cardString);
-            mainpot = bet(playerList,i,mainpot,1);
+            mainpot = bet(playerList,i,mainpot,0);
             if((result = gameOver(playerList)) != -1){
                 calcMoney(playerList,mainpot,result);
                 mainpot = 0;
@@ -235,7 +236,7 @@ public class Holdem {
             cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
             cards.remove(t);
             updateGameFlow(cardString);
-            mainpot = bet(playerList,i,mainpot,1);
+            mainpot = bet(playerList,i,mainpot,0);
             if((result = gameOver(playerList)) != -1){
                 calcMoney(playerList,mainpot,result);
                 mainpot = 0;
@@ -250,7 +251,7 @@ public class Holdem {
             cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
             cards.remove(t);
             updateGameFlow(cardString);
-            mainpot = bet(playerList,i,mainpot,1);
+            mainpot = bet(playerList,i,mainpot,0);
             if((result = gameOver(playerList)) != -1){//弃牌胜利
                 calcMoney(playerList,mainpot,result);
             }else{
