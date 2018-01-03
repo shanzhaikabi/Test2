@@ -9,7 +9,7 @@ import com.company.DZPK.server.*;
 public class YuyueServer {
     public static boolean Yuyue(UserData userData){
         for(UserData userData1:Server.userDataQueue){
-            if (userData.getId() == userData.getId()) return false;
+            if (userData.getUsername().equals(userData1.getUsername())) return false;
         }
         Server.userDataQueue.add(userData);
         return true;

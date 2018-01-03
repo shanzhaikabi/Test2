@@ -56,6 +56,7 @@ public class Client {
                             System.out.println("I'm client,and I'm out.");
                             break;
                         } else { // 输出服务端回复的消息
+                            System.out.println("server:" + result);
                             StringToAction.StringToAction(result);
                         }
                 }

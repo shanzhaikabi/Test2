@@ -2,6 +2,7 @@ package com.company.DZPK.client;
 
 import com.company.DZPK.controller.GetUserDataClient;
 import com.company.DZPK.controller.LoginClient;
+import com.company.DZPK.controller.PlayGameClient;
 import com.company.DZPK.controller.YuyueClient;
 import com.company.DZPK.model.UserData;
 
@@ -25,7 +26,10 @@ public class StringToAction {
                 YuyueClient.YuyueResultFromServer(string);
                 break;
             case "start":
-                System.out.println("game start");
+                PlayGameClient.StartGame(string);
+                break;
+            case "playerStart":
+                PlayGameClient.addPlayer(string);
                 break;
         }
     }
@@ -58,5 +62,24 @@ public class StringToAction {
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("returnYuyue")) return -1;
         return Integer.parseInt(arr[2]);
+    }
+
+    public static int GetTableId(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("start")) return -1;
+        return Integer.parseInt(arr[1]);
+    }
+
+    public static int GetPlayerIdWhenStart(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("playerStart")) return -1;
+        return Integer.parseInt(arr[1]);
+    }
+
+    public static String GetPlayerNicknameWhenStart(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("playerStart")) return null;
+        if (arr.length < 3) return null;
+        return arr[2];
     }
 }

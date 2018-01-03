@@ -70,8 +70,10 @@ public class game_frame {
 	public static JButton fold_button;
 	public static JButton all_in_button;
 	public static game_frame window;
-	
-	
+	public static int tableId;
+
+	public static String wait = "\u7b49\u5f85\u4e2d";
+
 	/**
 	 * Launch the application.
 	 */
@@ -393,4 +395,68 @@ public class game_frame {
 		raise_field.setColumns(10);
 
 	}
+
+
+    public static void SetPlayerNameLabel(String string,int playerId){
+	    switch (playerId){
+        case 1:
+            player1_name_label.setText(string);
+            if(string.length() > 0)
+                player1_label.setText(game_frame.wait);
+            else player1_label.setText("");
+            break;
+        case 2:
+            player2_name_label.setText(string);
+            if(string.length() > 0)
+                player2_label.setText(game_frame.wait);
+            else player2_label.setText("");
+            break;
+        case 3:
+            player3_name_label.setText(string);
+            if(string.length() > 0)
+                player3_label.setText(game_frame.wait);
+            else player3_label.setText("");
+        case 4:
+            player4_name_label.setText(string);
+            if(string.length() > 0)
+                player4_label.setText(game_frame.wait);
+            else player4_label.setText("");
+            break;
+        case 5:
+            player5_name_label.setText(string);
+            if(string.length() > 0)
+                player5_label.setText(game_frame.wait);
+            else player5_label.setText("");
+            break;
+        case 6:
+            player6_name_label.setText(string);
+            if(string.length() > 0)
+                player6_label.setText(game_frame.wait);
+            else player6_label.setText("");
+            break;
+        }
+	}
+
+	public static void SetPlayerLabel(String string,int playerId){
+        switch (playerId){
+            case 1:
+                player1_label.setText(string);
+                break;
+            case 2:
+                player2_label.setText(string);
+                break;
+            case 3:
+                player3_label.setText(string);
+                break;
+            case 4:
+                player4_label.setText(string);
+                break;
+            case 5:
+                player5_label.setText(string);
+                break;
+            case 6:
+                player6_label.setText(string);
+                break;
+        }
+    }
 }

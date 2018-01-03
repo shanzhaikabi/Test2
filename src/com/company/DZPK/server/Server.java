@@ -15,6 +15,7 @@ public class Server {
     private static List<GameThread> tableList = new ArrayList<GameThread>();
     private static int playerNumber = 0;
     private static int tableNumber = 0;
+    private static int tableCur = 0;
     public static Queue<UserData> userDataQueue = new ArrayDeque<UserData>();
     public InetAddress address = null;
 
@@ -113,7 +114,20 @@ public class Server {
             table = holdem;
             socket = table.getSocket();
         }
-
+        public void input(String string,int id){
+            OutputStream os = null;
+            PrintWriter pw = null;
+            try {
+                //获取输入流，并读取客户端信息
+                os = socket.getOutputStream();
+                pw = new PrintWriter(os);
+                pw.println("id " + String.valueOf(id) + " " + string);
+                pw.flush();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         //线程执行的操作，响应客户端的请求
         public void run() {
             InputStream is = null;
@@ -162,7 +176,9 @@ public class Server {
                         GameThread gameThread = new GameThread(holdem);
                         gameThread.start();
                         tableList.add(gameThread);
+                        gameThread.table.setTableId(tableCur);
                         tableNumber++;
+                        tableCur++;
                     }
                     sleep(100);
                 }

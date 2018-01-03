@@ -10,8 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 public class Holdem {
     private final int MAXPLAYER = 2;
+    private int tableId;
     private Random random = new Random(11);
     private Socket socket = null;
     private BufferedReader br = null;
@@ -21,6 +24,15 @@ public class Holdem {
     public OutputStream outputStream = null;
     private PrintWriter pw = null;
     public Holdem(Socket x){socket = x;}
+
+    public int getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(int tableId) {
+        this.tableId = tableId;
+    }
+
     public void setPlayerList(){
         UserData userData;
         for(int i = 0;i < MAXPLAYER;i++){
@@ -51,9 +63,18 @@ public class Holdem {
             pw = new PrintWriter(outputStream);
             //System.out.println("set player list");
             setPlayerList();
-            //sendMessage("start game");
+            sendMessage("start " + tableId);
+            sleep(100);
+            for(int i = 0;i < playerList.size();i++){
+                sendMessage("playerStart " + String.valueOf(i + 1) + " " + playerList.get(i).getNickname());
+            }
+            for(int i = playerList.size();i < 6;i++){
+                sendMessage("playerStart " + String.valueOf(i + 1) + " " + " ");
+            }
             play();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
