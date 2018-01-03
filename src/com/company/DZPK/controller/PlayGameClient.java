@@ -5,7 +5,7 @@ import com.company.DZPK.client.ActionToString;
 import com.company.DZPK.client.StringToAction;
 import com.company.DZPK.frame.game_frame;
 import com.company.DZPK.frame.main_frame;
-import com.company.DZPK.server.*;
+import com.company.DZPK.tool.Localization;
 
 /**
  * Created by Shanzhai on 2018/1/3.
@@ -67,7 +67,7 @@ public class PlayGameClient {
         game_frame.call_button.setEnabled(true);
         game_frame.all_in_button.setEnabled(true);
         game_frame.fold_button.setEnabled(true);
-        game_frame.error_label.setText(game_frame.enable_string);
+        game_frame.error_label.setText(Localization.enable_string);
     }
 
     public static void disableButton(){
@@ -96,5 +96,10 @@ public class PlayGameClient {
     public static void all_in(int money,int id,int table_id){
         String string = ActionToString.sendMessageToServer("all_in",id,0,table_id);
         Client.sendThread.setIs(string);
+    }
+
+    public static void setError(String string){
+        String str = StringToAction.getError(string);
+        game_frame.error_label.setText(string);
     }
 }

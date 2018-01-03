@@ -30,5 +30,4 @@ public class ActionToString {
     public static String sendMessageToServer(String type,int id,int money,int table_id){
         return type + " " + String.valueOf(money) + " " + String.valueOf(id) + " " + table_id;
     }
-
 }

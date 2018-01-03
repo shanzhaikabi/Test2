@@ -1,12 +1,11 @@
 package com.company.DZPK.controller;
 
-import com.company.DZPK.frame.game_frame;
 import com.company.DZPK.model.UserData;
 import com.company.DZPK.server.*;
+import com.company.DZPK.tool.Localization;
 
 import java.io.*;
 import java.net.Socket;
-import java.sql.Time;
 import java.util.*;
 
 import static java.lang.Thread.sleep;
@@ -48,7 +47,7 @@ public class Holdem {
         UserData userData;
         for(int i = 0;i < MAXPLAYER;i++){
             userData = Server.userDataQueue.poll();
-            Player player = new Player(playerList.size() + 1, userData.getId(), userData.getNickname());
+            Player player = new Player(playerList.size(), userData.getId(), userData.getNickname());
             playerList.add(player);
         }
     }
@@ -78,12 +77,12 @@ public class Holdem {
             }
             int xmzp = (i + 1) % MAXPLAYER;
             int dmzp = (i + 2) % MAXPLAYER;
-            str = playerList.get(xmzp).getNickname() + " " + game_frame.small_blind_string + " " + 800;
+            str = playerList.get(xmzp).getNickname() + " " + Localization.small_blind_string + " " + 800;
             updateGameFlow(str);
-            str = playerList.get(dmzp).getNickname() + " " + game_frame.big_blind_string + " " + 1600;
+            str = playerList.get(dmzp).getNickname() + " " + Localization.big_blind_string + " " + 1600;
             updateGameFlow(str);
-            updatePlayerLabel(xmzp,game_frame.small_blind_string,800);
-            updatePlayerLabel(dmzp,game_frame.big_blind_string,1600);
+            updatePlayerLabel(xmzp, Localization.small_blind_string,800);
+            updatePlayerLabel(dmzp, Localization.big_blind_string,1600);
             Player temp = playerList.get((i + 1) % MAXPLAYER);
             temp.setMoney(temp.getMoney() - 800);temp.setMoneyRaised(800);
             temp = playerList.get((i + 2) % MAXPLAYER);
@@ -106,17 +105,17 @@ public class Holdem {
                 switch (actionType) {
                     case 0:
                         curPlayer.setStatus(FOLDED);
-                        str = curPlayer.getNickname() + " " + game_frame.fold_string;
+                        str = curPlayer.getNickname() + " " + Localization.fold_string;
                         updateGameFlow(str);
-                        updatePlayerLabel(curPlayer.getId(),game_frame.fold_string);
+                        updatePlayerLabel(curPlayer.getId(), Localization.fold_string);
                         break;
                     case 1://跟注
                         tempMoney = moneyToCall - curPlayer.getMoneyRaised();
                         curPlayer.setMoney(curPlayer.getMoney() - tempMoney);
                         if (tempMoney > 0){
-                            str = curPlayer.getNickname() + " " + game_frame.call_string + " " + curPlayer.getMoneyRaised();
+                            str = curPlayer.getNickname() + " " + Localization.call_string + " " + curPlayer.getMoneyRaised();
                             updateGameFlow(str);
-                            updatePlayerLabel(curPlayer.getId(),game_frame.call_string + " " + curPlayer.getMoneyRaised());
+                            updatePlayerLabel(curPlayer.getId(), Localization.call_string,curPlayer.getMoneyRaised());
                         }
                         else{
                             str = curPlayer.getNickname() + " " + "check";
@@ -141,9 +140,9 @@ public class Holdem {
                     case 2://加注
                         tempMoney = getActionMoney(act);
                         moneyToCall = tempMoney;
-                        str = curPlayer.getNickname() + " " + game_frame.raise_string + " " + curPlayer.getMoneyRaised();
+                        str = curPlayer.getNickname() + " " + Localization.raise_string + " " + curPlayer.getMoneyRaised();
                         updateGameFlow(str);
-                        updatePlayerLabel(curPlayer.getId(),game_frame.raise_string);
+                        updatePlayerLabel(curPlayer.getId(), Localization.raise_string);
                         moneyToCall += tempMoney;
                         curPlayer.setMoney(curPlayer.getMoney() - moneyToCall);
                         j = 1;
@@ -168,12 +167,16 @@ public class Holdem {
             //翻三张牌
             int t = random.nextInt(52 - tmp);tmp++;
             cards.remove(t);
+            String cardString = Localization.board_string + " ";
             for(int k = 0;k < 3;k++){
                 t = random.nextInt(52 - tmp);tmp++;
-                publicCards.add(new Card(t));
-                //TODO:告知翻了三张牌
+                Card tempCard = new Card(t);
+                publicCards.add(tempCard);
+                sendMessage(ActionToString.ShowCardToPlayerSingle(tempCard, k + 2));
+                cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
                 cards.remove(t);
             }
+            updateGameFlow(cardString);
         }
     }
     //给桌上的每个玩家发送消息
@@ -190,10 +193,10 @@ public class Holdem {
 
     public void sendPlayerMessageToPlayer(int playerId){
         for(int i = 0;i < playerList.size();i++){
-            sendMessageToPlayer("playerStart " + String.valueOf(i + 1) + " " + playerList.get(i).getNickname(),playerId);
+            sendMessageToPlayer("playerStart " + String.valueOf(i) + " " + playerList.get(i).getNickname(),playerId);
         }
         for(int i = playerList.size();i < 6;i++){
-            sendMessageToPlayer("playerStart " + String.valueOf(i + 1) + " " + " ",playerId);
+            sendMessageToPlayer("playerStart " + String.valueOf(i) + " " + " ",playerId);
         }
     }
 

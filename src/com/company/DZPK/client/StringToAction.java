@@ -52,6 +52,12 @@ public class StringToAction {
             case "waitForRequire":
                 PlayGameClient.enableButton();
                 break;
+            case "actionSuccess":
+                PlayGameClient.disableButton();
+                break;
+            case "actionFailed":
+                PlayGameClient.setError(string);
+                break;
         }
     }
 
@@ -156,5 +162,11 @@ public class StringToAction {
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("updateMainPot")) return -1;
         return Integer.parseInt(arr[1]);
+    }
+
+    public static String getError(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("actionFailed")) return null;
+        return arr[2];
     }
 }

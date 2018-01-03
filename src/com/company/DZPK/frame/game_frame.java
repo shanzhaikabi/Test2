@@ -1,9 +1,9 @@
 package com.company.DZPK.frame;
 
-import com.company.DZPK.client.ActionToString;
 import com.company.DZPK.controller.Card;
 import com.company.DZPK.controller.PlayGameClient;
 import com.company.DZPK.model.UserData;
+import com.company.DZPK.tool.Localization;
 
 import java.awt.EventQueue;
 
@@ -83,29 +83,7 @@ public class game_frame {
     public static Card[] hole = new Card[2];
 	public static Card[] board = new Card[5];
 
-	public static String wait = "\u7b49\u5f85\u4e2d";
-	public static String unknown = "\u672a\u77e5";
-	public static String hole_string ="\u60A8\u7684\u624B\u724C\uFF1A";
-	public static String board_string ="\u5E95\u724C\u72B6\u6001\uFF1A";
-	public static String raise_string="\u52A0\u6CE8";
-	public static String call_string="\u8DDF\u6CE8";
-	public static String fold_string="\u5F03\u724C";
-	public static String straight_flush_string="\u540C\u82B1\u987A";
-	public static String four_of_a_kind_string="\u56DB\u6761";
-	public static String full_house_string="\u846B\u82A6";
-	public static String flush_string="\u540C\u82B1";
-	public static String straight_string="\u987A\u5B50";
-	public static String three_of_a_kind_string="\u4E09\u6761";
-	public static String two_pair_string="\u4E24\u5BF9";
-	public static String one_pair_string="\u4E00\u5BF9";
-	public static String big_blind_string="\u5927\u76F2\u6CE8";
-	public static String high_card_string="\u9AD8\u724C";
-	public static String small_blind_string="\u5C0F\u76F2\u6CE8";
-	public static String raise_high_string="\u7B79\u7801\u4E0D\u8DB3\uFF01";
-	public static String raise_low_string="\u8DDF\u6CE8\u91D1\u989D\u4E0D\u8DB3\uFF01";
-	public static String pot_string="\u5E95\u6C60\uFF1A";
 
-    public static String enable_string="\u4f60\u7684\u56de\u5408";
 
 	/**
 	 * Launch the application.
@@ -401,7 +379,7 @@ public class game_frame {
 		
 		gameflow_textarea = new JTextArea();
 		frame.getContentPane().add(gameflow_textarea);
-		gameflow_textarea.setText(wait);
+		gameflow_textarea.setText(Localization.wait);
 		gameflow_textarea.setLineWrap(true);
 		gameflow_textarea.setEditable(false);
 		gameflow_textarea.setFont(new Font("ËÎÌו", Font.PLAIN, 24));
@@ -409,6 +387,7 @@ public class game_frame {
 		
 		raise_button = new JButton("\u52A0\u6CE8");
 		raise_button.addActionListener(e -> {
+		    if (raise_field.getText() == null) return;
 			int money=Integer.parseInt(raise_field.getText());
 			PlayGameClient.raise(money,userData.getId(),tableId);
 		});
@@ -450,40 +429,41 @@ public class game_frame {
 
 
     public static void setPlayerNameLabel(String string,int playerId){
+	    if (string.equals(userData.getUsername())) string = "Player: " + string;
 	    switch (playerId){
-        case 1:
+        case 0:
             player1_name_label.setText(string);
             if(string.length() > 0)
-                player1_label.setText(game_frame.wait);
+                player1_label.setText(Localization.wait);
             else player1_label.setText("");
             break;
-        case 2:
+        case 1:
             player2_name_label.setText(string);
             if(string.length() > 0)
-                player2_label.setText(game_frame.wait);
+                player2_label.setText(Localization.wait);
             else player2_label.setText("");
             break;
-        case 3:
+        case 2:
             player3_name_label.setText(string);
             if(string.length() > 0)
-                player3_label.setText(game_frame.wait);
+                player3_label.setText(Localization.wait);
             else player3_label.setText("");
-        case 4:
+        case 3:
             player4_name_label.setText(string);
             if(string.length() > 0)
-                player4_label.setText(game_frame.wait);
+                player4_label.setText(Localization.wait);
             else player4_label.setText("");
             break;
-        case 5:
+        case 4:
             player5_name_label.setText(string);
             if(string.length() > 0)
-                player5_label.setText(game_frame.wait);
+                player5_label.setText(Localization.wait);
             else player5_label.setText("");
             break;
-        case 6:
+        case 5:
             player6_name_label.setText(string);
             if(string.length() > 0)
-                player6_label.setText(game_frame.wait);
+                player6_label.setText(Localization.wait);
             else player6_label.setText("");
             break;
         }
@@ -491,31 +471,31 @@ public class game_frame {
 
 	public static void setPlayerLabel(String string,int playerId){
         switch (playerId){
-            case 1:
+            case 0:
                 player1_label.setText(string);
                 break;
-            case 2:
+            case 1:
                 player2_label.setText(string);
                 break;
-            case 3:
+            case 2:
                 player3_label.setText(string);
                 break;
-            case 4:
+            case 3:
                 player4_label.setText(string);
                 break;
-            case 5:
+            case 4:
                 player5_label.setText(string);
                 break;
-            case 6:
+            case 5:
                 player6_label.setText(string);
                 break;
         }
     }
 
     public static void updateHole(){
-	    String holeS = hole_string;
+	    String holeS = Localization.hole_string;
 	    for(int i = 0;i < 2;i++){
-	        if (hole[i] == null) holeS += unknown;
+	        if (hole[i] == null) holeS += Localization.unknown;
 	        else {
 	            holeS += hole[i].getColorS() + hole[i].getNumS();
             }
@@ -525,9 +505,9 @@ public class game_frame {
     }
 
     public static void updateBoard(){
-        String boardS = board_string;
+        String boardS = Localization.board_string;
         for(int i = 0;i < 5;i++){
-            if (hole[i] == null) boardS += unknown;
+            if (board[i] == null) boardS += Localization.unknown;
             else {
                 boardS += board[i].getColorS() + board[i].getNumS();
             }
@@ -560,7 +540,7 @@ public class game_frame {
     }
 
     public static void updateMainPot(int mainPot){
-        String string = pot_string + " " + String.valueOf(mainPot);
+        String string = Localization.pot_string + " " + String.valueOf(mainPot);
         pot_label.setText(string);
     }
 }
