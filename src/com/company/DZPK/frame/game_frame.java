@@ -146,10 +146,7 @@ public class game_frame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("\u5927\u76F2\u6CE8");
-		lblNewLabel.setBounds(109, 43, 72, 18);
-		frame.getContentPane().add(lblNewLabel);
-		
+
 		JPanel ending_panel = new JPanel();
 		ending_panel.setBounds(128, 80, 778, 560);
 		frame.getContentPane().add(ending_panel);
