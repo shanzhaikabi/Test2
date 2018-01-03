@@ -15,7 +15,7 @@ import static java.lang.Thread.sleep;
 public class Holdem {
     private final int MAXPLAYER = 2;
     private int tableId;
-    private Random random = new Random(11);
+    private Random random = new Random(System.currentTimeMillis());
     private Socket socket = null;
     private BufferedReader br = null;
     private InputStream is = null;
@@ -42,8 +42,25 @@ public class Holdem {
         }
     }
     public void play(){
-        for(int i = 0;i < MAXPLAYER;i++){//第i个为庄家
-
+        for(int i = 0;i < MAXPLAYER;i++) {//第i个为庄家
+            List<Card> cards = new ArrayList<Card>();
+            for (int j = 0; j < 52; j++)
+                cards.add(new Card(j));
+            int tmp = 0;
+            for (int j = 0; j < MAXPLAYER; j++) {
+                for (int k = 0; k < 2; k++) {
+                    int t = random.nextInt(52 - tmp);
+                    playerList.get((i + j) % MAXPLAYER).setHand(k, cards.get(t));
+                    cards.remove(t);
+                    //TODO:告知玩家手牌
+                    t++;
+                }
+            }
+            //TODO:告知小盲大盲,PlayerID为(i + 1) % MAXPLAYER和(i + 2) % MAXPLAYER
+            //翻牌前
+            for (int j = 0; j < MAXPLAYER; j++) {
+                //TODO:获取操作类型
+            }
         }
     }
     //给桌上的每个玩家发送消息

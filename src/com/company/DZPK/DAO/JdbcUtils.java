@@ -10,9 +10,9 @@ import java.sql.SQLException;
 public class JdbcUtils {
 
     static String driverName = "com.mysql.jdbc.Driver";
-    static String dbUrl = "jdbc:mysql://localhost:3306/dzpk";
+    static String dbUrl = "jdbc:mysql://localhost:3306/dzpkdb";
     static String us = "root";
-    static String pw = "miao";
+    static String pw = "l1728L3sh+";
 
     public static void releaseConnection(Connection connection){
         try {
