@@ -11,12 +11,17 @@ import java.util.*;
 
 public class Server {
     private static List<ServerThread> threadList = new ArrayList<ServerThread>();
-    public static Map<Integer,ServerThread> threadMap = new HashMap<Integer,ServerThread>();
+    public static Map<Integer,ServerThread> threadMap;
     private static List<GameThread> tableList = new ArrayList<GameThread>();
     private static int playerNumber = 0;
     private static int tableNumber = 0;
     public static Queue<UserData> userDataQueue = new ArrayDeque<UserData>();
     public InetAddress address = null;
+
+    public Server() {
+        threadMap = new HashMap<Integer,ServerThread>();
+    }
+
     public void openServer(){
         try {
             ServerSocket serverSocket = new ServerSocket(18888);
@@ -57,15 +62,6 @@ public class Server {
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            } finally {
-                //关闭资源
-                try {
-                    pw.close();
-                    os.close();
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         }
         //线程执行的操作，响应客户端的请求

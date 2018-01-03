@@ -32,7 +32,7 @@ public class Holdem {
     public void sendMessage(String message){
         System.out.println("message send");
         for(Player player : playerList){
-            Server.threadMap.get(player.getId()).sendMessage(message);
+            Server.threadMap.get(player.getPlayerId()).sendMessage(message);
         }
     }
 
@@ -41,7 +41,7 @@ public class Holdem {
             is = socket.getInputStream();
             isr = new InputStreamReader(is,"utf-8");
             br = new BufferedReader(isr);
-            sendMessage("set player list");
+            System.out.println("set player list");
             setPlayerList();
             sendMessage("start game");
             play();

@@ -34,6 +34,25 @@ public class Player {
         return this.id;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
     public void setHand(Card[] card){
         this.hand = card;
     }
