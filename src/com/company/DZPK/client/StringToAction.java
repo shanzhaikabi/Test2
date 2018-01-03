@@ -32,7 +32,8 @@ public class StringToAction {
                 PlayGameClient.addPlayer(string);
                 break;
             case "getCardSingle":
-
+                PlayGameClient.getCardSingle(string);
+                break;
         }
     }
 

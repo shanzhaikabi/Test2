@@ -489,10 +489,10 @@ public class game_frame {
 
     public static void updateHole(){
 	    String holeS = hole_string;
-	    for(int i = 0;i < 1;i++){
+	    for(int i = 0;i < 2;i++){
 	        if (hole[i] == null) holeS += unknown;
 	        else {
-	            holeS += hole[i].getColorS() + " " + hole[i].getNumS();
+	            holeS += hole[i].getColorS() + hole[i].getNumS();
             }
 	        holeS += "  ";
         }
@@ -504,7 +504,7 @@ public class game_frame {
         for(int i = 0;i < 5;i++){
             if (hole[i] == null) boardS += unknown;
             else {
-                boardS += board[i].getColorS() + " " + board[i].getNumS();
+                boardS += board[i].getColorS() + board[i].getNumS();
             }
             boardS += "  ";
         }

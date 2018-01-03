@@ -12,6 +12,12 @@ public class Calculate_1{
     public Card getcard(int x){return ans[x-1];}//返回第x张牌
     public Card[] nuts=new Card[5];
     public int nuts_id=0;
+    Calculate_1(Card[] a){
+        for(int i=0;i<7;i++)
+        {
+            ans[i]=a[i];
+        }
+    }
     public void getans(){
         System.out.println("请输入牌型");
         Scanner sc = new Scanner(System.in);
@@ -24,14 +30,6 @@ public class Calculate_1{
         return;
     }
     Calculate_1(){}
-    Calculate_1(Card[] a){
-        for(int i=0;i<7;i++)
-        {
-            ans[i]=a[i];
-
-            ans[i].change();
-        }
-    }
     public Card search_num(int num)
     {
         for(int i=0;i<7;i++)

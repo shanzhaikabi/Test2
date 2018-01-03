@@ -6,9 +6,7 @@ import com.company.DZPK.server.*;
 import java.io.*;
 import java.net.Socket;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 
@@ -23,7 +21,11 @@ public class Holdem {
     private List<Player> playerList = new ArrayList<Player>();
     public OutputStream outputStream = null;
     private PrintWriter pw = null;
-    public Holdem(Socket x){socket = x;}
+    private Queue<String> stringQueue = new ArrayDeque<String>();
+    public Holdem(Socket x)
+    {
+        socket = x;
+    }
 
     public int getTableId() {
         return tableId;
@@ -31,6 +33,10 @@ public class Holdem {
 
     public void setTableId(int tableId) {
         this.tableId = tableId;
+    }
+
+    public void input(String string){
+        stringQueue.add(string);
     }
 
     public void setPlayerList(){
@@ -54,7 +60,7 @@ public class Holdem {
                     Card card = cards.get(t);
                     playerList.get(curPlayer).setHand(k, card);
                     cards.remove(t);
-                    sendMessageToPlayer(ActionToString.ShowCardToPlayerSingle(card,0),playerList.get(curPlayer).getPlayerId());
+                    sendMessageToPlayer(ActionToString.ShowCardToPlayerSingle(card,k),playerList.get(curPlayer).getPlayerId());
                     tmp++;
                 }
             }
@@ -87,30 +93,37 @@ public class Holdem {
     }
 
     public void load(){
+        InputStream is = null;
+        InputStreamReader isr = null;
+        BufferedReader br = null;
+        OutputStream os = null;
+        PrintWriter pw = null;
         try {
             is = socket.getInputStream();
-            isr = new InputStreamReader(is,"utf-8");
+            isr = new InputStreamReader(is,"UTF-8");
             br = new BufferedReader(isr);
-            outputStream = socket.getOutputStream();
-            pw = new PrintWriter(outputStream);
-            //System.out.println("set player list");
+            os = socket.getOutputStream();
+            pw = new PrintWriter(os);
+            System.out.println("[Holdem]Set Player List Start");
             setPlayerList();
+            System.out.println("[Holdem]Set Player List Complete");
             sendMessage("start " + tableId);
             sleep(100);
+            System.out.println("[Holdem]Waiting for players");
             for(int i = 0;i < playerList.size();i++){
-                String string = br.readLine();
+                String string = stringQueue.poll();
                 while(string == null || string.length() == 0){
-                    string = br.readLine();
+                    string = stringQueue.poll();
                     sleep(50);
                 }
                 String arr[] = string.split("\\s+");
-                System.out.println("server:" + string + string.length());
-                if (arr[0] == "id"){
+                System.out.println("[Holdem]player" + String.valueOf(i + 1) + "'s message: " + string);
+                if (arr[0].equals("id")){
                     int playerId = Integer.valueOf(arr[1]);
                     sendPlayerMessageToPlayer(playerId);
                 }
             }
-            System.out.println("Play!!!");
+            System.out.println("[Holdem]Play");
             play();
         } catch (IOException e) {
             e.printStackTrace();
@@ -119,5 +132,8 @@ public class Holdem {
         }
 
     }
-    public Socket getSocket(){return socket;}
+
+    public Socket getSocket(){
+        return socket;
+    }
 }

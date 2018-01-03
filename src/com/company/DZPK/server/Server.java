@@ -115,20 +115,8 @@ public class Server {
             socket = table.getSocket();
         }
         public void input(String string,int id){
-            OutputStream os = null;
-            PrintWriter pw = null;
-            try {
-                //获取输入流，并读取客户端信息
-                os = socket.getOutputStream();
-                pw = new PrintWriter(os);
-                String str = "id " + String.valueOf(id) + " " + string;
-                pw.println(str);
-                pw.flush();
-                System.out.println(str);
-            } catch (IOException e) {
-                // TODO Auto-generated catch  block
-                e.printStackTrace();
-            }
+            String str = "id " + String.valueOf(id) + " " + string;
+            table.input(str);
         }
         //线程执行的操作，响应客户端的请求
         public void run() {
