@@ -76,6 +76,8 @@ public class game_frame {
 	public static UserData userData;
 
 	public static String wait = "\u7b49\u5f85\u4e2d";
+	public static String hole="\u60A8\u7684\u624B\u724C\uFF1A";
+	public static String board="\u5E95\u724C\u72B6\u6001\uFF1A";
 
 	/**
 	 * Launch the application.
@@ -342,12 +344,12 @@ public class game_frame {
 		player6_label.setBounds(27, 612, 120, 40);
 		frame.getContentPane().add(player6_label);
 		
-		board_label = new JLabel("\u5E95\u724C\u72B6\u51B5\uFF1A \u9ED1\u6843K  \u9ED1\u6843Q  \u9ED1\u68439  \u672A\u77E5  \u672A\u77E5");
+		board_label = new JLabel("\u5E95\u724C\u72B6\u6001\uFF1A");
 		board_label.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
 		board_label.setBounds(257, 543, 698, 40);
 		frame.getContentPane().add(board_label);
 		
-		hole_label = new JLabel("\u60A8\u7684\u624B\u724C\uFF1A \u9ED1\u6843J  \u9ED1\u684310");
+		hole_label = new JLabel("\u60A8\u7684\u624B\u724C\uFF1A");
 		hole_label.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
 		hole_label.setBounds(257, 596, 334, 40);
 		frame.getContentPane().add(hole_label);
