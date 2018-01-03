@@ -1,5 +1,6 @@
 package com.company.DZPK.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class Compare {
     public int[] player_nuts_id=new int[6];//玩家最佳牌型编号
     public int nuts_num=0;//赢家牌型编号
     public int winner_num=1;//赢家数量
-    public int[] winner_id=new int[6];//赢家编号
+    public List<Integer> winner_id = new ArrayList<Integer>();//赢家编号
     public static void main(String[] args)
     {
         int n;
@@ -58,36 +59,40 @@ public class Compare {
     }
     public int cmp(Card[] a,Card[] b,int num_a,int num_b)/*a>b==1,a==b==2,a<b==0*/
     {
-        if(num_a<num_b)
+        if(num_a < num_b)
             return 0;
-        else if (num_a>num_b)
+        else if (num_a > num_b)
             return 1;
-        if(num_a>nuts_num)nuts_num=num_a;
-        if(num_b>nuts_num)nuts_num=num_b;
-        for(int i=0;i<5;i++)
+        if(num_a > nuts_num)nuts_num = num_a;
+        if(num_b > nuts_num)nuts_num = num_b;
+        for(int i = 0;i < 5;i++)
         {
-            if(a[i].getNum()>b[i].getNum())
+            if(a[i].getNum() > b[i].getNum())
                 return 1;
-            if(a[i].getNum()<b[i].getNum())
+            if(a[i].getNum() < b[i].getNum())
                 return 0;
         }
         return 2;
     }
     public void get_winner(int n)
     {
-        int winner_tmp=0;
+        int winner_tmp = 0;
         for(int i = 1;i < n;i++)
         {
             int ttt = cmp(playernuts[winner_tmp],playernuts[i],player_nuts_id[winner_tmp],player_nuts_id[i]);
             if(ttt == 0)
             {
-                if(winner_num > 1)winner_num = 1;
+                if(winner_num > 1) {
+                    winner_num = 1;
+                    winner_id.clear();
+                }
                 winner_tmp = i;
-                winner_id[winner_num - 1] = i;
+                winner_id.add(i);
             }
             else if(ttt == 2)
             {
-                winner_id[(++winner_num) - 1] = i;
+                winner_num++;
+                winner_id.add(i);
             }
         }
     }
