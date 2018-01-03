@@ -132,6 +132,24 @@ public class Holdem {
         }
         return mainpot;
     }
+    public int gameOver(List<Player> playerList){
+        int cnt = 0,tmp = 0;
+        for(Player player : playerList){
+            if(player.getStatus() == FOLDED || player.getStatus() == ALLIN)cnt++;
+            else tmp = player.getId();
+        }
+        if(cnt == MAXPLAYER - 1)return tmp;
+        else return -1;
+    }
+    public void calcMoney(List<Player> playerlist,int mainpot,int result){
+        Player temp = playerList.get(result);
+        temp.setMoney(temp.getMoney() + mainpot);
+        //TODO:更新金钱
+        for(Player player : playerlist){
+            player.setMoneyRaised(0);
+            player.setStatus(PLAYING);
+        }
+    }
     public void play(){
         sendMessage("resetGameflow");
         for(int i = 0;i < MAXPLAYER;i++) {//第i个为庄家
@@ -139,7 +157,7 @@ public class Holdem {
             sendMessage("updateGameflow " + str);
             List<Card> cards = new ArrayList<Card>();
             List<Card> publicCards = new ArrayList<Card>();
-            Vector<Integer> sidepot = new Vector<Integer>();
+            //Vector<Integer> sidepot = new Vector<Integer>();
             int mainpot = 0;
             for (int j = 0; j < 52; j++)
                 cards.add(new Card(j));
@@ -170,6 +188,11 @@ public class Holdem {
             updateMainPot(mainpot);
             //翻牌前
             mainpot = bet(playerList,i,mainpot,2);
+            int result = 0;
+            if((result = gameOver(playerList)) != -1){
+                calcMoney(playerList,mainpot,result);
+                mainpot = 0;
+            }
             //翻三张牌
             int t = random.nextInt(cards.size());
             cards.remove(t);
