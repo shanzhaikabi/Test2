@@ -31,6 +31,8 @@ public class StringToAction {
             case "playerStart":
                 PlayGameClient.addPlayer(string);
                 break;
+            case "getCardSingle":
+
         }
     }
 
@@ -81,5 +83,17 @@ public class StringToAction {
         if (!arr[0].equals("playerStart")) return null;
         if (arr.length < 3) return null;
         return arr[2];
+    }
+
+    public static int GetCardSingleId(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("getCardSingle")) return -1;
+        return Integer.parseInt(arr[1]);
+    }
+
+    public static int GetCardSinglePlace(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("getCardSingle")) return -1;
+        return Integer.parseInt(arr[2]);
     }
 }

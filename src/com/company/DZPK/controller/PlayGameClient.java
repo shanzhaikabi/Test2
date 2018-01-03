@@ -21,6 +21,12 @@ public class PlayGameClient {
         int playerId = StringToAction.GetPlayerIdWhenStart(string);
         String nickName = StringToAction.GetPlayerNicknameWhenStart(string);
         if (nickName == null) nickName = "";
-        game_frame.SetPlayerNameLabel(nickName, playerId);
+        game_frame.setPlayerNameLabel(nickName, playerId);
+    }
+
+    public static void getCardSingle(String string){
+        int id = StringToAction.GetCardSingleId(string);
+        int place = StringToAction.GetCardSinglePlace(string);
+        game_frame.addCard(id,place);
     }
 }

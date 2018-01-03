@@ -50,10 +50,12 @@ public class Holdem {
             for (int j = 0; j < MAXPLAYER; j++) {
                 for (int k = 0; k < 2; k++) {
                     int t = random.nextInt(52 - tmp);
-                    playerList.get((i + j) % MAXPLAYER).setHand(k, cards.get(t));
+                    int curPlayer = (i + j) % MAXPLAYER;
+                    Card card = cards.get(t);
+                    playerList.get(curPlayer).setHand(k, card);
                     cards.remove(t);
-                    //TODO:告知玩家手牌
-                    t++;
+                    sendMessageToPlayer(ActionToString.ShowCardToPlayerSingle(card,0),playerList.get(curPlayer).getPlayerId());
+                    tmp++;
                 }
             }
             //TODO:告知小盲大盲,PlayerID为(i + 1) % MAXPLAYER和(i + 2) % MAXPLAYER

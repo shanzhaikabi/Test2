@@ -1,5 +1,6 @@
 package com.company.DZPK.server;
 
+import com.company.DZPK.controller.Card;
 import com.company.DZPK.model.UserData;
 
 /**
@@ -21,5 +22,9 @@ public class ActionToString {
 
     public static String ReturnYuyue(boolean yuyue,int slot){
         return "returnYuyue " + String.valueOf(yuyue) + " " + String.valueOf(slot);
+    }
+
+    public static String ShowCardToPlayerSingle(Card card, int place){
+        return "getCardSingle " + String.valueOf(card.getId()) + " " + String.valueOf(place);
     }
 }

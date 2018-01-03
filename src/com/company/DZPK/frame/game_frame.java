@@ -1,5 +1,6 @@
 package com.company.DZPK.frame;
 
+import com.company.DZPK.controller.Card;
 import com.company.DZPK.model.UserData;
 
 import java.awt.EventQueue;
@@ -75,9 +76,13 @@ public class game_frame {
 	public static int tableId;
 	public static UserData userData;
 
+    public static Card[] hole = new Card[2];
+	public static Card[] board = new Card[5];
+
 	public static String wait = "\u7b49\u5f85\u4e2d";
-	public static String hole="\u60A8\u7684\u624B\u724C\uFF1A";
-	public static String board="\u5E95\u724C\u72B6\u6001\uFF1A";
+	public static String unknown = "\u672a\u77e5";
+	public static String hole_string ="\u60A8\u7684\u624B\u724C\uFF1A";
+	public static String board_string ="\u5E95\u724C\u72B6\u6001\uFF1A";
 
 	/**
 	 * Launch the application.
@@ -402,7 +407,7 @@ public class game_frame {
 	}
 
 
-    public static void SetPlayerNameLabel(String string,int playerId){
+    public static void setPlayerNameLabel(String string,int playerId){
 	    switch (playerId){
         case 1:
             player1_name_label.setText(string);
@@ -442,7 +447,7 @@ public class game_frame {
         }
 	}
 
-	public static void SetPlayerLabel(String string,int playerId){
+	public static void setPlayerLabel(String string,int playerId){
         switch (playerId){
             case 1:
                 player1_label.setText(string);
@@ -462,6 +467,42 @@ public class game_frame {
             case 6:
                 player6_label.setText(string);
                 break;
+        }
+    }
+
+    public static void updateHole(){
+	    String holeS = hole_string;
+	    for(int i = 0;i < 1;i++){
+	        if (hole[i] == null) holeS += unknown;
+	        else {
+	            holeS += hole[i].getColorS() + " " + hole[i].getNumS();
+            }
+	        holeS += "  ";
+        }
+        hole_label.setText(holeS);
+    }
+
+    public static void updateBoard(){
+        String boardS = board_string;
+        for(int i = 0;i < 5;i++){
+            if (hole[i] == null) boardS += unknown;
+            else {
+                boardS += board[i].getColorS() + " " + board[i].getNumS();
+            }
+            boardS += "  ";
+        }
+        board_label.setText(boardS);
+    }
+
+    public static void addCard(int id,int place){
+	    Card card = new Card(id);
+	    if (place < 2){
+	        hole[place] = card;
+	        updateHole();
+        }
+        else{
+	        board[place - 2] = card;
+	        updateBoard();
         }
     }
 }
