@@ -108,9 +108,12 @@ public class Holdem {
                         updateGameFlow(str);
                         updatePlayerLabel(curPlayer.getId(),game_frame.fold_string);
                         break;
-                    case 1:
+                    case 1://跟注
                         tempMoney = moneyToCall - curPlayer.getMoneyRaised();
                         curPlayer.setMoney(curPlayer.getMoney() - tempMoney);
+                        /*if(sidepotID == -1)*/
+                        mainpot += tempMoney;
+                        /*else {
                         if (tempMoney > 0){
                             str = curPlayer.getNickname() + " " + game_frame.call_string + " " + curPlayer.getMoneyRaised();
                             updateGameFlow(str);
@@ -127,17 +130,21 @@ public class Holdem {
                             sidepot.set(sidepotID,moneyInSidepot + tempMoney);
                         }
                         temp.setMoneyRaised(tempMoney + curPlayer.getMoneyRaised());
+                        }*/
                         //如果raiseMoney为0则状态显示为check
                         //否则显示为Call...元
                         break;
-                    case 2:
+                    case 2://加注
                         tempMoney = getActionMoney(act);
+                        moneyToCall = tempMoney;
                         str = curPlayer.getNickname() + " " + game_frame.raise_string + " " + curPlayer.getMoneyRaised();
                         updateGameFlow(str);
                         updatePlayerLabel(curPlayer.getId(),game_frame.raise_string);
                         moneyToCall += tempMoney;
                         curPlayer.setMoney(curPlayer.getMoney() - moneyToCall);
-                        j = 1;betPlayer = curPlayer.getId() - 1;
+                        j = 1;
+                        betPlayer = curPlayer.getId() - 1;
+                        //底池和sidepot如何变化
                         break;
                     case 3:
                         tempMoney = curPlayer.getMoney();
