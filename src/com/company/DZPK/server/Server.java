@@ -163,7 +163,7 @@ public class Server {
             try {
                 while (true) {
                     int cnt = userDataQueue.size();
-                    if (cnt > 1) {
+                    if (cnt > 5) {
                         System.out.println("new holdem");
                         Holdem holdem = new Holdem(new Socket("127.0.0.1", 18888));//新建主机
                         GameThread gameThread = new GameThread(holdem);

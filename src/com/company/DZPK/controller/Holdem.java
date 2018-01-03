@@ -13,7 +13,7 @@ import static java.lang.Math.max;
 import static java.lang.Thread.sleep;
 
 public class Holdem {
-    private final int MAXPLAYER = 2;
+    private final int MAXPLAYER = 6;
     private final int WAIT = 0;
     private final int FOLDED = 1;
     private final int PLAYING = 2;
