@@ -2,11 +2,11 @@ package com.company.DZPK.controller;
 
 import java.util.Arrays;
 import java.util.Scanner;
-/*这里所有的A都当做一来算*/
+/*这里所有的A都当做14来算*/
 /**
  * Created by Administrator on 2017/9/13.
  */
-public class Calculate{
+public class Calculate_1{
     final String[] hs = {"","黑桃","红桃","草花","方片"};
     private Card[] ans= new Card[7];//底牌两张和场上五张牌
     public Card getcard(int x){return ans[x-1];}//返回第x张牌
@@ -19,6 +19,7 @@ public class Calculate{
             int a = sc.nextInt();
             int b = sc.nextInt();
             ans[i] = new Card(a, b);//num，color
+            ans[i].change();
         }
         return;
     }
@@ -44,7 +45,7 @@ public class Calculate{
         if (p == 3) {System.out.println("两对");nuts_id=2;}
         if (p == 4) {System.out.println("一对");nuts_id=1;}
         if (p == 0) {System.out.println("高牌");nuts_id=0;}
-        /*for(int i = 0;i < 7;++i){
+       /* for(int i = 0;i < 7;++i){
             System.out.print(hs[ans[i].getColor()] + ans[i].getNum() + ' ');
         }
         System.out.println();*/
@@ -73,10 +74,10 @@ public class Calculate{
                 int cnt=0;
                 for(int j=0;j<7;j++)
                 {
-                   if(ans[j].getColor()==i)
-                   {
-                       t[cnt++]=ans[j].getNum();
-                   }
+                    if(ans[j].getColor()==i)
+                    {
+                        t[cnt++]=ans[j].getNum();
+                    }
                 }
                 Arrays.sort(t,0,cnt);
                 for(int h=0;h<5;h++)
@@ -152,7 +153,7 @@ public class Calculate{
         for(int i = 0;i < 7;i++)
             n[ans[i].getNum()]++;
         int two=0,three=0,four=0;//记录对子和三条个数
-        for(int i=1;i<14;i++)
+        for(int i=2;i<=14;i++)
         {
             if(n[i]==2)two++;
             else if (n[i]==3)three++;
@@ -161,7 +162,7 @@ public class Calculate{
         if(four == 1)
         {
             int kk=0;
-            for(int i=1;i<14;i++)
+            for(int i=2;i<=14;i++)
             {
                 if(n[i]==4)
                 {
@@ -172,7 +173,7 @@ public class Calculate{
                     break;
                 }
             }
-            for(int i=13;i>0;i--)
+            for(int i=14;i>1;i--)
             {
                 if(n[i]<=3&&n[i]>=1)
                 {
@@ -180,8 +181,8 @@ public class Calculate{
                     {
                         if(ans[j].getNum()==i)
                         {
-                          nuts[4]=ans[j];
-                          break;
+                            nuts[4]=ans[j];
+                            break;
                         }
                     }
                     break;
@@ -192,7 +193,7 @@ public class Calculate{
         if(three==2||(three==1&&two>=1))
         {
             int san=0,er=0;
-            for(int i=13;i>=1;i--)
+            for(int i=14;i>=2;i--)
             {
                 if(n[i]==3)
                 {
@@ -200,7 +201,7 @@ public class Calculate{
                     break;
                 }
             }
-            for(int i=13;i>=1;i--)
+            for(int i=14;i>=2;i--)
             {
                 if(n[i]>=2&&n[i]!=san)
                 {
@@ -228,7 +229,7 @@ public class Calculate{
         if(three==1&&two==0)
         {
             int san=0,yi=0,er=0;
-            for(int i=13;i>0;i--)
+            for(int i=14;i>1;i--)
             {
                 if(n[i]==3)
                 {
@@ -236,7 +237,7 @@ public class Calculate{
                     break;
                 }
             }
-            for(int i=13;i>=0;i--)
+            for(int i=14;i>=2;i--)
             {
                 if(n[i]>0&&n[i]!=san)
                 {
@@ -244,7 +245,7 @@ public class Calculate{
                     break;
                 }
             }
-            for(int i=13;i>=1;i--)
+            for(int i=14;i>=2;i--)
             {
                 if(n[i]>0&&n[i]!=san&&n[i]!=yi)
                 {
@@ -276,7 +277,7 @@ public class Calculate{
         if(two>=2)
         {
             int aaa=0,bbb=0,ccc=0;
-            for(int i=13;i>=1;i--)
+            for(int i=14;i>=2;i--)
             {
                 if(n[i]>=2&&aaa==0)
                     aaa=i;
@@ -312,7 +313,7 @@ public class Calculate{
         if(two==1)
         {
             int aaa=0,bbb=0,ccc=0,ddd=0;
-            for(int i=13;i>=1;i--)
+            for(int i=14;i>=2;i--)
             {
                 if(n[i]>=2&&aaa==0)
                     aaa=i;
