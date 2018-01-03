@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class game_final_frame {
+public class  game_final_frame {
 
 	private JFrame frame;
 	public static JLabel[] player_rank_label=new JLabel[6];
