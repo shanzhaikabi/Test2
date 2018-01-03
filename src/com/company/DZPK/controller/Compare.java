@@ -12,13 +12,19 @@ public class Compare {
     public Calculate[] nuts_1=new Calculate[6];//玩家最佳牌型选项1
     public Calculate_1[] nuts_2=new Calculate_1[6];//玩家最佳牌型选项2
     public int[] player_nuts_id=new int[6];//玩家最佳牌型编号
-    public int nuts_num=0;//赢家牌型编号
+    public static int nuts_num=0;//赢家牌型编号
     public int winner_num=1;//赢家数量
     public List<Integer> winner_id = new ArrayList<Integer>();//赢家编号
     public static void main(String[] args)
     {
         int n;
-
+        Calculate a=new Calculate();
+        a.getans();
+        Calculate_1 b=new Calculate_1();
+        b.getans();
+       // for(int i=0;i<5;i++)
+           // System.out.println(a.nuts[i].getNum());
+        System.out.println(cmp(a.nuts,b.nuts,a.nuts_id,b.nuts_id));
         return;
     }
     public Compare(int n, List<Player> players, List<Card> board)/*目前是假设传入n个player,还有桌面上的5张牌*/
@@ -57,7 +63,7 @@ public class Compare {
             }
         }
     }
-    public int cmp(Card[] a,Card[] b,int num_a,int num_b)/*a>b==1,a==b==2,a<b==0*/
+    public static int cmp(Card[] a,Card[] b,int num_a,int num_b)/*a>b==1,a==b==2,a<b==0*/
     {
         if(num_a < num_b)
             return 0;
@@ -97,4 +103,5 @@ public class Compare {
             }
         }
     }
+
  }

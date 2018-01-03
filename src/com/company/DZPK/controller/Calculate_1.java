@@ -11,7 +11,7 @@ public class Calculate_1{
     private Card[] ans= new Card[7];//底牌两张和场上五张牌
     public Card getcard(int x){return ans[x-1];}//返回第x张牌
     public Card[] nuts=new Card[5];
-    public int nuts_id=0;
+    public static int nuts_id=0;
     Calculate_1(Card[] a){
         for(int i=0;i<7;i++)
         {
@@ -28,6 +28,7 @@ public class Calculate_1{
             ans[i] = new Card(a, b);//num，color
             ans[i].change();
         }
+        test();
         return;
     }
     Calculate_1(){}
@@ -126,13 +127,15 @@ public class Calculate_1{
             if(ans[i].getColor()==f)a[cnt++]=ans[i].getNum();
         }
         Arrays.sort(a,0,l);//对该花色的点数排序
-        for(int i=0;i<=l-5;i++)//找顺子
+        System.out.println(l);
+        for(int i=l-5;i>=0;i--)//找顺子
         {
             if(a[i]==a[i+1]-1&&a[i]==a[i+2]-2&&a[i]==a[i+3]-3&&a[i]==a[i+4]-4)
             {
                 for(int j=4;j>=0;j--)
                 {
                     nuts[j]=new Card(a[i+4-j],f);
+                    System.out.println(nuts[j].getNum());
                 }
                 return true;
             }
@@ -151,7 +154,7 @@ public class Calculate_1{
             a[tmp++] = ans[i].getNum();
         }
         Arrays.sort(a);//排序后找连续五张
-        for(int i=0;i<=2;i++)
+        for(int i=2;i>=0;i--)
         {
             if(a[i]!=0&&a[i]==a[i+1]-1&&a[i]==a[i+2]-2&&a[i]==a[i+3]-3&&a[i]==a[i+4]-4)
             {
@@ -381,6 +384,12 @@ public class Calculate_1{
         Calculate_1 x=new Calculate_1();
         x.getans();
         x.test();
+        //System.out.println(nuts_id);
+        for(int i=0;i<5;i++)
+        {
+            //System.out.print(x.nuts[i].getNum());
+           // System.out.println(x.nuts[i].getColor());
+        }
         return;
     }
 }
