@@ -22,4 +22,8 @@ public class ActionToString {
     public static String SendYuyue(UserData userData,int table){
         return "actionYuyue " + ToString.UserDataToString(userData) + " " + String.valueOf(table);
     }
+
+    public static String SendPlayerReady(UserData userData,int tableId){
+        return "playerReady " + String.valueOf(userData.getId()) + " " + String.valueOf(tableId);
+    }
 }

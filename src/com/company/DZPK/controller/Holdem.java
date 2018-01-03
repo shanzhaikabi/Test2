@@ -54,6 +54,19 @@ public class Holdem {
         }
     }
 
+    public void sendMessageToPlayer(String message,int playerId){
+        Server.threadMap.get(playerId).sendMessage(message);
+    }
+
+    public void sendPlayerMessageToPlayer(int playerId){
+        for(int i = 0;i < playerList.size();i++){
+            sendMessageToPlayer("playerStart " + String.valueOf(i + 1) + " " + playerList.get(i).getNickname(),playerId);
+        }
+        for(int i = playerList.size();i < 6;i++){
+            sendMessageToPlayer("playerStart " + String.valueOf(i + 1) + " " + " ",playerId);
+        }
+    }
+
     public void load(){
         try {
             is = socket.getInputStream();
@@ -66,11 +79,19 @@ public class Holdem {
             sendMessage("start " + tableId);
             sleep(100);
             for(int i = 0;i < playerList.size();i++){
-                sendMessage("playerStart " + String.valueOf(i + 1) + " " + playerList.get(i).getNickname());
+                String string = br.readLine();
+                while(string == null || string.length() == 0){
+                    string = br.readLine();
+                    sleep(50);
+                }
+                String arr[] = string.split("\\s+");
+                System.out.println("server:" + string + string.length());
+                if (arr[0] == "id"){
+                    int playerId = Integer.valueOf(arr[1]);
+                    sendPlayerMessageToPlayer(playerId);
+                }
             }
-            for(int i = playerList.size();i < 6;i++){
-                sendMessage("playerStart " + String.valueOf(i + 1) + " " + " ");
-            }
+            System.out.println("Play!!!");
             play();
         } catch (IOException e) {
             e.printStackTrace();

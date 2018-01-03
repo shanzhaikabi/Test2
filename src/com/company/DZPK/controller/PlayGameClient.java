@@ -1,6 +1,6 @@
 package com.company.DZPK.controller;
 
-import com.company.DZPK.client.StringToAction;
+import com.company.DZPK.client.*;
 import com.company.DZPK.frame.game_frame;
 import com.company.DZPK.frame.main_frame;
 
@@ -12,8 +12,9 @@ public class PlayGameClient {
         int tableId = StringToAction.GetTableId(string);
         game_frame.show();
         game_frame.tableId = tableId;
-        game_frame.gameflow_textarea.setText(game_frame.wait);
         main_frame.frame.setVisible(false);
+        game_frame.userData = main_frame.userData;
+        Client.sendThread.setIs(ActionToString.SendPlayerReady(game_frame.userData,tableId));
     }
 
     public static void addPlayer(String string){

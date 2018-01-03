@@ -1,5 +1,7 @@
 package com.company.DZPK.frame;
 
+import com.company.DZPK.model.UserData;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -71,6 +73,7 @@ public class game_frame {
 	public static JButton all_in_button;
 	public static game_frame window;
 	public static int tableId;
+	public static UserData userData;
 
 	public static String wait = "\u7b49\u5f85\u4e2d";
 
@@ -362,7 +365,7 @@ public class game_frame {
 		
 		gameflow_textarea = new JTextArea();
 		frame.getContentPane().add(gameflow_textarea);
-		gameflow_textarea.setText("\u6E38\u620F\u4FE1\u606F\r\nsjj \u5F03\u724C 2333333");
+		gameflow_textarea.setText(wait);
 		gameflow_textarea.setLineWrap(true);
 		gameflow_textarea.setEditable(false);
 		gameflow_textarea.setFont(new Font("ËÎÌו", Font.PLAIN, 24));

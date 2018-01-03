@@ -2,6 +2,7 @@ package com.company.DZPK.server;
 
 import com.company.DZPK.controller.GetUserDataServer;
 import com.company.DZPK.controller.LoginServer;
+import com.company.DZPK.controller.PlayGameServer;
 import com.company.DZPK.controller.YuyueServer;
 import com.company.DZPK.model.UserData;
 
@@ -20,6 +21,8 @@ public class StringToAction {
                 return LoginServer.RegisterToClient(string);
             case "actionYuyue" :
                 return YuyueServer.YuyueToClient(string);
+            case "playerReady" :
+                return PlayGameServer.PlayerReady(string);
         }
         return null;
     }
@@ -58,5 +61,18 @@ public class StringToAction {
         String[] arr = string.split("\\s+");
         if (!arr[0].equals("actionYuyue")) return -1;
         return Integer.parseInt(arr[7]);
+    }
+
+    public static int PlayerReady(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("playerReady")) return -1;
+        return Integer.parseInt(arr[1]);
+    }
+
+
+    public static int PlayerReadyTable(String string){
+        String[] arr = string.split("\\s+");
+        if (!arr[0].equals("playerReady")) return -1;
+        return Integer.parseInt(arr[2]);
     }
 }
