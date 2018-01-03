@@ -12,7 +12,7 @@ import java.util.*;
 public class Server {
     private static List<ServerThread> threadList = new ArrayList<ServerThread>();
     public static Map<Integer,ServerThread> threadMap;
-    private static List<GameThread> tableList = new ArrayList<GameThread>();
+    public static List<GameThread> tableList = new ArrayList<GameThread>();
     private static int playerNumber = 0;
     private static int tableNumber = 0;
     private static int tableCur = 0;
@@ -108,7 +108,7 @@ public class Server {
         }
     }
     public class GameThread extends Thread {
-        Holdem table = null;
+        public Holdem table = null;
         Socket socket = null;
         public GameThread(Holdem holdem) {
             table = holdem;
@@ -121,10 +121,12 @@ public class Server {
                 //获取输入流，并读取客户端信息
                 os = socket.getOutputStream();
                 pw = new PrintWriter(os);
-                pw.println("id " + String.valueOf(id) + " " + string);
+                String str = "id " + String.valueOf(id) + " " + string;
+                pw.println(str);
                 pw.flush();
+                System.out.println(str);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
+                // TODO Auto-generated catch  block
                 e.printStackTrace();
             }
         }
