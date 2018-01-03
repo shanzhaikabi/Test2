@@ -392,7 +392,7 @@ public class game_frame {
 			PlayGameClient.raise(money,userData.getId(),tableId);
 		});
 		raise_button.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
-		raise_button.setBounds(460, 708, 240, 40);
+		raise_button.setBounds(460, 708, 120, 40);
 		frame.getContentPane().add(raise_button);
 
 		call_button = new JButton("\u8DDF\u6CE8");
@@ -400,7 +400,7 @@ public class game_frame {
 			PlayGameClient.call(0,userData.getId(),tableId);
 		});
 		call_button.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
-		call_button.setBounds(640, 708, 240, 40);
+		call_button.setBounds(640, 708, 120, 40);
 		frame.getContentPane().add(call_button);
 		
 		fold_button = new JButton("\u5F03\u724C");
@@ -408,7 +408,7 @@ public class game_frame {
 			PlayGameClient.fold(0,userData.getId(),tableId);
 		});
 		fold_button.setFont(new Font("ËÎÌו", Font.PLAIN, 22));
-		fold_button.setBounds(820, 708, 240, 40);
+		fold_button.setBounds(820, 708, 120, 40);
 		frame.getContentPane().add(fold_button);
 		
 		all_in_button = new JButton("ALL-IN");
@@ -471,8 +471,8 @@ public class game_frame {
         }
 	}
 
-	public static void setPlayerLabel(String string,int playerId){
-        switch (playerId){
+	public static void setPlayerLabel(String string,int id){
+        switch (id){
             case 0:
                 player1_label.setText(string);
                 break;

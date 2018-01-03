@@ -24,8 +24,9 @@ public class PlayGameClient {
         int id = StringToAction.GetIdWhenStart(string);
         int playerId = StringToAction.GetPlayerIdWhenStart(string);
         String nickName = StringToAction.GetPlayerNicknameWhenStart(string);
-        if (nickName == null) nickName = "";
+        if (nickName == null) return;
         game_frame.setPlayerNameLabel(nickName, playerId, id);
+        game_frame.setPlayerLabel(Localization.money_string + " 200000",id);
     }
 
     public static void getCardSingle(String string){

@@ -79,12 +79,12 @@ public class Holdem {
             updateGameFlow(str);
             str = playerList.get(dmzp).getNickname() + " " + Localization.big_blind_string + " " + 1600;
             updateGameFlow(str);
-            updatePlayerLabel(xmzp, Localization.small_blind_string,800);
-            updatePlayerLabel(dmzp, Localization.big_blind_string,1600);
             Player temp = playerList.get((i + 1) % MAXPLAYER);
             temp.setMoney(temp.getMoney() - 800);temp.setMoneyRaised(800);
+            updatePlayerLabel(temp.getMoney(),xmzp, Localization.small_blind_string,800);
             temp = playerList.get((i + 2) % MAXPLAYER);
             temp.setMoney(temp.getMoney() - 1600);temp.setMoneyRaised(1600);
+            updatePlayerLabel(temp.getMoney(),dmzp, Localization.big_blind_string,1600);
             mainpot = 2400;
             updateMainPot(mainpot);
             //翻牌前
@@ -104,7 +104,7 @@ public class Holdem {
                         curPlayer.setStatus(FOLDED);
                         str = curPlayer.getNickname() + " " + Localization.fold_string;
                         updateGameFlow(str);
-                        updatePlayerLabel(curPlayer.getId(), Localization.fold_string);
+                        updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(), Localization.fold_string);
                         break;
                     case 1://跟注
                         tempMoney = moneyToCall - curPlayer.getMoneyRaised();
@@ -116,12 +116,12 @@ public class Holdem {
                         if (tempMoney > 0){//跟注操作，仅做注释，下同
                             str = curPlayer.getNickname() + " " + Localization.call_string + " " + curPlayer.getMoneyRaised();
                             updateGameFlow(str);
-                            updatePlayerLabel(curPlayer.getId(), Localization.call_string,curPlayer.getMoneyRaised());
+                            updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(), Localization.call_string,curPlayer.getMoneyRaised());
                         }
                         else{//过牌操作
                             str = curPlayer.getNickname() + " " + "check";
                             updateGameFlow(str);
-                            updatePlayerLabel(curPlayer.getId(),"check");
+                            updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(),"check");
                         }
                         temp.setMoneyRaised(tempMoney + curPlayer.getMoneyRaised());
                         /*if(sidepotID == -1)*/
@@ -150,9 +150,9 @@ public class Holdem {
                         }
                         mainpot+=tempMoney-moneyToCall;
                         moneyToCall = tempMoney;
-                        str = curPlayer.getNickname() + " " + Localization.raise_string + " " + moneyToCall;
+                        str = curPlayer.getNickname() + " " + Localization.raise_to_string + " " + moneyToCall;
                         updateGameFlow(str);
-                        updatePlayerLabel(curPlayer.getId(), Localization.raise_string, moneyToCall);
+                        updatePlayerLabel(curPlayer.getMoney(),curPlayer.getId(), Localization.raise_string, moneyToCall);
                         moneyToCall += tempMoney;
                         curPlayer.setMoney(curPlayer.getMoney() - moneyToCall);
                         j = 0;
@@ -324,12 +324,12 @@ public class Holdem {
         sendMessage("updateMainPot " + String.valueOf(mainPot));
     }
 
-    public void updatePlayerLabel(int id,String str){
-        sendMessage("updatePlayerLabel " + id + " " + str);
+    public void updatePlayerLabel(int money,int playerId,String str){
+        sendMessage("updatePlayerLabel " + Localization.money_string + " " + money + " " + playerId + " " + str);
     }
 
-    public void updatePlayerLabel(int id,String str,int money){
-        sendMessage("updatePlayerLabel " + id + " " + str + " " + money);
+    public void updatePlayerLabel(int money1,int playerId,String str,int money){
+        sendMessage("updatePlayerLabel "+ Localization.money_string + " " + money1 + " " + playerId + " " + str + " " + money);
     }
 
     public void sendErrorMessage(int id,String string){
