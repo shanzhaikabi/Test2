@@ -17,6 +17,8 @@ public class Holdem {
     private final int FOLDED = 1;
     private final int PLAYING = 2;
     private final int ALLIN = 3;
+    private final int SMALLBLIND = 800;
+    private final int BIGBILND = 1600;
     private int tableId;
     private Random random = new Random(System.currentTimeMillis());
     private Socket socket = null;
@@ -55,9 +57,12 @@ public class Holdem {
     public int bet(List<Player> playerList,int i,int mainpot,int beginPlayer){
         int betPlayer = (i + beginPlayer) % MAXPLAYER, j = 1, moneyToCall = 1600;
         String str = "";
-        while (j < MAXPLAYER) {
+        while (j <= MAXPLAYER) {
             int cur = (betPlayer + j) % MAXPLAYER;
             Player curPlayer = playerList.get(cur);
+            if(j == MAXPLAYER){
+                if(curPlayer.getMoneyRaised() == moneyToCall)break;
+            }
             if (curPlayer.getStatus() == FOLDED) {
                 j++;
                 continue;
@@ -183,17 +188,17 @@ public class Holdem {
             }
             int xmzp = (i + 1) % MAXPLAYER;
             int dmzp = (i + 2) % MAXPLAYER;
-            str = playerList.get(xmzp).getNickname() + " " + Localization.small_blind_string + " " + 800;
+            str = playerList.get(xmzp).getNickname() + " " + Localization.small_blind_string + " " + SMALLBLIND;
             updateGameFlow(str);
-            str = playerList.get(dmzp).getNickname() + " " + Localization.big_blind_string + " " + 1600;
+            str = playerList.get(dmzp).getNickname() + " " + Localization.big_blind_string + " " + BIGBILND;
             updateGameFlow(str);
             Player temp = playerList.get((i + 1) % MAXPLAYER);
-            temp.setMoney(temp.getMoney() - 800);temp.setMoneyRaised(800);
-            updatePlayerLabel(temp.getMoney(),xmzp, Localization.small_blind_string,800);
+            temp.setMoney(temp.getMoney() - SMALLBLIND);temp.setMoneyRaised(SMALLBLIND);
+            updatePlayerLabel(temp.getMoney(),xmzp, Localization.small_blind_string,SMALLBLIND);
             temp = playerList.get((i + 2) % MAXPLAYER);
-            temp.setMoney(temp.getMoney() - 1600);temp.setMoneyRaised(1600);
-            updatePlayerLabel(temp.getMoney(),dmzp, Localization.big_blind_string,1600);
-            mainpot = 2400;
+            temp.setMoney(temp.getMoney() - BIGBILND);temp.setMoneyRaised(BIGBILND);
+            updatePlayerLabel(temp.getMoney(),dmzp, Localization.big_blind_string,BIGBILND);
+            mainpot = SMALLBLIND + BIGBILND;
             //翻牌前
             mainpot = bet(playerList,i,mainpot,2);
             int result = 0;
@@ -207,7 +212,7 @@ public class Holdem {
             String cardString = Localization.board_string + " ";
             for(int k = 0;k < 3;k++){
                 t = random.nextInt(cards.size());
-                Card tempCard = new Card(t);
+                Card tempCard = cards.get(t);
                 publicCards.add(tempCard);
                 sendMessage(ActionToString.ShowCardToPlayerSingle(tempCard, k + 2));
                 cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
@@ -218,7 +223,7 @@ public class Holdem {
             //翻一张牌
             t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
-            Card tempCard = new Card(t);
+            Card tempCard = cards.get(t);
             publicCards.add(tempCard);
             sendMessage(ActionToString.ShowCardToPlayerSingle(tempCard, 5));
             cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
@@ -228,7 +233,7 @@ public class Holdem {
             //翻一张牌
             t = random.nextInt(cards.size());
             cardString = Localization.board_string + " ";
-            tempCard = new Card(t);
+            tempCard = cards.get(t);
             publicCards.add(tempCard);
             sendMessage(ActionToString.ShowCardToPlayerSingle(tempCard, 6));
             cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
@@ -244,6 +249,13 @@ public class Holdem {
                 }
                 Compare compare = new Compare(players.size(),players,publicCards);
                 compare.get_winner(players.size());
+                int winnerNumber = compare.winner_num;
+                int prize = mainpot / winnerNumber;
+                for(int Id : compare.winner_id){
+                    Player player = playerList.get(Id);
+                    player.setMoney(player.getMoney() + prize);
+                    //TODO:你懂的
+                }
             }
         }
     }
