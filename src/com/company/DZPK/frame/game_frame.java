@@ -24,48 +24,27 @@ public class game_frame {
 
 	public static JFrame frame;
 	public static JTextField raise_field;
-	public static JLabel ed_player1_name_label;
-	public static JLabel ed_player1_money_label ;
-	public static JLabel ed_player1_delta_label;
+	public static JLabel[] ed_player_name=new JLabel[6];
+	public static JLabel[] ed_player_money=new JLabel[6];
+	public static JLabel[] ed_player_delta=new JLabel[6];
+	public static JLabel[] ed_player_detail=new JLabel[6];
 	public static JLabel player1_name_label;
 	public static JLabel player1_label;
-	public static JLabel ed_player2_name_label;
-	public static JLabel ed_player2_money_label ;
-	public static JLabel ed_player2_delta_label;
 	public static JLabel player2_name_label;
 	public static JLabel player2_label;
-	public static JLabel ed_player3_name_label;
-	public static JLabel ed_player3_money_label ;
-	public static JLabel ed_player3_delta_label;
 	public static JLabel player3_name_label;
 	public static JLabel player3_label;
-	public static JLabel ed_player5_name_label;
-	public static JLabel ed_player5_money_label ;
-	public static JLabel ed_player5_delta_label;
 	public static JLabel player5_name_label;
 	public static JLabel player5_label;
-	public static JLabel ed_player4_name_label;
-	public static JLabel ed_player4_money_label ;
-	public static JLabel ed_player4_delta_label;
 	public static JLabel player4_name_label;
 	public static JLabel player4_label;
-	public static JLabel ed_player6_name_label;
-	public static JLabel ed_player6_money_label ;
-	public static JLabel ed_player6_delta_label;
 	public static JLabel player6_name_label;
 	public static JLabel player6_label;
-	public static JPanel ending_panel;
 	public static JLabel ed_nuts_label;
 	public static JLabel ed_winner_label;
 	public static JLabel ed_board_label;
 	public static JLabel ed_nuts_detail_label;
 	public static JLabel ed_board_detail_label;
-	public static JLabel ed_player2_hole_hand;
-	public static JLabel ed_player3_hole_hand;
-	public static JLabel ed_player4_hole_hand;
-	public static JLabel ed_player5_hole_hand;
-	public static JLabel ed_player6_hole_hand;
-	public static JLabel ed_player1_hole_hand;
 	public static JButton continue_button;
 	public static JLabel board_label;
 	public static JLabel hole_label;
@@ -136,7 +115,7 @@ public class game_frame {
 		ending_panel.setBounds(128, 80, 778, 560);
 		frame.getContentPane().add(ending_panel);
 		ending_panel.setLayout(null);
-		ending_panel.hide();
+		ending_panel.show();
 		
 		ed_nuts_label = new JLabel("\u540C \u82B1 Dark \u987A");
 		ed_nuts_label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -166,125 +145,125 @@ public class game_frame {
 		ed_board_detail_label.setBounds(14, 139, 750, 40);
 		ending_panel.add(ed_board_detail_label);
 		
-		ed_player1_name_label = new JLabel("\u53F8\u673A\u59EC");
-		ed_player1_name_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player1_name_label.setBounds(14, 192, 375, 40);
-		ending_panel.add(ed_player1_name_label);
+		ed_player_name[0] = new JLabel("\u53F8\u673A\u59EC");
+		ed_player_name[0].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_name[0].setBounds(14, 192, 375, 40);
+		ending_panel.add(ed_player_name[0]);
 		
-		ed_player1_money_label = new JLabel("25000");
-		ed_player1_money_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player1_money_label.setBounds(389, 192, 189, 40);
-		ending_panel.add(ed_player1_money_label);
+		ed_player_money[0] = new JLabel("25000");
+		ed_player_money[0].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_money[0].setBounds(389, 192, 189, 40);
+		ending_panel.add(ed_player_money[0]);
 		
-		ed_player1_delta_label = new JLabel("+32000");
-		ed_player1_delta_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player1_delta_label.setBounds(575, 192, 189, 40);
-		ending_panel.add(ed_player1_delta_label);
+		ed_player_delta[0] = new JLabel("+32000");
+		ed_player_delta[0].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_delta[0].setBounds(575, 192, 189, 40);
+		ending_panel.add(ed_player_delta[0]);
 		
-		ed_player2_name_label = new JLabel("\u73A9\u5BB62");
-		ed_player2_name_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player2_name_label.setBounds(14, 245, 375, 40);
-		ending_panel.add(ed_player2_name_label);
+		ed_player_name[1] = new JLabel("\u73A9\u5BB62");
+		ed_player_name[1].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_name[1].setBounds(14, 245, 375, 40);
+		ending_panel.add(ed_player_name[1]);
 		
-		ed_player2_money_label = new JLabel("25000");
-		ed_player2_money_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player2_money_label.setBounds(389, 245, 189, 40);
-		ending_panel.add(ed_player2_money_label);
+		ed_player_money[1] = new JLabel("25000");
+		ed_player_money[1].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_money[1].setBounds(389, 245, 189, 40);
+		ending_panel.add(ed_player_money[1]);
 		
-		ed_player2_delta_label = new JLabel("-16000");
-		ed_player2_delta_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player2_delta_label.setBounds(575, 245, 189, 40);
-		ending_panel.add(ed_player2_delta_label);
+		ed_player_delta[1] = new JLabel("-16000");
+		ed_player_delta[1].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_delta[1].setBounds(575, 245, 189, 40);
+		ending_panel.add(ed_player_delta[1]);
 		
-		ed_player3_name_label = new JLabel("\u73A9\u5BB63");
-		ed_player3_name_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player3_name_label.setBounds(14, 298, 375, 40);
-		ending_panel.add(ed_player3_name_label);
+		ed_player_name[2] = new JLabel("\u73A9\u5BB63");
+		ed_player_name[2].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_name[2].setBounds(14, 298, 375, 40);
+		ending_panel.add(ed_player_name[2]);
 		
-		ed_player3_money_label = new JLabel("25000");
-		ed_player3_money_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player3_money_label.setBounds(389, 298, 189, 40);
-		ending_panel.add(ed_player3_money_label);
+		ed_player_money[2] = new JLabel("25000");
+		ed_player_money[2].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_money[2].setBounds(389, 298, 189, 40);
+		ending_panel.add(ed_player_money[2]);
 		
-		ed_player3_delta_label = new JLabel("-16000");
-		ed_player3_delta_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player3_delta_label.setBounds(575, 298, 189, 40);
-		ending_panel.add(ed_player3_delta_label);
+		ed_player_delta[2] = new JLabel("-16000");
+		ed_player_delta[2].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_delta[2].setBounds(575, 298, 189, 40);
+		ending_panel.add(ed_player_delta[2]);
 		
-		ed_player4_name_label = new JLabel("\u73A9\u5BB64");
-		ed_player4_name_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player4_name_label.setBounds(14, 351, 375, 40);
-		ending_panel.add(ed_player4_name_label);
+		ed_player_name[3] = new JLabel("\u73A9\u5BB64");
+		ed_player_name[3].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_name[3].setBounds(14, 351, 375, 40);
+		ending_panel.add(ed_player_name[3]);
 		
-		ed_player4_money_label = new JLabel("25000");
-		ed_player4_money_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player4_money_label.setBounds(389, 351, 189, 40);
-		ending_panel.add(ed_player4_money_label);
+		ed_player_money[3] = new JLabel("25000");
+		ed_player_money[3].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_money[3].setBounds(389, 351, 189, 40);
+		ending_panel.add(ed_player_money[3]);
 		
-		ed_player4_delta_label = new JLabel("0");
-		ed_player4_delta_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player4_delta_label.setBounds(575, 351, 189, 40);
-		ending_panel.add(ed_player4_delta_label);
+		ed_player_delta[3] = new JLabel("0");
+		ed_player_delta[3].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_delta[3].setBounds(575, 351, 189, 40);
+		ending_panel.add(ed_player_delta[3]);
 		
-		ed_player5_name_label = new JLabel("\u73A9\u5BB65");
-		ed_player5_name_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player5_name_label.setBounds(14, 404, 375, 40);
-		ending_panel.add(ed_player5_name_label);
+		ed_player_name[4] = new JLabel("\u73A9\u5BB65");
+		ed_player_name[4].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_name[4].setBounds(14, 404, 375, 40);
+		ending_panel.add(ed_player_name[4]);
 		
-		ed_player5_money_label = new JLabel("25000");
-		ed_player5_money_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player5_money_label.setBounds(389, 404, 189, 40);
-		ending_panel.add(ed_player5_money_label);
+		ed_player_money[4] = new JLabel("25000");
+		ed_player_money[4].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_money[4].setBounds(389, 404, 189, 40);
+		ending_panel.add(ed_player_money[4]);
 		
-		ed_player5_delta_label = new JLabel("0");
-		ed_player5_delta_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player5_delta_label.setBounds(575, 404, 189, 40);
-		ending_panel.add(ed_player5_delta_label);
+		ed_player_delta[4] = new JLabel("0");
+		ed_player_delta[4].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_delta[4].setBounds(575, 404, 189, 40);
+		ending_panel.add(ed_player_delta[4]);
 		
-		ed_player6_name_label = new JLabel("\u73A9\u5BB66");
-		ed_player6_name_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player6_name_label.setBounds(14, 457, 375, 40);
-		ending_panel.add(ed_player6_name_label);
+		ed_player_name[5] = new JLabel("\u73A9\u5BB66");
+		ed_player_name[5].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_name[5].setBounds(14, 457, 375, 40);
+		ending_panel.add(ed_player_name[5]);
 		
-		ed_player6_money_label = new JLabel("25000");
-		ed_player6_money_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player6_money_label.setBounds(389, 457, 189, 40);
-		ending_panel.add(ed_player6_money_label);
+		ed_player_money[5] = new JLabel("25000");
+		ed_player_money[5].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_money[5].setBounds(389, 457, 189, 40);
+		ending_panel.add(ed_player_money[5]);
 		
-		ed_player6_delta_label = new JLabel("0");
-		ed_player6_delta_label.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player6_delta_label.setBounds(575, 457, 189, 40);
-		ending_panel.add(ed_player6_delta_label);
+		ed_player_delta[5] = new JLabel("0");
+		ed_player_delta[5].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_delta[5].setBounds(575, 457, 189, 40);
+		ending_panel.add(ed_player_delta[5]);
 		
-		ed_player1_hole_hand = new JLabel("\u9ED1\u6843J \u9ED1\u684310");
-		ed_player1_hole_hand.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player1_hole_hand.setBounds(240, 192, 189, 40);
-		ending_panel.add(ed_player1_hole_hand);
+		ed_player_detail[0] = new JLabel("\u9ED1\u6843J \u9ED1\u684310");
+		ed_player_detail[0].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_detail[0].setBounds(240, 192, 189, 40);
+		ending_panel.add(ed_player_detail[0]);
 		
-		ed_player2_hole_hand = new JLabel("\u9ED1\u684310 \u9ED1\u68437");
-		ed_player2_hole_hand.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player2_hole_hand.setBounds(240, 245, 189, 40);
-		ending_panel.add(ed_player2_hole_hand);
+		ed_player_detail[1] = new JLabel("\u9ED1\u684310 \u9ED1\u68437");
+		ed_player_detail[1].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_detail[1].setBounds(240, 245, 189, 40);
+		ending_panel.add(ed_player_detail[1]);
 		
-		ed_player3_hole_hand = new JLabel("\u7EA2\u6843J \u9ED1\u684310");
-		ed_player3_hole_hand.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player3_hole_hand.setBounds(240, 298, 189, 40);
-		ending_panel.add(ed_player3_hole_hand);
+		ed_player_detail[2] = new JLabel("\u7EA2\u6843J \u9ED1\u684310");
+		ed_player_detail[2].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_detail[2].setBounds(240, 298, 189, 40);
+		ending_panel.add(ed_player_detail[2]);
 		
-		ed_player4_hole_hand = new JLabel("\u5F03\u724C");
-		ed_player4_hole_hand.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player4_hole_hand.setBounds(240, 351, 189, 40);
-		ending_panel.add(ed_player4_hole_hand);
+		ed_player_detail[3] = new JLabel("\u5F03\u724C");
+		ed_player_detail[3].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_detail[3].setBounds(240, 351, 189, 40);
+		ending_panel.add(ed_player_detail[3]);
 		
-		ed_player5_hole_hand = new JLabel("\u5F03\u724C");
-		ed_player5_hole_hand.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player5_hole_hand.setBounds(240, 404, 189, 40);
-		ending_panel.add(ed_player5_hole_hand);
+		ed_player_detail[4] = new JLabel("\u5F03\u724C");
+		ed_player_detail[4].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_detail[4].setBounds(240, 404, 189, 40);
+		ending_panel.add(ed_player_detail[4]);
 		
-		ed_player6_hole_hand = new JLabel("\u5F03\u724C");
-		ed_player6_hole_hand.setFont(new Font("宋体", Font.PLAIN, 22));
-		ed_player6_hole_hand.setBounds(240, 457, 189, 40);
-		ending_panel.add(ed_player6_hole_hand);
+		ed_player_detail[5] = new JLabel("\u5F03\u724C");
+		ed_player_detail[5].setFont(new Font("宋体", Font.PLAIN, 22));
+		ed_player_detail[5].setBounds(240, 457, 189, 40);
+		ending_panel.add(ed_player_detail[5]);
 		
 		continue_button = new JButton("Continue");
 		continue_button.addMouseListener(new MouseAdapter() {
