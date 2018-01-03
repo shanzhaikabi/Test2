@@ -64,6 +64,9 @@ public class StringToAction {
             case "winner":
                 PlayGameClient.setWinner(string);
                 break;
+            case "matchOver":
+                PlayGameClient.setFinal(string);
+                break;
         }
     }
 

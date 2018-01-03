@@ -3,6 +3,7 @@ package com.company.DZPK.controller;
 import com.company.DZPK.client.*;
 import com.company.DZPK.client.ActionToString;
 import com.company.DZPK.client.StringToAction;
+import com.company.DZPK.frame.game_final_frame;
 import com.company.DZPK.frame.game_frame;
 import com.company.DZPK.frame.main_frame;
 import com.company.DZPK.tool.Localization;
@@ -153,4 +154,11 @@ public class PlayGameClient {
         else game_frame.ed_nuts_detail_label.setText(detail);
         game_frame.ending_panel.setVisible(true);
     }
+
+    /*public static void setFinal(String string){
+        String arr[] = string.split("\\s+");
+        for(int i = 1;i < (arr.length - 1) / 4;i++){
+            game_final_frame.player_name
+        }
+    }*/
 }

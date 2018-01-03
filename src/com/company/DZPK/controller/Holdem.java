@@ -1,5 +1,6 @@
 package com.company.DZPK.controller;
 
+import com.company.DZPK.DAO.DAOFactory;
 import com.company.DZPK.model.UserData;
 import com.company.DZPK.server.*;
 import com.company.DZPK.tool.Localization;
@@ -286,7 +287,7 @@ public class Holdem {
                     Player player = playerList.get(compare.winner_id.get(0));
                     String string = "winner " + player.getNickname() + " ";
                     for(int j = 0;j < 5;j++){
-                        string += compare.playernuts[player.getId()][j] + " ";
+                        string += compare.playernuts[player.getId()][j].getId() + " ";
                     }
                     sendMessage(string);
                 }
@@ -443,9 +444,23 @@ public class Holdem {
 
     public void send_player_message_when_match_over()
     {
-        String string ="match_over ";
+        String string ="matchOver ";
+        playerList.sort(new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                if (o1.getMoney() < o2.getMoney()) return 1;
+                if (o1.getMoney() > o2.getMoney()) return -1;
+                return 0;
+            }
+        });
+        for(int i = 0;i < playerList.size();i++){
+            Player player = playerList.get(i);
+            string += player.getNickname() + " " + player.getMoney() + " " + DAOFactory.getUserDataDAO().GetById(player.getId()).getPoint() + " ";
+            string += String.valueOf((player.getMoney() - 200000) / 10000) + " ";
+        }
         sendMessage(string);
     }
+
 
     public Socket getSocket(){return socket;}
 }
