@@ -198,7 +198,7 @@ public class StringToAction {
         Player player = new Player(Integer.parseInt(arr[1]),Integer.parseInt(arr[2]),arr[3]);
         player.setMoney(Integer.parseInt(arr[4]));
         if (arr.length <= 5) return player;
-        if (Integer.parseInt(arr[5]) > 0){
+        if (Integer.parseInt(arr[5]) >= 0){
             player.setHand(0,new Card(Integer.parseInt(arr[5])));
             player.setHand(1,new Card(Integer.parseInt(arr[6])));
         }

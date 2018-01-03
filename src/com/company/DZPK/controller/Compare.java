@@ -79,6 +79,7 @@ public class Compare {
         int winner_tmp = 0;
         for(int i = 1;i < n;i++)
         {
+            winner_id.add(0);
             int ttt = cmp(playernuts[winner_tmp],playernuts[i],player_nuts_id[winner_tmp],player_nuts_id[i]);
             if(ttt == 0)
             {

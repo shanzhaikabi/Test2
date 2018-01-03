@@ -155,10 +155,16 @@ public class PlayGameClient {
         game_frame.ending_panel.setVisible(true);
     }
 
-    /*public static void setFinal(String string){
+    public static void setFinal(String string){
         String arr[] = string.split("\\s+");
-        for(int i = 1;i < (arr.length - 1) / 4;i++){
-            game_final_frame.player_name
+        game_final_frame gameframe = new game_final_frame();
+        for(int i = 0;i < (arr.length - 1) / 4;i++){
+            gameframe.player_name[i].setText(arr[i * 4 + 1]);
+            gameframe.player_money[i].setText(arr[i * 4 + 2]);
+            gameframe.player_point[i].setText(arr[i * 4 + 3]);
+            gameframe.player_delta[i].setText(arr[i * 4 + 4]);
         }
-    }*/
+        gameframe.frame.setVisible(true);
+        game_frame.frame.setVisible(false);
+    }
 }
