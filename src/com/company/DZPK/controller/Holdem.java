@@ -62,17 +62,15 @@ public class Holdem {
             int mainpot = 0;
             for (int j = 0; j < 52; j++)
                 cards.add(new Card(j));
-            int tmp = 0;
             for (int j = 0; j < MAXPLAYER; j++) {
                 int curPlayer = (i + j) % MAXPLAYER;
                 playerList.get(curPlayer).setStatus(PLAYING);
                 for (int k = 0; k < 2; k++) {
-                    int t = random.nextInt(52 - tmp);
+                    int t = random.nextInt(cards.size());
                     Card card = cards.get(t);
                     playerList.get(curPlayer).setHand(k, card);
                     cards.remove(t);
                     sendMessageToPlayer(ActionToString.ShowCardToPlayerSingle(card, k), playerList.get(curPlayer).getPlayerId());
-                    tmp++;
                 }
             }
             int xmzp = (i + 1) % MAXPLAYER;
@@ -91,7 +89,6 @@ public class Holdem {
             updateMainPot(mainpot);
             //翻牌前
             int betPlayer = (i + 3) % MAXPLAYER, j = 0, moneyToCall = 1600, sidepotID = -1;
-            //TODO:向玩家发送信息
             while (j < MAXPLAYER) {
                 int cur = (betPlayer + j + 2) % MAXPLAYER;
                 Player curPlayer = playerList.get(cur);
@@ -165,17 +162,37 @@ public class Holdem {
                 j++;
             }
             //翻三张牌
-            int t = random.nextInt(52 - tmp);tmp++;
+            int t = random.nextInt(cards.size());
             cards.remove(t);
             String cardString = Localization.board_string + " ";
             for(int k = 0;k < 3;k++){
-                t = random.nextInt(52 - tmp);tmp++;
+                t = random.nextInt(cards.size());
                 Card tempCard = new Card(t);
                 publicCards.add(tempCard);
                 sendMessage(ActionToString.ShowCardToPlayerSingle(tempCard, k + 2));
                 cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
                 cards.remove(t);
             }
+            updateGameFlow(cardString);
+            //TODO:下注流程
+            //翻一张牌
+            t = random.nextInt(cards.size());
+            cardString = Localization.board_string + " ";
+            Card tempCard = new Card(t);
+            publicCards.add(tempCard);
+            sendMessage(ActionToString.ShowCardToPlayerSingle(tempCard, 5));
+            cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
+            cards.remove(t);
+            updateGameFlow(cardString);
+            //TODO:下注流程
+            //翻一张牌
+            t = random.nextInt(cards.size());
+            cardString = Localization.board_string + " ";
+            tempCard = new Card(t);
+            publicCards.add(tempCard);
+            sendMessage(ActionToString.ShowCardToPlayerSingle(tempCard, 6));
+            cardString += tempCard.getColorS() + tempCard.getNumS() + " ";
+            cards.remove(t);
             updateGameFlow(cardString);
         }
     }
