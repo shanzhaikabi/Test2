@@ -58,6 +58,7 @@ public class Holdem {
             String str = "============== Round " + String.valueOf(i + 1) + " ==============";
             sendMessage("updateGameflow " + str);
             List<Card> cards = new ArrayList<Card>();
+            List<Card> publicCards = new ArrayList<Card>();
             Vector<Integer> sidepot = new Vector<Integer>();
             int mainpot = 0;
             for (int j = 0; j < 52; j++)
@@ -71,7 +72,7 @@ public class Holdem {
                     Card card = cards.get(t);
                     playerList.get(curPlayer).setHand(k, card);
                     cards.remove(t);
-                    sendMessageToPlayer(ActionToString.ShowCardToPlayerSingle(card,k),playerList.get(curPlayer).getPlayerId());
+                    sendMessageToPlayer(ActionToString.ShowCardToPlayerSingle(card, k), playerList.get(curPlayer).getPlayerId());
                     tmp++;
                 }
             }
@@ -90,18 +91,19 @@ public class Holdem {
             mainpot = 2400;
             updateMainPot(mainpot);
             //翻牌前
-            int betPlayer = (i + 3) % MAXPLAYER,j = 0,moneyToCall = 1600,sidepotID = -1;
+            int betPlayer = (i + 3) % MAXPLAYER, j = 0, moneyToCall = 1600, sidepotID = -1;
             //TODO:向玩家发送信息
-            while(j < MAXPLAYER){
+            while (j < MAXPLAYER) {
                 int cur = (betPlayer + j + 2) % MAXPLAYER;
                 Player curPlayer = playerList.get(cur);
-                if(curPlayer.getStatus() == FOLDED){
-                    j++;continue;
+                if (curPlayer.getStatus() == FOLDED) {
+                    j++;
+                    continue;
                 }
                 System.out.println("[Holdem]Wait for player " + playerList.get(cur).getPlayerId());
                 String act = read(cur);
-                int actionType = getActionType(act),tempMoney = 0;
-                switch(actionType){
+                int actionType = getActionType(act), tempMoney = 0;
+                switch (actionType) {
                     case 0:
                         curPlayer.setStatus(FOLDED);
                         str = curPlayer.getNickname() + " " + game_frame.fold_string;
@@ -111,9 +113,6 @@ public class Holdem {
                     case 1://跟注
                         tempMoney = moneyToCall - curPlayer.getMoneyRaised();
                         curPlayer.setMoney(curPlayer.getMoney() - tempMoney);
-                        /*if(sidepotID == -1)*/
-                        mainpot += tempMoney;
-                        /*else {
                         if (tempMoney > 0){
                             str = curPlayer.getNickname() + " " + game_frame.call_string + " " + curPlayer.getMoneyRaised();
                             updateGameFlow(str);
@@ -124,12 +123,17 @@ public class Holdem {
                             updateGameFlow(str);
                             updatePlayerLabel(curPlayer.getId(),"check");
                         }
+                        temp.setMoneyRaised(tempMoney + curPlayer.getMoneyRaised());
+                        /*if(sidepotID == -1)*/
+                        mainpot += tempMoney;
+                        /*else {
+
                         if(sidepotID == -1)mainpot += tempMoney;
                         else {
                             int moneyInSidepot = sidepot.get(sidepotID);
                             sidepot.set(sidepotID,moneyInSidepot + tempMoney);
                         }
-                        temp.setMoneyRaised(tempMoney + curPlayer.getMoneyRaised());
+
                         }*/
                         //如果raiseMoney为0则状态显示为check
                         //否则显示为Call...元
@@ -160,6 +164,15 @@ public class Holdem {
                         break;
                 }
                 j++;
+            }
+            //翻三张牌
+            int t = random.nextInt(52 - tmp);tmp++;
+            cards.remove(t);
+            for(int k = 0;k < 3;k++){
+                t = random.nextInt(52 - tmp);tmp++;
+                publicCards.add(new Card(t));
+                //TODO:告知翻了三张牌
+                cards.remove(t);
             }
         }
     }
