@@ -24,6 +24,10 @@ public class Card {
         this.color = id / 13 + 1;
     }
 
+    public String toString(){
+        return this.getColorS() + this.getNumS();
+    }
+
     public Card(int id,int num,int color){
         this.id = id;
         this.num = num;
