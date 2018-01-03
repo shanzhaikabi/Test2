@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class main_frame {
 
@@ -183,6 +185,12 @@ public class main_frame {
 		frame.getContentPane().add(moneydata_label);
 		
 		query_button = new JButton("\u67E5\u8BE2\u8BE6\u7EC6\u6218\u7EE9");
+		query_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				detail_frame a=new detail_frame();
+				a.frame.setVisible(true);
+			}
+		});
 		query_button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
