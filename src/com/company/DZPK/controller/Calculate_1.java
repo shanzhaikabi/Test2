@@ -1,5 +1,7 @@
 package com.company.DZPK.controller;
 
+import com.company.DZPK.model.Card;
+
 import java.util.Arrays;
 import java.util.Scanner;
 /*这里所有的A都当做14来算*/
@@ -322,19 +324,19 @@ public class Calculate_1{
             }
             for(int i=0;i<7;i++)
             {
-                if(ans[i].getNum()==ccc)
+                if(ans[i].getNum() == ccc && cnt <= 4)
                 {
-                    nuts[cnt++]=ans[i];
+                    nuts[cnt++] = ans[i];
                 }
             }
             return 3;
         }
-        if(two==1)
+        if(two == 1)
         {
-            int aaa=0,bbb=0,ccc=0,ddd=0;
-            for(int i=14;i>=2;i--)
+            int aaa = 0,bbb = 0,ccc = 0,ddd = 0;
+            for(int i = 14;i >= 2;i--)
             {
-                if(n[i]>=2&&aaa==0)
+                if(n[i] >= 2 && aaa == 0)
                     aaa=i;
                 else if(n[i]>0&&bbb==0)
                     bbb=i;

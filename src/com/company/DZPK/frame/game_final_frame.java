@@ -89,146 +89,146 @@ public class  game_final_frame {
 		player_rank_label[5].setVisible(true);
 		frame.getContentPane().add(player_rank_label[5]);
 		
-		player_name[0] = new JLabel("sijiji");
+		player_name[0] = new JLabel("");
 		player_name[0].setFont(new Font("����", Font.PLAIN, 32));
 		player_name[0].setBounds(300, 120, 180, 50);
 		player_name[0].setVisible(true);
 		frame.getContentPane().add(player_name[0]);
 		
-		player_money[0] = new JLabel("sijiji");
+		player_money[0] = new JLabel("");
 		player_money[0].setFont(new Font("����", Font.PLAIN, 32));
 		player_money[0].setBounds(480, 120, 180, 50);
 		player_money[0].setVisible(true);
 		frame.getContentPane().add(player_money[0]);
 		
-		player_point[0] = new JLabel("sijiji");
+		player_point[0] = new JLabel("");
 		player_point[0].setFont(new Font("����", Font.PLAIN, 32));
 		player_point[0].setBounds(660, 120, 180, 50);
 		player_point[0].setVisible(true);
 		frame.getContentPane().add(player_point[0]);
 		
-		player_delta[0] = new JLabel("sijiji");
+		player_delta[0] = new JLabel("");
 		player_delta[0].setFont(new Font("����", Font.PLAIN, 32));
 		player_delta[0].setBounds(840, 120, 180, 50);
 		player_delta[0].setVisible(true);
 		frame.getContentPane().add(player_delta[0]);
 		
-		player_name[1] = new JLabel("sijiji");
+		player_name[1] = new JLabel("");
 		player_name[1].setFont(new Font("����", Font.PLAIN, 32));
 		player_name[1].setBounds(300, 200, 180, 50);
 		player_name[1].setVisible(true);
 		frame.getContentPane().add(player_name[1]);
 		
-		player_money[1] = new JLabel("sijiji");
+		player_money[1] = new JLabel("");
 		player_money[1].setFont(new Font("����", Font.PLAIN, 32));
 		player_money[1].setBounds(480, 200, 180, 50);
 		player_money[1].setVisible(true);
 		frame.getContentPane().add(player_money[1]);
 		
-		player_point[1] = new JLabel("sijiji");
+		player_point[1] = new JLabel("");
 		player_point[1].setFont(new Font("����", Font.PLAIN, 32));
 		player_point[1].setBounds(660, 200, 180, 50);
 		player_point[1].setVisible(true);
 		frame.getContentPane().add(player_point[1]);
 		
-		player_delta[1] = new JLabel("sijiji");
+		player_delta[1] = new JLabel("");
 		player_delta[1].setFont(new Font("����", Font.PLAIN, 32));
 		player_delta[1].setBounds(840, 200, 180, 50);
 		player_delta[1].setVisible(true);
 		frame.getContentPane().add(player_delta[1]);
 		
 		
-		player_name[2] = new JLabel("sijiji");
+		player_name[2] = new JLabel("");
 		player_name[2].setFont(new Font("����", Font.PLAIN, 32));
 		player_name[2].setBounds(300, 280, 180, 50);
 		player_name[2].setVisible(true);
 		frame.getContentPane().add(player_name[2]);
 		
-		player_money[2] = new JLabel("sijiji");
+		player_money[2] = new JLabel("");
 		player_money[2].setFont(new Font("����", Font.PLAIN, 32));
 		player_money[2].setBounds(480, 280, 180, 50);
 		player_money[2].setVisible(true);
 		frame.getContentPane().add(player_money[2]);
 		
-		player_point[2] = new JLabel("sijiji");
+		player_point[2] = new JLabel("");
 		player_point[2].setFont(new Font("����", Font.PLAIN, 32));
 		player_point[2].setBounds(660, 280, 180, 50);
 		player_point[2].setVisible(true);
 		frame.getContentPane().add(player_point[2]);
 		
-		player_delta[2] = new JLabel("sijiji");
+		player_delta[2] = new JLabel("");
 		player_delta[2].setFont(new Font("����", Font.PLAIN, 32));
 		player_delta[2].setBounds(840, 280, 180, 50);
 		player_delta[2].setVisible(true);
 		frame.getContentPane().add(player_delta[2]);
 		
-		player_name[3] = new JLabel("sijiji");
+		player_name[3] = new JLabel("");
 		player_name[3].setFont(new Font("����", Font.PLAIN, 32));
 		player_name[3].setBounds(300, 360, 180, 50);
 		player_name[3].setVisible(true);
 		frame.getContentPane().add(player_name[3]);
 		
-		player_money[3] = new JLabel("sijiji");
+		player_money[3] = new JLabel("");
 		player_money[3].setFont(new Font("����", Font.PLAIN, 32));
 		player_money[3].setBounds(480, 360, 180, 50);
 		player_money[3].setVisible(true);
 		frame.getContentPane().add(player_money[3]);
 		
-		player_point[3] = new JLabel("sijiji");
+		player_point[3] = new JLabel("");
 		player_point[3].setFont(new Font("����", Font.PLAIN, 32));
 		player_point[3].setBounds(660, 360, 180, 50);
 		player_point[3].setVisible(true);
 		frame.getContentPane().add(player_point[3]);
 		
-		player_delta[3] = new JLabel("sijiji");
+		player_delta[3] = new JLabel("");
 		player_delta[3].setFont(new Font("����", Font.PLAIN, 32));
 		player_delta[3].setBounds(840, 360, 180, 50);
 		player_delta[3].setVisible(true);
 		frame.getContentPane().add(player_delta[3]);
 		
-		player_name[4] = new JLabel("sijiji");
+		player_name[4] = new JLabel("");
 		player_name[4].setFont(new Font("����", Font.PLAIN, 32));
 		player_name[4].setBounds(300, 440,180, 50);
 		player_name[4].setVisible(true);
 		frame.getContentPane().add(player_name[4]);
 		
-		player_money[4] = new JLabel("sijiji");
+		player_money[4] = new JLabel("");
 		player_money[4].setFont(new Font("����", Font.PLAIN, 32));
 		player_money[4].setBounds(480, 440, 180, 50);
 		player_money[4].setVisible(true);
 		frame.getContentPane().add(player_money[4]);
 		
-		player_point[4] = new JLabel("sijiji");
+		player_point[4] = new JLabel("");
 		player_point[4].setFont(new Font("����", Font.PLAIN, 32));
 		player_point[4].setBounds(660, 440, 180, 50);
 		player_point[4].setVisible(true);
 		frame.getContentPane().add(player_point[4]);
 		
-		player_delta[4] = new JLabel("sijiji");
+		player_delta[4] = new JLabel("");
 		player_delta[4].setFont(new Font("����", Font.PLAIN, 32));
 		player_delta[4].setBounds(840, 440, 180, 50);
 		player_delta[4].setVisible(true);
 		frame.getContentPane().add(player_delta[4]);
 		
-		player_name[5] = new JLabel("sijiji");
+		player_name[5] = new JLabel("");
 		player_name[5].setFont(new Font("����", Font.PLAIN, 32));
 		player_name[5].setBounds(300, 520, 180, 50);
 		player_name[5].setVisible(true);
 		frame.getContentPane().add(player_name[5]);
 		
-		player_money[5] = new JLabel("sijiji");
+		player_money[5] = new JLabel("");
 		player_money[5].setFont(new Font("����", Font.PLAIN, 32));
 		player_money[5].setBounds(480, 520, 180, 50);
 		player_money[5].setVisible(true);
 		frame.getContentPane().add(player_money[5]);
 		
-		player_point[5] = new JLabel("sijiji");
+		player_point[5] = new JLabel("");
 		player_point[5].setFont(new Font("����", Font.PLAIN, 32));
 		player_point[5].setBounds(660, 520, 180, 50);
 		player_point[5].setVisible(true);
 		frame.getContentPane().add(player_point[5]);
 		
-		player_delta[5] = new JLabel("sijiji");
+		player_delta[5] = new JLabel("");
 		player_delta[5].setFont(new Font("����", Font.PLAIN, 32));
 		player_delta[5].setBounds(840, 520, 180, 50);
 		player_delta[5].setVisible(true);

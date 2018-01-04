@@ -103,7 +103,7 @@ public class main_frame {
 		
 		game_combo_1 = new JComboBox();
 		game_combo_1.setFont(new Font("宋体", Font.PLAIN, 22));
-		game_combo_1.setModel(new DefaultComboBoxModel(new String[] {"", "\u56DB\u822C\u4E1C\u55B0\u8D64", "002", "003"}));
+		game_combo_1.setModel(new DefaultComboBoxModel(new String[] {"", "新手场", "002", "003"}));
 		game_combo_1.setSelectedIndex(1);
 		game_combo_1.setBounds(60, 130, 240, 40);
 		frame.getContentPane().add(game_combo_1);

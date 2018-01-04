@@ -1,5 +1,8 @@
 package com.company.DZPK.controller;
 
+import com.company.DZPK.model.Card;
+import com.company.DZPK.model.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,16 +86,16 @@ public class Compare {
     public void get_winner(int n)
     {
         int winner_tmp = 0;
+        winner_id.add(0);
         for(int i = 1;i < n;i++)
         {
-            winner_id.add(0);
             int ttt = cmp(playernuts[winner_tmp],playernuts[i],player_nuts_id[winner_tmp],player_nuts_id[i]);
             if(ttt == 0)
             {
                 if(winner_num > 1) {
                     winner_num = 1;
-                    winner_id.clear();
                 }
+                winner_id.clear();
                 winner_tmp = i;
                 winner_id.add(i);
             }
