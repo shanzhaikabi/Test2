@@ -1,6 +1,6 @@
 package com.company.DZPK.frame;
 
-import com.company.DZPK.controller.Card;
+import com.company.DZPK.model.Card;
 import com.company.DZPK.controller.PlayGameClient;
 import com.company.DZPK.model.UserData;
 import com.company.DZPK.tool.Localization;
@@ -17,8 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class game_frame {
 

@@ -1,5 +1,8 @@
 package com.company.DZPK.controller;
 
+import com.company.DZPK.model.Card;
+import com.company.DZPK.model.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -6,6 +6,8 @@ import com.company.DZPK.client.StringToAction;
 import com.company.DZPK.frame.game_final_frame;
 import com.company.DZPK.frame.game_frame;
 import com.company.DZPK.frame.main_frame;
+import com.company.DZPK.model.Card;
+import com.company.DZPK.model.Player;
 import com.company.DZPK.tool.Localization;
 
 /**

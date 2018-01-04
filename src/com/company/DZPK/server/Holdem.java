@@ -1,6 +1,9 @@
-package com.company.DZPK.controller;
+package com.company.DZPK.server;
 
 import com.company.DZPK.DAO.DAOFactory;
+import com.company.DZPK.controller.Compare;
+import com.company.DZPK.model.Card;
+import com.company.DZPK.model.Player;
 import com.company.DZPK.model.UserData;
 import com.company.DZPK.server.*;
 import com.company.DZPK.tool.Localization;
