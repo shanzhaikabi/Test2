@@ -54,5 +54,4 @@ public class Card {
     static public Card getCardFromId(int id){
         return new Card(id);
     }
-    //TODO:展示课GIT练习操作
 }
