@@ -1,4 +1,4 @@
-package com.company.DZPK.model;
+package com.company.DZPK.controller;
 /**
  * 牌
  */

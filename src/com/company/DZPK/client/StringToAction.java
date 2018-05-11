@@ -1,8 +1,6 @@
 package com.company.DZPK.client;
 
 import com.company.DZPK.controller.*;
-import com.company.DZPK.model.Card;
-import com.company.DZPK.model.Player;
 import com.company.DZPK.model.UserData;
 
 /**

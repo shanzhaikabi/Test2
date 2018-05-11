@@ -1,4 +1,6 @@
-package com.company.DZPK.model;
+package com.company.DZPK.controller;
+
+import com.company.DZPK.controller.Card;
 
 /**
  * Created by Shanzhai on 2017/9/13.

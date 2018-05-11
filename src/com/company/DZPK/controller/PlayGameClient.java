@@ -6,8 +6,6 @@ import com.company.DZPK.client.StringToAction;
 import com.company.DZPK.frame.game_final_frame;
 import com.company.DZPK.frame.game_frame;
 import com.company.DZPK.frame.main_frame;
-import com.company.DZPK.model.Card;
-import com.company.DZPK.model.Player;
 import com.company.DZPK.tool.Localization;
 
 /**
@@ -27,7 +25,7 @@ public class PlayGameClient {
         int id = StringToAction.GetIdWhenStart(string);
         int playerId = StringToAction.GetPlayerIdWhenStart(string);
         String nickName = StringToAction.GetPlayerNicknameWhenStart(string);
-        if (nickName == null || nickName.length() == 0) return;
+        if (nickName == null) return;
         game_frame.setPlayerNameLabel(nickName, playerId, id);
         game_frame.setPlayerLabel(Localization.money_string + " 200000",id);
     }
@@ -47,8 +45,6 @@ public class PlayGameClient {
         String str = StringToAction.resetGameflow(string);
         if (str == null) str = "";
         game_frame.resetGameflow(str);
-        game_frame.board = new Card[5];
-        game_frame.board_label.setText(Localization.board_string);
         disableButton();
     }
 

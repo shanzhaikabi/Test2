@@ -1,5 +1,6 @@
 package com.company.DZPK.server;
 
+import com.company.DZPK.controller.Holdem;
 import com.company.DZPK.model.UserData;
 
 import java.io.*;
@@ -162,7 +163,7 @@ public class Server {
             try {
                 while (true) {
                     int cnt = userDataQueue.size();
-                    if (cnt > 5) {
+                    if (cnt > 1) {
                         System.out.println("new holdem");
                         Holdem holdem = new Holdem(new Socket("127.0.0.1", 18888));//新建主机
                         GameThread gameThread = new GameThread(holdem);

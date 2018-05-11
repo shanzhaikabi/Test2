@@ -1,7 +1,7 @@
-package com.company.DZPK.model;
+package com.company.DZPK.controller;
 
-import com.company.DZPK.model.Card;
-import com.company.DZPK.model.Player;
+import com.company.DZPK.controller.Card;
+import com.company.DZPK.controller.Player;
 
 /**
  * Created by Shanzhai on 2017/9/14.

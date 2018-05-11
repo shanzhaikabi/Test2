@@ -1,7 +1,5 @@
 package com.company.DZPK.controller;
 
-import com.company.DZPK.model.Card;
-
 import java.util.Arrays;
 import java.util.Scanner;
 /*这里所有的A都当做一来算*/

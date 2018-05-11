@@ -83,18 +83,18 @@ public class UserDataDAOImpl implements UserDataDAO{
         Connection connection = null;
         try{
             connection = JdbcUtils.getConnection();
-            String sql = "select * from user where id=" + String.valueOf(id);
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "select * from user where id=?";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setInt(1,id);
+            pst.executeUpdate();
+            ResultSet rs = pst.executeQuery(sql);
             if (rs == null) return null;
-            while(rs.next()) {
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-                String nickname = rs.getString("nickname");
-                int point = rs.getInt("point");
-                int rank = rs.getInt("rank");
-                return new UserData(id, username, password, nickname, point, rank);
-            }
+            String username = rs.getString("username");
+            String password = rs.getString("password");
+            String nickname = rs.getString("nickname");
+            int point = rs.getInt("point");
+            int rank = rs.getInt("rank");
+            return new UserData(id,username,password,nickname,point,rank);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally{
